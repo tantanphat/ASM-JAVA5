@@ -1,0 +1,71 @@
+/*----------------------------------------
+#Lines
+----------------------------------------*/
+.box-content {
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.box-title {
+    font-size: 22px;
+    margin-bottom: 30px;
+    position: relative;
+    font-weight: 700;
+    color: #212121;
+}
+
+.box-title h3 {
+    font-size: 2.2rem;
+    text-transform: uppercase;
+    line-height: 40px;
+    margin: 0 0 30px;
+}
+
+.box-title.box-title-v1 {
+    text-align: center;
+    line-height: 40px;
+    margin: 0;
+    overflow: hidden;
+}
+
+.box-title.box-title-v1 h3 {
+
+
+    margin: 0 0 22px;
+    margin-left: 300px;
+    line-height: 2.5rem;
+    margin: auto 20px;
+}
+
+
+.box-title.box-title-v1 span {
+    position: relative;
+    padding: 0 20px;
+
+}
+
+.box-title.box-title-v1 span:before {
+    content: "";
+    height: 5px;
+    width: 1000%;
+    background: #212121;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: block;
+    margin: auto;
+    right: 100%;
+}
+
+.box-title.box-title-v1 span:after {
+    content: "";
+    height: 5px;
+    width: 1000%;
+    background: #212121;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: block;
+    margin: auto;
+    left: 100%;
+}

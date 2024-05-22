@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estore</title>
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/assets/img/favicon.ico}">
+    <!-- Include common head -->
+    <th:block th:include="/common/head :: head"></th:block>
+</head>
+<body>
+<!-- Include common header -->
+<div th:include="/common/header :: header"></div>
+<main>
+    <div class="container-fluid mb-4">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="breadcrumb">
+                <a href="/"><i class="icon fa fa-home"></i></a>
+                <span class="mx-2 mb-0">/</span>
+                <strong class="text-black">Quản lý tài khoản</strong>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <form action="/member/update" method="post" enctype="multipart/form-data" id="formUpdate">
+                <input name="__RequestVerificationToken" type="hidden" >
+                <h2 class="h3 mb-3 mt-4 text-black">Thông tin dùng</h2>
+                <div class="p-3 p-lg-5 border">
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <label for="c_fname" class="text-black">Họ tên <span class="text-danger">*</span></label>
+                            <input type="text" class="required form-control" id="c_fname" name="CustomerName">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <label for="c_fname" class="text-black">Sinh nhật (Ngày/Tháng/Năm)</label>
+                            <input type="text" class="form-control" id="c_birthday" name="Birthday">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <label for="c_fname" class="text-black"><span class="text-danger">Điểm tích lũy/Giảm giá</span></label>
+                            <input type="text" class="form-control" readonly="readonly" value="- 5 %">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <label for="c_address" class="text-black">Địa chỉ <span class="text-danger">*</span></label>
+                            <input type="text" class="required form-control" id="c_address" name="CustomerAddress" placeholder="">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <label for="c_email_address" class="text-black">Email <span class="text-danger">*</span></label>
+                            <input type="text" class="required form-control" id="c_email_address" name="EmailAddress">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="c_phone" class="text-black">Điện thoại <span class="text-danger">*</span></label>
+                            <div class="form-inline">
+                                <input type="text" class="form-control" id="c_phone" name="c_phone" placeholder="" value="344720904" readonly="readonly">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-success" type="button" id="btnUpdate" name="btnUpdate"><b>Cập nhập thông tin</b></button>
+                        <br>
+                        <button type="button" class="btn btn-success">Thoát</button>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>>
+
+    </div>
+    <!-- Gallery End-->
+    <div th:replace="/common/footer :: footer"></div>
+</main>
+
+
+</body>
+</html>

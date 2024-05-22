@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Estore</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" th:href="@{/site.webmanifest}">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/assets/img/favicon.ico}">
+    <th:block th:include="/common/head :: head"></th:block>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/user/css/login.css}">
+
+</head>
+<body>
+    <div th:include="/common/header :: header"></div>
+
+<main ng-app="myApp" ng-controller="myCtrl">
+    <div class="container" id="container">
+        <div class="form-container sign-up-container">
+            <form >
+                <h1>Create Account</h1>
+                <input type="text" placeholder="Username" name="username"/>
+                <input type="password" placeholder="Password" name="password"/>
+                <input type="text" placeholder="Phone" name="phone"/>
+                <input type="text" placeholder="Email" name="email"/>
+                <input type="text" placeholder="Address" name="address"/>
+                <button>Sign Up</button>
+            </form>
+        </div>
+        <div class="form-container sign-in-container">
+            <form ng-submit="login()">
+                <h1>Sign in</h1>
+                <div class="social-container">
+                    <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                    <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+                <span>or use your account</span>
+                <input type="email" name="username"  ng-model="formData.logEmail" placeholder="Email"/>
+
+                <input type="password" name="password" ng-model="formData.logPassword" placeholder="Password"/>
+
+                <a href="#">Forgot your password?</a>
+                <button type="submit">Sign In</button>
+            </form>
+        </div>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1>Welcome Back!</h1>
+                    <p>To keep connected with us please login with your personal info</p>
+                    <button class="ghost" id="signIn">Sign In</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h1>Hello, Friend!</h1>
+                    <p>Enter your personal details and start journey with us</p>
+                    <button class="ghost" id="signUp">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    const signUpButton = document.getElementById('signUp');
+    const signInButton = document.getElementById('signIn');
+    const container = document.getElementById('container');
+
+    signUpButton.addEventListener('click', () => {
+        container.classList.add("right-panel-active");
+    });
+
+    signInButton.addEventListener('click', () => {
+        container.classList.remove("right-panel-active");
+    });
+
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function($scope, $http) {
+        $scope.formData = {};
+
+        $scope.login = function() {
+            if ($scope.formData.logEmail == null) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Ỏoooo",
+                    text: "Email không được để trống ",
+                });
+            } else if ($scope.formData.logPassword == null) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Mật khẩu không được để trống",
+                });
+            } else {
+                $http.post('/Dang-nhap', {
+                    username: $scope.formData.logEmail, // Gửi logEmail như là username
+                    password: $scope.formData.logPassword // Gửi logPassword như là password
+                }).then(function(response) {
+                    $scope.user = response.data;
+                    if ($scope.user === null) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Email chưa chính xác!",
+                        });
+                    } else {
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "Login successful",
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(function() {
+                            window.location.href = '/Trang-chu';
+                        });
+                    }
+                }).catch(function(error) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Email hoặc mật khẩu chưa chính xác",
+                    });
+                });
+            }
+        };
+    });
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
