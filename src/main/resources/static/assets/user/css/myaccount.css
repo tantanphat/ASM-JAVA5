@@ -1,0 +1,22 @@
+.col-12{
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+.btn{
+    transition: .3s all ease-in-out;
+    text-transform: uppercase;
+}
+.btn-block{
+    display: block;
+    width: 100%;
+}
+.btn-success{
+    color: #ffffff;
+    background-color:  #ffffff;
+    border-color: #007bff;
+}
+.btn-outline-dark{
+    color:  #ffffff;
+    border-color: #343a40;
+}
+
