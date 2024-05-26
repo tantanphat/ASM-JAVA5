@@ -17,7 +17,7 @@ public class UserController {
     private KhachHangServiceImpl khachHangServiceImpl;
 
     @GetMapping("/myaccount")
-    public String hienThiTrangAccountKhachHang(Model model) {
+    public String hienThiTrangAccountKhachHang() {
         return "/views/myaccount";
     }
 
