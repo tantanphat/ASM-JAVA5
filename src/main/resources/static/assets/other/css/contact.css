@@ -1,0 +1,12 @@
+.Map {
+    width: 100%;
+    overflow: hidden;
+}
+
+.map1 {
+    position: absolute;
+
+    top: 50px;
+    left: 60%;
+
+}
