@@ -96,7 +96,7 @@
                                     </li>
                                     <!-- Hiển thị nút "Hello" và chuyển hướng đến trang Login nếu có người dùng trong session -->
                                     <li class="d-none d-lg-block" sec:authorize="hasRole('ROLE_USER')">
-                                        <span th:text="'Hello '+ ${#authentication.name}"></span>
+                                        <span th:text="'Hello '+ ${CURRENT_USER}"></span>
                                     </li>
                                     <li class="d-none d-lg-block" sec:authorize="!isAuthenticated()">
                                         <a th:href="@{/Dang-nhap}" class="btn header-btn">Sign in</a>
