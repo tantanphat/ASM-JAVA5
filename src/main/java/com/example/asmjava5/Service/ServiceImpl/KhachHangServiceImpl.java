@@ -1,6 +1,7 @@
 package com.example.asmjava5.Service.ServiceImpl;
 
 import com.example.asmjava5.Entity.KhachHang;
+import com.example.asmjava5.Model.request.KhachHangDto;
 import com.example.asmjava5.Repository.KhachHangDao;
 
 import com.example.asmjava5.Service.KhachHangService;
@@ -11,17 +12,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 @Transactional
 public class KhachHangServiceImpl implements KhachHangService {
+
     @Autowired
     private KhachHangDao khachHangRepository;
-
-    @PersistenceContext
-    private EntityManager entityManager;
-
     @Override
     public List<KhachHang> getAllKhachHang() {
         return  khachHangRepository.findAll();
@@ -32,16 +31,15 @@ public class KhachHangServiceImpl implements KhachHangService {
         return khachHangRepository.findByEmail(email);
     }
 
-
-
-//    public UserDetailsManager userDetailsManager(String email, String pass) {
-//        UserDetails user = User.builder()
-//                .username(email)
-//                .password("{noop}" + pass)  // Không mã hóa mật khẩu (chỉ dùng cho mục đích minh họa)
-//                .roles("USER")
-//                .build();
-//        return new InMemoryUserDetailsManager(user);
-//    }
+    @Override
+    public KhachHang updateInfo(KhachHangDto khachHang) {
+        KhachHang kh = khachHangRepository.findByEmail(khachHang.getEmail());
+        kh.setTenKH(khachHang.getHoTen());
+        kh.setDiaChi(khachHang.getDiaChi());
+        kh.setSdt(khachHang.getSoDienThoai());
+        khachHangRepository.save(kh);
+        return kh;
+    }
 
 
 }
