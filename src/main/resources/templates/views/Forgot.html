@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Estore - Forgot Password</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" th:href="@{/site.webmanifest}">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/assets/img/favicon.ico}">
+    <th:block th:include="/common/head :: head"></th:block>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/user/css/login.css}">
+</head>
+<body>
+<div th:include="/common/header :: header"></div>
+
+<main ng-app="forgotPasswordApp" ng-controller="forgotPasswordCtrl">
+    <div class="container" id="container">
+        <div class="form-container forgot-password-container">
+            <form ng-submit="sendResetEmail()">
+                <h1>Forgot Password</h1>
+                <span>Enter your email to reset your password</span>
+                <input type="email" ng-model="formData.email" placeholder="Email" required>
+                <button type="submit">Reset Password</button>
+            </form>
+        </div>
+    </div>
+</main>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var app = angular.module('forgotPasswordApp', []);
+    app.controller('forgotPasswordCtrl', function($scope, $http) {
+        $scope.formData = {};
+
+        $scope.sendResetEmail = function() {
+            if ($scope.formData.email == null) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Email không được để trống",
+                });
+            } else {
+                $http.post('/forgot-password', {
+                    email: $scope.formData.email
+                }).then(function(response) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Reset email sent",
+                        text: "Please check your email for reset instructions",
+                    }).then(function() {
+                        $scope.formData.email = ""; // Xóa dữ liệu trong form
+                    });
+                }).catch(function(error) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Đã xảy ra lỗi khi gửi email đặt lại mật khẩu",
+                    });
+                });
+            }
+        };
+    });
+    /*]]>*/
+</script>
+</body>
+</html>
