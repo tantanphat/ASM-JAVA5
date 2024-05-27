@@ -3,12 +3,9 @@ package com.example.asmjava5.Entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.sql.Date;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -32,8 +29,11 @@ public class NhanVien {
     @Column(name = "DiaChi")
     private String DiaChi;
 
-    @Column(name = "NgaySinh")
-    private LocalDate NgaySinh;
+    @Column(name = "DienThoai")
+    private String phone;
+
+    @Column(name = "NgaySinh", columnDefinition = "datetime2")
+    private Date NgaySinh;
 
     @Column(name = "Matkhau")
     private String Matkhau;
