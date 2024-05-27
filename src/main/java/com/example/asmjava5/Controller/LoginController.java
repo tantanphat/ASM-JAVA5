@@ -1,7 +1,8 @@
 package com.example.asmjava5.Controller;
 
 
-import com.example.asmjava5.Constant.SessionAttr;
+
+
 import com.example.asmjava5.Model.request.LoginRequest;
 import com.example.asmjava5.Service.ServiceImpl.KhachHangServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
@@ -55,9 +56,6 @@ public class LoginController {
     public String logout() {
         return "redirect:/Dang-nhap";
     }
-
-
-
 
 
 }
