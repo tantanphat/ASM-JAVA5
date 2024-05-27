@@ -116,12 +116,12 @@
                                 <label class="text-black">Vai trò <span class="text-danger">*</span></label>
                                 <div class="form-check-inline">
                                     <div class="form-check">
-                                        <input type="radio" class="form-check-input" id="radio1" name="optradio" value="option1" checked>
-                                        <label class="form-check-label" for="radio1">Nhân viên</label>
+                                        <input type="radio" class="form-check-input" id="RoleNV" name="role_radio">
+                                        <label class="form-check-label" for="RoleNV">Nhân viên</label>
                                     </div>
                                     <div class="form-check">
-                                        <input type="radio" class="form-check-input">Quản lý
-                                        <label class="form-check-label"></label>
+                                        <input type="radio" class="form-check-input" id="RoleQL" name="role_radio">Quản lý
+                                        <label class="form-check-label" for="RoleQL"></label>
                                     </div>
                                 </div>
                             </div>
@@ -274,31 +274,9 @@
     }
 
     $(document).ready(function() {
-
-        // var currentURL = window.location.href;
-        // var segments = currentURL.split('/');
-        // var manv = segments[segments.length - 1];
-        // console.log(manv); // Logs "NV001"
-        // $.ajax({
-        //     url: "/api/nhan-vien/"+manv,
-        //     type: "GET",
-        //     success: function (data) {
-        //         data.preventDefault();
-        //         $('#MANV').val(data.maNV);
-        //         $('#FullName').val(data.tenNV);
-        //         $('#Brithday').val(data.gioiTinh);
-        //         $('#Address').val(data.diaChi);
-        //         $('#Phone').val(data.phone);
-        //         $('#Brithday').val(data.ngaySinh);
-        //         $('#Password').val(data.matkhau);
-        //
-        //     }
-        // });
-
         var currentURL = window.location.href;
         var segments = currentURL.split('/');
         var manv = segments[segments.length - 1];
-
         console.log(manv); // Logs "NV001"
         $.ajax({
             url: "/api/nhan-vien/"+manv,
@@ -313,6 +291,14 @@
                         $('#Phone').val(data.phone);
                         $('#Brithday').val(data.ngaySinh);
                         $('#Password').val(data.matkhau);
+                        var roleValue = data.vaiTro;
+                        if (roleValue == false) {
+                            $('#RoleNV').prop('checked', true);
+                            $('#RoleQL').prop('checked', false);
+                        } else {
+                            $('#RoleNV').prop('checked', false);
+                            $('#RoleQL').prop('checked', true);
+                        }
 
                 var formContainer = document.getElementById('formUpdate');
                 formContainer.scrollIntoView({ behavior: 'smooth' });
