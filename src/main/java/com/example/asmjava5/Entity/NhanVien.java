@@ -30,10 +30,10 @@ public class NhanVien {
     private String DiaChi;
 
     @Column(name = "DienThoai")
-    private String phone;
+    private String DienThoai;
 
-    @Column(name = "NgaySinh", columnDefinition = "datetime2")
-    private Date NgaySinh;
+    @Column(name = "NgaySinh")
+    private LocalDate NgaySinh;
 
     @Column(name = "Matkhau")
     private String Matkhau;
