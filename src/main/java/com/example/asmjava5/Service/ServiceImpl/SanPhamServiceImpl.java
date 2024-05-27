@@ -1,6 +1,6 @@
 package com.example.asmjava5.Service.ServiceImpl;
 
-import com.example.asmjava5.Repository.SanPhamDao;
+import com.example.asmjava5.Repository.SanPhamRepository;
 import com.example.asmjava5.Entity.SanPham;
 import com.example.asmjava5.Service.SanPhamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,15 +13,15 @@ import java.util.List;
 @Transactional
 public class SanPhamServiceImpl implements SanPhamService {
     @Autowired
-    private SanPhamDao sanPhamDao;
+    private SanPhamRepository sanPhamRepository;
 
     @Override
     public List<SanPham> getAllSanPham() {
-        return sanPhamDao.findAll();
+        return sanPhamRepository.findAll();
     }
 
     @Override
     public SanPham getSanPhamById(String maSP) {
-        return sanPhamDao.findSanPhambyMaSP(maSP);
+        return sanPhamRepository.findSanPhambyMaSP(maSP);
     }
 }

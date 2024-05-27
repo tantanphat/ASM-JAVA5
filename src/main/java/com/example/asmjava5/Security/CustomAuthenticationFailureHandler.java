@@ -1,7 +1,7 @@
 package com.example.asmjava5.Security;
 
 import com.example.asmjava5.Entity.KhachHang;
-import com.example.asmjava5.Repository.KhachHangDao;
+import com.example.asmjava5.Repository.KhachHangRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,19 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 
 @Component
 public class CustomAuthenticationFailureHandler implements AuthenticationFailureHandler {
     @Autowired
-    private KhachHangDao khachHangDao;
+    private KhachHangRepository khachHangRepository;
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
@@ -48,7 +44,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         String username = request.getParameter("username");
-        KhachHang kh = khachHangDao.findByEmail(username);
+        KhachHang kh = khachHangRepository.findByEmail(username);
 
         String errorMessage= "Lỗi xác thực";
         if ( kh == null ) {

@@ -2,17 +2,14 @@ package com.example.asmjava5.Service.ServiceImpl;
 
 import com.example.asmjava5.Entity.KhachHang;
 import com.example.asmjava5.Model.request.KhachHangDto;
-import com.example.asmjava5.Repository.KhachHangDao;
+import com.example.asmjava5.Repository.KhachHangRepository;
 
 import com.example.asmjava5.Service.KhachHangService;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,7 +17,7 @@ import java.util.List;
 public class KhachHangServiceImpl implements KhachHangService {
 
     @Autowired
-    private KhachHangDao khachHangRepository;
+    private KhachHangRepository khachHangRepository;
     @Override
     public List<KhachHang> getAllKhachHang() {
         return  khachHangRepository.findAll();

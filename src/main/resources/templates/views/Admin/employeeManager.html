@@ -8,7 +8,6 @@
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/assets/img/favicon.ico}">
     <!-- Include common head -->
     <th:block th:include="/common/head :: head"></th:block>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         .form-check-inline {
             display: flex;
@@ -60,23 +59,21 @@
     <div class="container-fluid mb-4">
         <div class="row">
             <div class="col-12">
-                <form method="post" enctype="multipart/form-data" id="formUpdate">
+                <form enctype="multipart/form-data" id="formUpdate">
                     <input name="__RequestVerificationToken" type="hidden">
                     <h1 class="h2 mb-3 mt-2 text-dark d-flex justify-content-center align-items-center">Thông tin nhân viên</h1>
                     <div class="p-3 p-lg-5 border">
 
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label for="MNV" class="text-black">Mã nhân viên <span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="MNV" name="MSNV" disabled>
+                                <label for="MANV" class="text-black">Mã nhân viên <span class="text-danger">*</span></label>
+                                    <input type="text" class="required form-control" id="MANV"  disabled>
                             </div>
                             <div class="col-md-6">
                                 <label for="Gender" class="form-label">Giới tính <span class="text-danger">*</span></label>
                                 <select id="Gender" class="form-select" aria-label="Default select example">
-                                    <option selected>...</option>
-                                    <option value="1">Nam</option>
+                                    <option value="1" selected>Nam</option>
                                     <option value="2">Nữ</option>
-                                    <option value="3">Khác</option>
                                 </select>
                             </div>
                         </div>
@@ -84,28 +81,28 @@
                         <div class="form-group row">
                             <div class="col-md-6">
                                 <label for="FullName" class="text-black">Tên nhân viên <span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="FullName" name="FullName">
+                                <input type="text" class="required form-control" id="FullName" >
                             </div>
                             <div class="col-md-6">
                                 <label for="Brithday" class="text-black">Ngày sinh <span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="Brithday" name="Brithday" placeholder="MM/DD/YYYY">
+                                <input type="date" class="required form-control" id="Brithday" name="Brithday" placeholder="MM/DD/YYYY">
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <div class="col-md-6">
                                 <label for="Phone" class="text-black">Số điện thoại <span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="Phone" name="Phone">
+                                <input type="text" class="required form-control" id="Phone" >
                             </div>
                             <div class="col-md-6">
                             <div class="row">
                                 <div class="col-md-6">
                                     <label for="Password" class="text-black">Mật khẩu <span class="text-danger">*</span></label>
-                                    <input type="password" class="required form-control" id="Password" name="Password">
+                                    <input type="password" class="required form-control" id="Password" >
                                 </div>
                                 <div class="col-md-6">
                                     <label for="Password1" class="text-black">Nhập lại mật khẩu <span class="text-danger">*</span></label>
-                                    <input type="password" class="required form-control" id="Password1" name="Password1">
+                                    <input type="password" class="required form-control" id="Password1" >
                                 </div>
                             </div>
                             </div>
@@ -113,7 +110,7 @@
                         <div class="form-group row">
                             <div class="col-md-6">
                                 <label for="Address" class="text-black">Địa chỉ <span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="Address" name="Address">
+                                <input type="text" class="required form-control" id="Address" >
                             </div>
                             <div class="col-md-6">
                                 <label class="text-black">Vai trò <span class="text-danger">*</span></label>
@@ -123,7 +120,7 @@
                                         <label class="form-check-label" for="radio1">Nhân viên</label>
                                     </div>
                                     <div class="form-check">
-                                        <input type="radio" class="form-check-input" disabled>Quản lý
+                                        <input type="radio" class="form-check-input">Quản lý
                                         <label class="form-check-label"></label>
                                     </div>
                                 </div>
@@ -137,40 +134,24 @@
                         </div>
                         <br>
                         <h2 class="h3 mb-3 mt-4 text-black d-flex justify-content-center align-items-center">Danh sách</h2>
-                        <table class="col-md-12">
-                            <tr>
-                                <th>MSNV</th>
-                                <th>FullName</th>
-                                <th>Gender</th>
-                                <th>Address</th>
-                                <th>Phone</th>
-                                <th>Brithday</th>
-                                <th>Password</th>
-                                <th>Role</th>
-                            </tr>
-                            <tr>
-                                <td>NV001</td>
-                                <td>Nguyễn Văn Phát</td>
-                                <td>Nam</td>
-                                <td>HCM</td>
-                                <td>012345678</td>
-                                <td>01/01/2014</td>
-                                <td>123</td>
-                                <td>Nhân viên</td>
-                            </tr>
-                            <tr>
-                                <td>NV002</td>
-                                <td>Trần Duy Linh</td>
-                                <td>Nam</td>
-                                <td>HCM</td>
-                                <td>012345678</td>
-                                <td>01/01/2014</td>
-                                <td>1234</td>
-                                <td>Nhân viên</td>
-                            </tr>
-                        </table>
                     </div>
                 </form>
+                <table id="employeeTable" class="col-md-12" border="1">
+                    <thead>
+                    <tr>
+                        <th>MSNV</th>
+                        <th>FullName</th>
+                        <th>Gender</th>
+                        <th>Address</th>
+                        <th>Phone</th>
+                        <th>Birthday</th>
+                        <th>Password</th>
+                        <th>Role</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -180,20 +161,19 @@
         verificationForm();
     }
 
-    function validateName (FullName) {
+    function validateName(FullName) {
         let regex = /^[a-zA-Z\s]+$/;
         return regex.test(FullName);
     }
 
     function validateBirthday(Birthday) {
-        let regex = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;;
+        let regex = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;
         if (!regex.test(Birthday)) {
             return false;
         }
 
         let sinh = new Date(Birthday);
-
-        let tai= new Date();
+        let tai = new Date();
 
         if (sinh > tai) {
             return false;
@@ -207,75 +187,81 @@
     }
 
     function verificationForm() {
-
-        if($('#Gender').val() == '...'){
+        if ($('#Gender').val() == '...') {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
                 text: "Vui lòng chọn giới tính !",
             });
             $('#Gender').focus();
-        }else if($('#FullName').val() == ''|| !validateName($('#FullName').val())){
+            return;
+        }
+
+        if ($('#FullName').val() == '' || !validateName($('#FullName').val())) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
                 text: "Vui lòng nhập họ tên!",
             });
             $('#FullName').focus();
-        }else if($('#Brithday').val() == '' || !validateBirthday($('#Brithday').val())){
+            return;
+        }
+
+        if ($('#Brithday').val() == '' || !validateBirthday($('#Brithday').val())) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
                 text: "Ngày sinh sai định dạng",
             });
-        }else if($('#Phone').val() == ''|| !validatePhone($('#Phone').val())){
+            return;
+        }
+
+        if ($('#Phone').val() == '' || !validatePhone($('#Phone').val())) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
                 text: "Vui lòng nhập Sdt!",
             });
             $('#Phone').focus();
-        }else if($('#Password').val() == ''){
+            return;
+        }
+
+        if ($('#Password').val() == '') {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
                 text: "Vui lòng nhập mật khẩu!",
             });
             $('#Password').focus();
-        }else if($('#Password1').val() !== $('#Password').val()){
+            return;
+        }
+
+        if ($('#Password1').val() !== $('#Password').val()) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
                 text: "Vui lòng nhập lại!",
             });
             $('#Password1').focus();
-        }else if($('#Address').val() == ''){
+            return;
+        }
+
+        if ($('#Address').val() == '') {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
                 text: "Vui lòng nhập địa chỉ!",
             });
             $('#Address').focus();
-        } else {
-            Swal.fire({
-                icon: "success",
-                text: "Xác thực thành công",
-            });
-        };
+            return;
+        }
+
+
     }
 
-    function btnFillForm(data){
-        $('#Gender').val(data.Gender);
-        $('#FullName').val(data.FullName);
-        $('#Brithday').val(data.Brithday);
-        $('#Phone').val(data.Phone);
-        $('#Password').val(data.Password);
-        $('#Password1').val(data.Password1);
-        $('#Address').val(data.Address);
-    }
 
-    function  btnClear_click(){
-        data = {
+    function btnClear_click() {
+        var data = {
             Gender: '...',
             FullName: '',
             Brithday: '',
@@ -283,10 +269,87 @@
             Password: '',
             Password1: '',
             Address: ''
-        }
-        this.btnFillForm(data);
+        };
+        btnFillForm(data);
     }
+
+    $(document).ready(function() {
+
+        // var currentURL = window.location.href;
+        // var segments = currentURL.split('/');
+        // var manv = segments[segments.length - 1];
+        // console.log(manv); // Logs "NV001"
+        // $.ajax({
+        //     url: "/api/nhan-vien/"+manv,
+        //     type: "GET",
+        //     success: function (data) {
+        //         data.preventDefault();
+        //         $('#MANV').val(data.maNV);
+        //         $('#FullName').val(data.tenNV);
+        //         $('#Brithday').val(data.gioiTinh);
+        //         $('#Address').val(data.diaChi);
+        //         $('#Phone').val(data.phone);
+        //         $('#Brithday').val(data.ngaySinh);
+        //         $('#Password').val(data.matkhau);
+        //
+        //     }
+        // });
+
+        var currentURL = window.location.href;
+        var segments = currentURL.split('/');
+        var manv = segments[segments.length - 1];
+
+        console.log(manv); // Logs "NV001"
+        $.ajax({
+            url: "/api/nhan-vien/"+manv,
+            type: "GET",
+            success: function (data) {
+                console.log('Hello', data);
+                        $('#MANV').val(data.maNV);
+                        $('#FullName').val(data.tenNV);
+                         var genderValue = data.gioiTinh ? "1" : "2"; // true là Nam, false là Nữ
+                        $('#Gender').val(genderValue);
+                        $('#Address').val(data.diaChi);
+                        $('#Phone').val(data.phone);
+                        $('#Brithday').val(data.ngaySinh);
+                        $('#Password').val(data.matkhau);
+
+                var formContainer = document.getElementById('formUpdate');
+                formContainer.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+
+        $.ajax({
+            url: "/api/nhan-vien",
+            type: "GET",
+            headers: {
+                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBWZXIiOiIwLjAuMCIsImV4cCI6NDcyNjM4OTEyMiwibG9jYWxlIjoiIiwibWFzdGVyVmVyIjoiIiwicGxhdGZvcm0iOiIiLCJwbGF0Zm9ybVZlciI6IiIsInVzZXJJZCI6IiJ9.QIZbmB5_9Xlap_gDhjETfMI6EAmR15yBtIQkWFWJkrg',
+            },
+            success: function(response) {
+                var tbody = $('#employeeTable tbody');
+                tbody.empty();
+                response.forEach(function(item) {
+                    var row = $('<tr></tr>');
+                    row.append('<td><a href="/admin/nhan-vien/' + item.maNV + '">' + item.maNV + '</a></td>');
+                    row.append('<td>' + item.tenNV + '</td>');
+                    row.append('<td>' + item.gioiTinh + '</td>');
+                    row.append('<td>' + item.diaChi + '</td>');
+                    row.append('<td>' + item.phone + '</td>');
+                    row.append('<td>' + item.ngaySinh + '</td>');
+                    row.append('<td>' + item.matkhau + '</td>');
+                    row.append('<td>' + item.vaiTro + '</td>');
+                    tbody.append(row);
+                })
+            },
+            error: function(xhr, status, error) {
+                // Xử lý lỗi
+                console.error("Error fetching employee data:", error);
+            }
+        });
+    });
+
 </script>
+
 
 </body>
 </html>
