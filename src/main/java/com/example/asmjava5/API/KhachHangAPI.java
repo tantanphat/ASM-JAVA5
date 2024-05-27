@@ -26,8 +26,7 @@ public class KhachHangAPI {
     HttpServletResponse resp;
     @Autowired
     private KhachHangServiceImpl khachHangServiceImpl;
-    @Autowired
-    private KhachHangRepository khachHangRepository;
+
 
     //Lấy thông tin khách hàng qua email
     @GetMapping("/user")
