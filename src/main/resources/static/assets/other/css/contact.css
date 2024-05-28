@@ -1,0 +1,9 @@
+.Map{
+    position: relative;
+}
+
+.map1 {
+    position: relative;
+    top: -20px;
+    left: 20px;
+}
