@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estore</title>
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/assets/img/favicon.ico}">
+    <!-- Include common head -->
+    <th:block th:include="/common/head :: head"></th:block>
+    <style>
+        .form-check-inline {
+            display: flex;
+            margin-top: 10px;
+        }
+        .form-check {
+            display: inline-block;
+            margin-right: 10px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+        }
+        .button-container button {
+            margin: 0 5px; /* Khoảng cách giữa các nút */
+        }
+        table.col-md-12 {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #3f76ba;
+        }
+
+        table.col-md-12 th, table.col-md-12 td {
+            border: 1px solid #000000;
+            padding: 8px;
+        }
+
+        table.col-md-12 th {
+            text-align: center;
+            color: #FFFFFF;
+        }
+
+        table.col-md-12 tr {
+            display: flex;
+            text-align: center;
+            color: #FFFFFF
+        }
+
+        table.col-md-12 td, table.col-md-12 th {
+            flex: 1;
+            min-width: 0;
+        }
+    </style>
+</head>
+<body>
+<!-- Include common header -->
+
+<main>
+    <div class="container-fluid mb-4">
+        <div class="row">
+            <div class="col-12">
+                <form enctype="multipart/form-data" id="formUpdate">
+                    <input name="__RequestVerificationToken" type="hidden">
+                    <h1 class="h2 mb-3 mt-2 text-dark d-flex justify-content-center align-items-center">Thông tin nhân viên</h1>
+                    <div class="p-3 p-lg-5 border">
+
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label for="MaHD" class="text-black">Mã hoá đơn <span class="text-danger">*</span></label>
+                                <input type="text" class="required form-control" id="MaHD"  disabled>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="TenKH" class="form-label">Tên khách hàng <span class="text-danger">*</span></label>
+                                <input type="text" class="required form-control" id="TenKH">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label for="date" class="text-black">Ngày bán <span class="text-danger">*</span></label>
+                                <input type="text" class="required form-control" id="date" >
+                            </div>
+                            <div class="col-md-6">
+                                <label for="MaKH" class="text-black">Mã khách hàng <span class="text-danger">*</span></label>
+                                <input type="text" class="required form-control" id="MaKH">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label for="MaNV" class="text-black">Mã nhân viên <span class="text-danger">*</span></label>
+                                <input type="text" class="required form-control" id="MaNV" >
+                            </div>
+                            <div class="col-md-6">
+                                <label for="Address" class="text-black">Địa chỉ <span class="text-danger">*</span></label>
+                                <input type="text" class="required form-control" id="Address">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label for="TenNV" class="text-black">Tên nhân viên <span class="text-danger">*</span></label>
+                                <input type="text" class="required form-control" id="TenNV" >
+                            </div>
+                            <div class="col-md-6">
+                                <label for="Phone" class="text-black">Số điện thoại <span class="text-danger">*</span></label>
+                                <input type="text" class="required form-control" id="Phone" >
+                            </div>
+                        </div>
+                        <div class="button-container">
+                            <button type="button" class="btn btn-outline-success" onclick="btnCreat_click()">Creat</button>
+                            <button type="button" class="btn btn-outline-success" onclick="btnClear_click()">Clear</button>
+                            <button type="button" class="btn btn-outline-success">Update</button>
+                            <button type="button" class="btn btn-outline-success">Delete</button>
+                        </div>
+                        <br>
+                        <h2 class="h3 mb-3 mt-4 text-black d-flex justify-content-center align-items-center">Danh sách</h2>
+                    </div>
+                </form>
+                <table id="employeeTable" class="col-md-12" border="1">
+                    <thead>
+                    <tr>
+                        <th>Mã hóa đơn</th>
+                        <th>Mã nhân viên</th>
+                        <th>Ngày bán</th>
+                        <th>Mã khách hàng</th>
+                        <th>Tổng tiền</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+</body>
+</html>
