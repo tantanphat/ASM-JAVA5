@@ -49,6 +49,8 @@ public class MainController {
     public String hienThiGioiThieu () {
         return "views/introduce";
     }
+    @GetMapping("/Lien-he")
+    public String hienThiLienHe() { return "views/contact";}
     @GetMapping("/demo")
     public ResponseEntity<?> demoApi () {
         SanPham kh = sanPhamServiceImpl.getSanPhamById("SP001");

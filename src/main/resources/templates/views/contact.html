@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:http="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Estore</title>
+    <link rel="shortcut icon" th:href="@{/assets/img/favicon.ico}" type="image/x-icon">
+
+    <!-- Include common head -->
+    <th:block th:include="/common/head :: head"></th:block>
+    <link rel="stylesheet" th:href="@{/assets/other/css/contact.css}" type="text/css">
+    <style>
+        .container {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+        }
+
+        .content {
+            flex: 25px; /* Tăng tỉ lệ chiều rộng của nội dung */
+            margin-right: 10px; /* Khoảng cách giữa nội dung và bản đồ */
+        }
+
+        .map1 {
+            flex: 60px; /* Tăng tỉ lệ chiều rộng của bản đồ */
+        }
+
+        .map1 iframe {
+            width: 150%;
+        }
+    </style>
+</head>
+<body>
+<!-- Include common header -->
+<div th:include="/common/header :: header"></div>
+
+<div class="col-md-9 col-sm-12 col-xs-12">
+    <div class="page-wrapper">
+        <div class="heading-page">
+            <h1>Liên Hệ Với Estore Shop</h1>
+        </div>
+        <div class="wrapbox-content-page">
+            <div class="" id="PageContainer">
+                <main class="main-content" role="main">
+                    <!-- /templates/page.liquid -->
+                    <div class="container">
+                        <div class="content">
+                            <div class="grid">
+                                <div class="grid__item large--two-thirds push--large--one-sixth">
+                                    <div class="rte">
+                                        <h3>➡Tại Tp.Hồ Chí Minh</h3>
+                                        <div>
+                                            <div>Store 1: CVPM Quang Trung, Tân Chánh Hiệp, Q12&nbsp;</div>
+                                            <div>ĐT: 0123456789</div>
+                                            <div>&nbsp;</div>
+                                            <div>Store 2: Số 334 Quang Trung, P.10, Q. Gò Vấp&nbsp;</div>
+                                            <div>ĐT: 02822618333&nbsp;</div>
+                                            <div>&nbsp;</div>
+                                            <div>Store 3: Số 71 Nguyễn Trãi, P.2, Q.5&nbsp;</div>
+                                            <div>ĐT: 02822604333&nbsp;</div>
+                                            <div>&nbsp;</div>
+                                            <div>Store 4: Số 8 Hồ Văn Huê, P.9, Q.Phú Nhuận&nbsp;</div>
+                                            <div>ĐT: 02866804333&nbsp;</div>
+                                            <div>&nbsp;</div>
+                                            <div>Store 5: Số 180 đường 3/2, P.12, Q.10&nbsp;</div>
+                                            <div>ĐT: 02866704333</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="map1">
+                            <iframe allowfullscreen="" height="450" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5541.543453178388!2d106.62722835185878!3d10.852349700283538!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752bee0b0ef9e5%3A0x5b4da59e47aa97a8!2sQuang%20Trung%20Software%20City!5e0!3m2!1sen!2s!4v1716728522324!5m2!1sen!2s"
+                                    style="border:0;"></iframe>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        <!-- Gallery End-->
+        <div th:replace="/common/footer :: footer"></div>
+    </div>
+</div>
+</body>
+</html>
