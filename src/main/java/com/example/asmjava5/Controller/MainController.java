@@ -97,6 +97,9 @@ public class MainController {
         return "views/productDeltails";
     }
 
+    @GetMapping("/views/bill")
+    public String Bill(){ return "views/Admin/Bill";}
+
 
 }
 
