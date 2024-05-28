@@ -60,7 +60,13 @@ public class MainController {
         return "views/productDeltails";
     }
 
+    @GetMapping("/Quen-pass")
+    public String quenmatKhau() {
+        return "/views/Forgot";
+    }
 
+    @GetMapping("/Admin-login")
+    public String adminLogin(){return "/views/adminLogin";}
 
 
 }
