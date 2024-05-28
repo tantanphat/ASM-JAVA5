@@ -15,7 +15,7 @@
 <body>
     <div th:include="/common/header :: header"></div>
 
-<main ng-app="myApp" ng-controller="myCtrl">
+<main >
     <div class="container" id="container">
         <div class="form-container sign-up-container">
             <form >
@@ -29,17 +29,18 @@
             </form>
         </div>
         <div class="form-container sign-in-container">
-            <form ng-submit="login()">
+            <form id="loginForm" >
                 <h1>Sign in</h1>
                 <div class="social-container">
                     <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
                     <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
                 </div>
-                <span>or use your account</span>
-                <input type="email" name="username"  ng-model="formData.logEmail" placeholder="Email"/>
 
-                <input type="password" name="password" ng-model="formData.logPassword" placeholder="Password"/>
+                <span>or use your account</span>
+                <input type="email" name="username"  id="username" placeholder="Email"/>
+
+                <input type="password" name="password" id="password" placeholder="Password"/>
 
                 <a href="#">Forgot your password?</a>
                 <button type="submit">Sign In</button>
@@ -76,63 +77,67 @@
         container.classList.remove("right-panel-active");
     });
 
-    var app = angular.module('myApp', []);
-    app.controller('myCtrl', function($scope, $http) {
-        $scope.formData = {};
 
-        $scope.login = function() {
-            if ($scope.formData.logEmail == null) {
+
+    $(document).ready(function() {
+        $('#loginForm').submit(function(event) {
+            event.preventDefault();
+
+            var username = $('#username').val();
+            var password = $('#password').val();
+
+            if (!username) {
                 Swal.fire({
                     icon: "error",
-                    title: "Ỏoooo",
-                    text: "Email không được để trống ",
+                    title: "Error",
+                    text: "Email cannot be empty",
                 });
-            } else if ($scope.formData.logPassword == null) {
+                return;
+            }
+
+            if (!password) {
                 Swal.fire({
                     icon: "error",
-                    title: "Oops...",
-                    text: "Mật khẩu không được để trống",
+                    title: "Error",
+                    text: "Password cannot be empty",
                 });
-            } else {
-                $http.post('/Dang-nhap', {
-                    username: $scope.formData.logEmail, // Gửi logEmail như là username
-                    password: $scope.formData.logPassword // Gửi logPassword như là password
-                }).then(function(response) {
-                    $scope.user = response.data;
-                    if ($scope.user === null) {
+                return;
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/Dang-nhap',
+                data: $.param({ username: username, password: password }),
+                contentType: 'application/x-www-form-urlencoded',
+                success: function(response) {
+
+
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Login successful",
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(function() {
+                        window.location.href = '/Trang-chu';
+                    });
+
+                },
+                error: function(jqXHR, exception, exceptionText) {
+                    if (jqXHR.status === 401) {
+                        var errorResponse = JSON.parse(jqXHR.responseText);
                         Swal.fire({
                             icon: "error",
-                            title: "Oops...",
-                            text: "Email chưa chính xác!",
+                            title: "Error",
+                            text: errorResponse.error
                         });
                     } else {
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "success",
-                            title: "Login successful",
-                            showConfirmButton: false,
-                            timer: 1500
-                        }).then(function() {
-                            window.location.href = '/Trang-chu';
-                        });
+                        console.log('Error: ' + exceptionText);
                     }
-                }).catch(function(error) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "Email hoặc mật khẩu chưa chính xác",
-                    });
-                });
-            }
-        };
+                }
+            });
+        });
     });
-
-
-
-
-
-
-
 </script>
 </body>
 </html>

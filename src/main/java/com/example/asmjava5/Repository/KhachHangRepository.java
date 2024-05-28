@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface KhachHangDao extends JpaRepository<KhachHang, String> {
+public interface KhachHangRepository extends JpaRepository<KhachHang, Long> {
 
     @Query("SELECT k FROM KhachHang k WHERE k.email = ?1")
     KhachHang findByEmail(String email);

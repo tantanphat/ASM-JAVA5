@@ -1,4 +1,4 @@
-<div th:fragment="header">
+<div th:fragment="header" xmlns:sec="http://www.w3.org/1999/xhtml">
     <div id="preloader-active">
         <div class="preloader d-flex align-items-center justify-content-center">
             <div class="preloader-inner position-relative">
@@ -25,11 +25,11 @@
                                 </div>
                                 <div class="header-info-right col align-self-end" >
                                     <ul class="text-right   ">
-                                        <li><a th:href="@{/Dang-nhap}">My Account </a></li>
+                                        <li><a th:href="@{/user/myaccount}">My Account </a></li>
                                         <li><a href="product_list.html">Wish List  </a></li>
                                         <li><a href="cart.html">Shopping</a></li>
                                         <li><a href="cart.html">Cart</a></li>
-                                        <li><a href="checkout.html">Checkout</a></li>
+                                        <li sec:authorize="hasRole('ROLE_USER')"><a th:href="@{/logout}" >Logout</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -95,13 +95,12 @@
                                         </div>
                                     </li>
                                     <!-- Hiển thị nút "Hello" và chuyển hướng đến trang Login nếu có người dùng trong session -->
-                                    <li class="d-none d-lg-block" >
+                                    <li class="d-none d-lg-block" sec:authorize="hasRole('ROLE_USER')">
+                                        <span th:text="'Hello '+ ${#authentication.name}"></span>
+                                    </li>
+                                    <li class="d-none d-lg-block" sec:authorize="!isAuthenticated()">
                                         <a th:href="@{/Dang-nhap}" class="btn header-btn">Sign in</a>
                                     </li>
-
-
-
-
                                 </ul>
                             </div>
                             <!-- Mobile Menu -->
