@@ -1,14 +1,13 @@
 package com.example.asmjava5.Entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -29,4 +28,9 @@ public class HoaDon {
 
     @Column(name = "MaKH")
     private String hd_MaKH;
+
+    @OneToMany(cascade= {CascadeType.ALL})
+    @JoinColumn(name="MaHDBan", referencedColumnName = "MaHDBan")
+    @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
+    private List<HoaDonChiTiet> hoaDonChiTiet;
 }
