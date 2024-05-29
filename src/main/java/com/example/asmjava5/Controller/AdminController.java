@@ -10,17 +10,19 @@ public class AdminController {
 
     @RequestMapping("/admin")
     public String doGetAdminController() {
-        return "/views/Admin/admin";
+        return "/views/Admin/MainAdmin";
     }
-    @RequestMapping("/admin/doanhthu")
+    @RequestMapping("/admin/report/doanh-thu")
     public String doGetAdminDoanhThuController() {
         return "/views/Admin/adminDoanhThu";
     }
-    @RequestMapping("/admin/nhanvien")
+
+    @RequestMapping("/admin/report/nhan-vien")
     public String doGetAdminNhanVienController() {
         return "/views/Admin/adminNhanVien";
     }
-    @RequestMapping("/admin/sanpham")
+
+    @RequestMapping("/admin/report/san-pham")
     public String doGetAdminSanPhamController() {
         return "/views/Admin/adminSanPham";
     }

@@ -55,7 +55,7 @@ public class WebSecurityConfig {
 
         http.
                 authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                                .requestMatchers("/assets/**","/Trang-chu","/Gioi-thieu").permitAll() // Cho phép truy cập vào tài nguyên tĩnh
+                                .requestMatchers("/assets/**","/Trang-chu","/Gioi-thieu","/demo","/demo/**","/**").permitAll() // Cho phép truy cập vào tài nguyên tĩnh
                                 .anyRequest().authenticated() // Yêu cầu xác thực cho tất cả các yêu cầu khác
 
                 )

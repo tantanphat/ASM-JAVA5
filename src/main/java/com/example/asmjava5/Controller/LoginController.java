@@ -36,10 +36,8 @@ public class LoginController {
         return "views/Login";
     }
 
-
     private final SecurityContextRepository securityContextRepository =
             new HttpSessionSecurityContextRepository();//	Thêm SecurityContextRepositoryvào bộ điều khiển
-
     @PostMapping("/Dang-nhap")
     public void postDangNhap(@RequestBody LoginRequest loginRequest, HttpServletRequest request, HttpServletResponse response) {//Tiêm HttpServletRequestvà HttpServletResponseđể có thể lưuSecurityContext
         UsernamePasswordAuthenticationToken token = UsernamePasswordAuthenticationToken.unauthenticated(
