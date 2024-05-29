@@ -96,5 +96,6 @@ public class MainController {
     public String productDel() {
         return "views/productDeltails";
     }
+
 }
 
