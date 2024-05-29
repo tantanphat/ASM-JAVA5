@@ -99,6 +99,8 @@ public class MainController {
 
     @GetMapping("/views/bill")
     public String Bill(){ return "views/Admin/Bill";}
+    @GetMapping("/views/billChiTiet")
+    public String Bill2(){ return "views/Admin/BillChiTiet";}
 
 
 }
