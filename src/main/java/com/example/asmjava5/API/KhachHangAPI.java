@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -45,5 +46,11 @@ public class KhachHangAPI {
     public ResponseEntity<?> updateKhachHang(@RequestBody KhachHangDto khachHangDto) {
         KhachHang khh = khachHangServiceImpl.updateInfo(khachHangDto);
         return ResponseEntity.ok(KhachHangMapper.khMapper(khh));
+
+    }
+
+    @GetMapping("/list-khach-hang")
+    public List<KhachHang> getAllKhachHang(){
+        return khachHangServiceImpl.getAllKhachHang();
     }
 }
