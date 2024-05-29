@@ -61,57 +61,56 @@
             <div class="col-12">
                 <form enctype="multipart/form-data" id="formUpdate">
                     <input name="__RequestVerificationToken" type="hidden">
-                    <h1 class="h2 mb-3 mt-2 text-dark d-flex justify-content-center align-items-center">Hóa Đơn</h1>
+                    <h1 class="h2 mb-3 mt-2 text-dark d-flex justify-content-center align-items-center">Hóa Đơn Chi Tiết</h1>
                     <div class="p-3 p-lg-5 border">
 
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label for="MaHD" class="text-black">Mã hoá đơn <span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="MaHD"  disabled>
+                                <label for="LoaiSP" class="text-black">Loại Sản Phẩm <span class="text-danger">*</span></label>
+                                <input type="text" class="required form-control" id="LoaiSP"  disabled>
                             </div>
                             <div class="col-md-6">
-                                <label for="TenKH" class="form-label">Tên khách hàng <span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="TenKH">
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-6">
-                                <label for="date" class="text-black">Ngày bán <span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="date" >
-                            </div>
-                            <div class="col-md-6">
-                                <label for="MaKH" class="text-black">Mã khách hàng <span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="MaKH">
+                                <label for="DonGia" class="form-label">Đơn Giá<span class="text-danger">*</span></label>
+                                <input type="text" class="required form-control" id="DonGia">
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label for="MaNV" class="text-black">Mã nhân viên <span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="MaNV" >
+                                <label for="TênSP" class="text-black">Tên Sản Phẩm <span class="text-danger">*</span></label>
+                                <input type="text" class="required form-control" id="TênSP" >
                             </div>
                             <div class="col-md-6">
-                                <label for="Address" class="text-black">Địa chỉ <span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="Address">
+                                <label for="SL" class="text-black">Số Lượng<span class="text-danger">*</span></label>
+                                <input type="text" class="required form-control" id="SL">
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label for="TenNV" class="text-black">Tên nhân viên <span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="TenNV" >
+                                <label for="MaSP" class="text-black">Mã Sản Phẩm <span class="text-danger">*</span></label>
+                                <input type="text" class="required form-control" id="MaSP" >
                             </div>
                             <div class="col-md-6">
-                                <label for="Phone" class="text-black">Số điện thoại <span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="Phone" >
+                                <label for="sale" class="text-black">Giảm Giá <span class="text-danger">*</span></label>
+                                <input type="text" class="required form-control" id="sale">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+
+                            <div class="col-md-6">
+                                <label for="ThanhTien" class="text-black">Thành Tiền <span class="text-danger">*</span></label>
+                                <input type="text" class="required form-control" id="ThanhTien" >
                             </div>
                         </div>
                         <div class="button-container">
-                            <button type="button" class="btn btn-outline-success" onclick="btnCreat_click()">Save</button>
+                            <button type="button" class="btn btn-outline-success" onclick="btnCreat_click()">Add</button>
                             <button type="button" class="btn btn-outline-success" onclick="btnClear_click()">Edit</button>
                             <button type="button" class="btn btn-outline-success">Delete</button>
                             <button type="button" class="btn btn-outline-success">Update</button>
+                            <button type="button" class="btn btn-outline-success">Print</button>
+                            <button type="button" class="btn btn-outline-success">Finished</button>
                         </div>
                         <br>
                         <h2 class="h3 mb-3 mt-4 text-black d-flex justify-content-center align-items-center">Danh sách</h2>
@@ -120,11 +119,12 @@
                 <table id="employeeTable" class="col-md-12" border="1">
                     <thead>
                     <tr>
-                        <th>Mã hóa đơn</th>
-                        <th>Mã nhân viên</th>
-                        <th>Ngày bán</th>
-                        <th>Mã khách hàng</th>
-                        <th>Tổng tiền</th>
+                        <th>Mã HDCT</th>
+                        <th>Mã Hóa Đơn</th>
+                        <th>Số lượng</th>
+                        <th>Đơn Giá</th>
+                        <th>Giảm Giá</th>
+                        <th>Thành Tiền</th>
                     </tr>
                     </thead>
                     <tbody>
