@@ -29,7 +29,7 @@ public class HoaDon {
     @Column(name = "MaKH")
     private String hd_MaKH;
 
-    @OneToMany(cascade= {CascadeType.ALL})
+    @OneToMany
     @JoinColumn(name="MaHDBan", referencedColumnName = "MaHDBan")
     @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
     private List<HoaDonChiTiet> hoaDonChiTiet;

@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class HoaDonChiTiet {
     @Id
     @Column(name = "MaHDCT")
-    private String hdct_maHDCT;
+    private Integer hdct_maHDCT;
     @Column(name = "MaHDBan")
     private String hdct_maHDBan;
     @Column(name = "MaSP")
