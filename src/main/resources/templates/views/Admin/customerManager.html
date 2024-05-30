@@ -128,12 +128,12 @@
                                 <label class="text-black">Thành viên <span class="text-danger">*</span></label>
                                 <div class="form-check-inline">
                                     <div class="form-check">
-                                        <input type="radio" class="form-check-input"  name="role_radio">
-                                        <label class="form-check-label">Có</label>
+                                        <input type="radio" class="form-check-input" id="Roletrue" name="role_radio">
+                                        <label class="form-check-label" for="Roletrue">Có</label>
                                     </div>
                                     <div class="form-check">
-                                        <input type="radio" class="form-check-input" name="role_radio">Không
-                                        <label class="form-check-label"></label>
+                                        <input type="radio" class="form-check-input" id="Rolefalse" name="role_radio">Không
+                                        <label class="form-check-label" for="Rolefalse"></label>
                                     </div>
                                 </div>
                             </div>
@@ -159,7 +159,7 @@
                         <h2 class="h3 mb-3 mt-4 text-black d-flex justify-content-center align-items-center">Danh sách</h2>
                     </div>
                 </form>
-                <table id="khach-hang-table" class="col-md-12">
+                <table id="khach-hang-table" class="col-md-12" border="1">
                     <thead>
                     <tr>
                         <th>MKH</th>
@@ -178,35 +178,6 @@
         </div>
     </div>
 </main>
-
-<script>
-    $.ajax({
-        url: "/api/list-khach-hang",
-        type: "GET",
-        headers: {
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBWZXIiOiIwLjAuMCIsImV4cCI6NDcyNjM4OTEyMiwibG9jYWxlIjoiIiwibWFzdGVyVmVyIjoiIiwicGxhdGZvcm0iOiIiLCJwbGF0Zm9ybVZlciI6IiIsInVzZXJJZCI6IiJ9.QIZbmB5_9Xlap_gDhjETfMI6EAmR15yBtIQkWFWJkrg',
-        },
-        success: function(response) {
-            // Xử lý thành công, đổ dữ liệu vào bảng
-            var tbody = $('#khach-hang-table tbody');
-            tbody.empty(); // Xóa nội dung cũ của bảng
-            response.forEach(function(item) {
-                var row = $('<tr></tr>');
-                row.append('<td>' + item.maKH+ '</td>'); // Mã khách hàng
-                row.append('<td>' + item.tenKH + '</td>'); // Tên khách hàng
-                row.append('<td>' + item.diaChi + '</td>'); // Địa chỉ
-                row.append('<td>' + item.sdt + '</td>'); // Số điện thoại
-                row.append('<td>' + item.email + '</td>'); // Email
-                row.append('<td>' + item.matKhau + '</td>'); // Mật khẩu
-                row.append('<td>' + item.thanhVien + '</td>'); // Thành viên
-                tbody.append(row); // Thêm hàng vào bảng
-            });
-        },
-        error: function(xhr, status, error) {
-            // Xử lý lỗi khi lấy dữ liệu
-            console.error("Lỗi khi lấy dữ liệu khách hàng:", error);
-        }
-    });
-</script>
+<script th:src="@{/assets/admin/js/admin-khachhang.js}"></script>
 </body>
 </html>

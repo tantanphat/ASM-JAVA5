@@ -89,6 +89,11 @@
 <!--            <groupId>org.springframework.boot</groupId>-->
 <!--            <artifactId>spring-boot-cli</artifactId>-->
 <!--        </dependency>-->
+        <dependency>
+            <groupId>com.github.zhanhb</groupId>
+            <artifactId>thymeleaf-layout-dialect</artifactId>
+            <version>3.2.0</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -10,5 +10,8 @@ public interface KhachHangRepository extends JpaRepository<KhachHang, Long> {
 
     @Query("SELECT k FROM KhachHang k WHERE k.email = ?1")
     KhachHang findByEmail(String email);
+
+    @Query("SELECT kh FROM KhachHang kh WHERE kh.maKH = ?1")
+    KhachHang findByMaKH(String maKH);
 }
 

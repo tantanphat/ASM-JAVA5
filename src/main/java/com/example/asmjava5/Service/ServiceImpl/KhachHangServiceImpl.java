@@ -1,6 +1,7 @@
 package com.example.asmjava5.Service.ServiceImpl;
 
 import com.example.asmjava5.Entity.KhachHang;
+import com.example.asmjava5.Entity.NhanVien;
 import com.example.asmjava5.Model.request.KhachHangDto;
 import com.example.asmjava5.Repository.KhachHangRepository;
 
@@ -36,6 +37,11 @@ public class KhachHangServiceImpl implements KhachHangService {
         kh.setSdt(khachHang.getSoDienThoai());
         khachHangRepository.save(kh);
         return kh;
+    }
+
+    @Override
+    public KhachHang findByMaKH(String MaKH) {
+        return khachHangRepository.findByMaKH(MaKH);
     }
 
 
