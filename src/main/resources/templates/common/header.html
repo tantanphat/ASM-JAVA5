@@ -27,8 +27,8 @@
                                     <ul class="text-right   ">
                                         <li><a th:href="@{/user/myaccount}">My Account </a></li>
                                         <li><a href="product_list.html">Wish List  </a></li>
-                                        <li><a href="cart.html">Shopping</a></li>
-                                        <li><a href="cart.html">Cart</a></li>
+                                        <li><a href="">Shopping</a></li>
+                                        <li><a href="">Cart</a></li>
                                         <li sec:authorize="hasRole('ROLE_USER')"><a th:href="@{/logout}" >Logout</a></li>
                                     </ul>
                                 </div>
@@ -91,7 +91,7 @@
                                     </li>
                                     <li>
                                         <div class="shopping-card">
-                                            <a href="cart.html"><i class="fas fa-shopping-cart"></i></a>
+                                            <a href="/cart"><i class="fas fa-shopping-cart"></i></a>
                                         </div>
                                     </li>
                                     <!-- Hiển thị nút "Hello" và chuyển hướng đến trang Login nếu có người dùng trong session -->

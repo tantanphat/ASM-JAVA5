@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{views/Admin/MainAdmin.html}">
 <head>
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -54,108 +55,108 @@
 </head>
 <body>
 <!-- Include common header -->
+<article layout:fragment="content"  >
+    <main>
+        <div class="container-fluid mb-4">
+            <div class="row">
+                <div class="col-12">
+                    <form enctype="multipart/form-data" id="formUpdate">
+                        <input name="__RequestVerificationToken" type="hidden">
+                        <h1 class="h2 mb-3 mt-2 text-dark d-flex justify-content-center align-items-center">Thông tin nhân viên</h1>
+                        <div class="p-3 p-lg-5 border">
 
-<main>
-    <div class="container-fluid mb-4">
-        <div class="row">
-            <div class="col-12">
-                <form enctype="multipart/form-data" id="formUpdate">
-                    <input name="__RequestVerificationToken" type="hidden">
-                    <h1 class="h2 mb-3 mt-2 text-dark d-flex justify-content-center align-items-center">Thông tin nhân viên</h1>
-                    <div class="p-3 p-lg-5 border">
-
-                        <div class="form-group row">
-                            <div class="col-md-6">
-                                <label for="MANV" class="text-black">Mã nhân viên <span class="text-danger">*</span></label>
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <label for="MANV" class="text-black">Mã nhân viên <span class="text-danger">*</span></label>
                                     <input type="text" class="required form-control" id="MANV"  disabled>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="Gender" class="form-label">Giới tính <span class="text-danger">*</span></label>
-                                <select id="Gender" class="form-select" aria-label="Default select example">
-                                    <option value="1" selected>Nam</option>
-                                    <option value="2">Nữ</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-6">
-                                <label for="FullName" class="text-black">Tên nhân viên <span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="FullName" >
-                            </div>
-                            <div class="col-md-6">
-                                <label for="Brithday" class="text-black">Ngày sinh <span class="text-danger">*</span></label>
-                                <input type="date" class="required form-control" id="Brithday" name="Brithday" placeholder="MM/DD/YYYY">
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-6">
-                                <label for="Phone" class="text-black">Số điện thoại <span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="Phone" >
-                            </div>
-                            <div class="col-md-6">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="Password" class="text-black">Mật khẩu <span class="text-danger">*</span></label>
-                                    <input type="password" class="required form-control" id="Password" >
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="Password1" class="text-black">Nhập lại mật khẩu <span class="text-danger">*</span></label>
-                                    <input type="password" class="required form-control" id="Password1" >
+                                    <label for="Gender" class="form-label">Giới tính <span class="text-danger">*</span></label>
+                                    <select id="Gender" class="form-select" aria-label="Default select example">
+                                        <option value="1" selected>Nam</option>
+                                        <option value="2">Nữ</option>
+                                    </select>
                                 </div>
                             </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <label for="FullName" class="text-black">Tên nhân viên <span class="text-danger">*</span></label>
+                                    <input type="text" class="required form-control" id="FullName" >
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="Brithday" class="text-black">Ngày sinh <span class="text-danger">*</span></label>
+                                    <input type="date" class="required form-control" id="Brithday" name="Brithday" placeholder="MM/DD/YYYY">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-6">
-                                <label for="Address" class="text-black">Địa chỉ <span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="Address" >
-                            </div>
-                            <div class="col-md-6">
-                                <label class="text-black">Vai trò <span class="text-danger">*</span></label>
-                                <div class="form-check-inline">
-                                    <div class="form-check">
-                                        <input type="radio" class="form-check-input" id="radio1" name="optradio" value="option1" checked>
-                                        <label class="form-check-label" for="radio1">Nhân viên</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input type="radio" class="form-check-input">Quản lý
-                                        <label class="form-check-label"></label>
+
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <label for="Phone" class="text-black">Số điện thoại <span class="text-danger">*</span></label>
+                                    <input type="text" class="required form-control" id="Phone" >
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="Password" class="text-black">Mật khẩu <span class="text-danger">*</span></label>
+                                            <input type="password" class="required form-control" id="Password" >
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="Password1" class="text-black">Nhập lại mật khẩu <span class="text-danger">*</span></label>
+                                            <input type="password" class="required form-control" id="Password1" >
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <label for="Address" class="text-black">Địa chỉ <span class="text-danger">*</span></label>
+                                    <input type="text" class="required form-control" id="Address" >
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="text-black">Vai trò <span class="text-danger">*</span></label>
+                                    <div class="form-check-inline">
+                                        <div class="form-check">
+                                            <input type="radio" class="form-check-input" id="radio1" name="optradio" value="option1" checked>
+                                            <label class="form-check-label" for="radio1">Nhân viên</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="radio" class="form-check-input">Quản lý
+                                            <label class="form-check-label"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="button-container">
+                                <button type="button" class="btn btn-outline-success" onclick="btnCreat_click()">Creat</button>
+                                <button type="button" class="btn btn-outline-success" onclick="btnClear_click()">Clear</button>
+                                <button type="button" class="btn btn-outline-success">Update</button>
+                                <button type="button" class="btn btn-outline-success">Delete</button>
+                            </div>
+                            <br>
+                            <h2 class="h3 mb-3 mt-4 text-black d-flex justify-content-center align-items-center">Danh sách</h2>
                         </div>
-                        <div class="button-container">
-                            <button type="button" class="btn btn-outline-success" onclick="btnCreat_click()">Creat</button>
-                            <button type="button" class="btn btn-outline-success" onclick="btnClear_click()">Clear</button>
-                            <button type="button" class="btn btn-outline-success">Update</button>
-                            <button type="button" class="btn btn-outline-success">Delete</button>
-                        </div>
-                        <br>
-                        <h2 class="h3 mb-3 mt-4 text-black d-flex justify-content-center align-items-center">Danh sách</h2>
-                    </div>
-                </form>
-                <table id="employeeTable" class="col-md-12" border="1">
-                    <thead>
-                    <tr>
-                        <th>MSNV</th>
-                        <th>FullName</th>
-                        <th>Gender</th>
-                        <th>Address</th>
-                        <th>Phone</th>
-                        <th>Birthday</th>
-                        <th>Password</th>
-                        <th>Role</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
+                    </form>
+                    <table id="employeeTable" class="col-md-12" border="1">
+                        <thead>
+                        <tr>
+                            <th>MSNV</th>
+                            <th>FullName</th>
+                            <th>Gender</th>
+                            <th>Address</th>
+                            <th>Phone</th>
+                            <th>Birthday</th>
+                            <th>Password</th>
+                            <th>Role</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
-</main>
-    <script th:src="@{/assets/admin/js/admin-nhanvien.js}"></script>
+    </main>
+</article>
 </body>
 </html>

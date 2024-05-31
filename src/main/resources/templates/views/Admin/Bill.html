@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{views/Admin/MainAdmin.html}">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -97,7 +97,7 @@
 </head>
 <body>
 <!-- Include common header -->
-
+<article layout:fragment="content">
 <main>
     <div class="container-fluid mb-4">
         <div class="row">
@@ -108,10 +108,10 @@
                     <div class="tabs">
                         <ul class="nav nav-underline">
                             <li class="nav-item">
-                                <a id="linkBill" class="nav-link active" aria-current="page" href="/views/bill">Hóa Đơn</a>
+                                <a id="linkBill" class="nav-link active" aria-current="page" href="/admin/hoa-don">Hóa Đơn</a>
                             </li>
                             <li class="nav-item">
-                                <a id="linkBillChiTiet" class="nav-link" href="/views/billChiTiet">Hóa Đơn chi tiết</a>
+                                <a id="linkBillChiTiet" class="nav-link" href="/admin/hoa-don-chitiet">Hóa Đơn chi tiết</a>
                             </li>
 
                         </ul>
@@ -187,6 +187,6 @@
         </div>
     </div>
 </main>
-<script th:src="@{/assets/admin/js/admin-hoadon.js}"></script>
+</article>
 </body>
 </html>
