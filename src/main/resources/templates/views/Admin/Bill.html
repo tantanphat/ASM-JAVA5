@@ -98,7 +98,7 @@
 <body>
 <!-- Include common header -->
 <article layout:fragment="content">
-<main>
+<main layout:fragment="hoaDon">
     <div class="container-fluid mb-4">
         <div class="row">
             <div class="col-12">
@@ -108,10 +108,10 @@
                     <div class="tabs">
                         <ul class="nav nav-underline">
                             <li class="nav-item">
-                                <a id="linkBill" class="nav-link active" aria-current="page" href="/admin/hoa-don">Hóa Đơn</a>
+                                <a id="linkBill" class="nav-link active" aria-current="page" th:href="@{/admin/hoa-don}">Hóa Đơn</a>
                             </li>
                             <li class="nav-item">
-                                <a id="linkBillChiTiet" class="nav-link" href="/admin/hoa-don-chitiet">Hóa Đơn chi tiết</a>
+                                <a id="linkBillChiTiet" class="nav-link" th:href="@{/admin/hoa-don-chi-tiet}">Hóa Đơn chi tiết</a>
                             </li>
 
                         </ul>

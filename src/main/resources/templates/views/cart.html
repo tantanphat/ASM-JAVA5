@@ -133,7 +133,7 @@
         <tbody>
         <tr th:each="item : ${cartItems}">
             <td>
-                <img th:src="@{'/images/' + ${item.anh}}" alt="Product Image" width="50">
+                <img th:src="@{/assets/sanpham/__${item.anh}__}" alt="Product Image" width="50">
             </td>
             <td th:text="${item.tenSP}"></td>
             <td th:text="${item.size}"></td>

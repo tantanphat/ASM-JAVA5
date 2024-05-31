@@ -129,7 +129,7 @@ $(document).ready(function() {
             var genderValue = data.gioiTinh ? "1" : "2"; // true là Nam, false là Nữ
             $('#Gender').val(genderValue);
             $('#Address').val(data.diaChi);
-            $('#Phone').val(data.phone);
+            $('#Phone').val(data.dienThoai);
             $('#Brithday').val(data.ngaySinh);
             $('#Password').val(data.matkhau);
             var roleValue = data.vaiTro;

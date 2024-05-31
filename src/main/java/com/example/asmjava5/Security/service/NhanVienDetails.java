@@ -1,6 +1,7 @@
-package com.example.asmjava5.Security;
+package com.example.asmjava5.Security.service;
 
-import com.example.asmjava5.Entity.KhachHang;
+
+import com.example.asmjava5.Entity.NhanVien;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,29 +10,29 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
-//Tạo class KhachHangDetails implements UserDetails để chứa thông tin người dùng
-public class KhachHangDetails implements UserDetails {
-
-    private KhachHang kh;
+public class NhanVienDetails implements UserDetails {
+    private NhanVien nv;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-
-        return Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
+        if (nv.getVaiTro() == true ) {
+            return Collections.singleton(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        }
+        return Collections.singleton(new SimpleGrantedAuthority("ROLE_STAFF"));
     }
+
 
     @Override
     public String getPassword() {
-        return kh.getMatKhau();
+        return nv.getMatkhau();
     }
 
     @Override
     public String getUsername() {
-        return kh.getEmail();
+        return nv.getMaNV();
     }
 
     @Override

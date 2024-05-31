@@ -1,7 +1,10 @@
 package com.example.asmjava5.Security;
 
 import com.example.asmjava5.Entity.KhachHang;
+import com.example.asmjava5.Entity.NhanVien;
 import com.example.asmjava5.Repository.KhachHangRepository;
+import com.example.asmjava5.Service.ServiceImpl.KhachHangServiceImpl;
+import com.example.asmjava5.Service.ServiceImpl.NhanVienServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,7 +21,10 @@ import java.io.IOException;
 @Component
 public class CustomAuthenticationFailureHandler implements AuthenticationFailureHandler {
     @Autowired
-    private KhachHangRepository khachHangRepository;
+    private KhachHangServiceImpl khachHangServiceImpl;
+
+    @Autowired
+    private NhanVienServiceImpl nhanVienServiceImpl;
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
@@ -28,32 +34,40 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
             HttpServletResponse response,
             AuthenticationException exception)
             throws IOException, ServletException {
-
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
-//        Map<String, Object> data = new HashMap<>();
-//        data.put(
-//                "timestamp",
-//                Calendar.getInstance().getTime());
-//        data.put(
-//                "exception",
-//                exception.getMessage());
-//
-//        response.getOutputStream()
-//                .println(objectMapper.writeValueAsString(data));
-
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         String username = request.getParameter("username");
-        KhachHang kh = khachHangRepository.findByEmail(username);
-
         String errorMessage= "Lỗi xác thực";
-        if ( kh == null ) {
-            errorMessage = "Không tìm thấy người dùng trong hệ thống";
-        } else if (exception instanceof BadCredentialsException) {
-            errorMessage = "Mật khẩu không chính xác";
+        String path = request.getServletPath();
+
+        switch (path) {
+            case "/Dang-nhap":
+                KhachHang kh = khachHangServiceImpl.getLoginByEmail(username);
+                if ( kh == null ) {
+                    errorMessage = "Không tìm thấy người dùng trong hệ thống";
+                } else if (exception instanceof BadCredentialsException) {
+                    errorMessage = "Mật khẩu không chính xác";
+                }
+                response.getWriter().write("{\"error\": \"" + errorMessage + "\"}");
+                break;
+            case "/admin/Login":
+                NhanVien nv = nhanVienServiceImpl.findByMaNV(username);
+                if ( nv == null ) {
+                    errorMessage = "Không tìm thấy người dùng trong hệ thống";
+                } else if (exception instanceof BadCredentialsException) {
+                    errorMessage = "Mật khẩu không chính xác";
+                }
+                response.getWriter().write("{\"error\": \"" + errorMessage + "\"}");
+                break;
+
         }
 
-        response.getWriter().write("{\"error\": \"" + errorMessage + "\"}");
+
+
+
+
+
 
     }
 

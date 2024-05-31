@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-bs-theme="auto" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en" data-bs-theme="auto" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <script th:src="@{/assets/admin/js/color-modes.js}"></script>
     <meta charset="utf-8">
@@ -191,7 +191,7 @@
                 </a>
             </li>
             <li>
-                <a href="/admin/khach-hang" class="nav-link text-white">
+                <a href="#" class="nav-link text-white">
                     <i class="fa-solid fa-users me-2" width="16" height="16"></i>
                     Khách hàng
                 </a>
@@ -209,13 +209,13 @@
                 </a>
             </li>
             <li>
-                <a href="/admin/hoa-don" class="nav-link text-white">
+                <a th:href="@{/admin/hoa-don}" class="nav-link text-white">
                     <i class="fa-solid fa-users me-2" width="16" height="16"></i>
                     Hoá đơn
                 </a>
             </li>
             <li>
-                <a href="/admin/report/nhan-vien" class="nav-link text-white">
+                <a th:href="@{/admin/report/nhan-vien}" class="nav-link text-white">
                     <i class="fa-solid fa-file-invoice-dollar me-2" width="16" height="16"></i>
                     Báo cáo - Thống kê
                 </a>
@@ -226,7 +226,7 @@
             <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
                data-bs-toggle="dropdown" aria-expanded="false">
                 <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                <strong>mdo</strong>
+                <strong th:text="${#authentication.name}"></strong>
             </a>
             <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
                 <li><a class="dropdown-item" href="#">New project...</a></li>
@@ -235,7 +235,7 @@
                 <li>
                     <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item" href="#">Sign out</a></li>
+                <li><a class="dropdown-item" th:href="@{/logout}">Sign out</a></li>
             </ul>
         </div>
     </div>
@@ -254,8 +254,5 @@
 <script th:src="@{/assets/admin/js/sidebars.js}"></script>
 <script th:src="@{/assets/admin/js/admin.js}"></script>
 <script th:src="@{/assets/admin/js/admin-nhanvien.js}"></script>
-<script th:src="@{/assets/admin/js/admin-.khachhangjs}"></script>
-<script th:src="@{/assets/admin/js/admin-hoadon.js}"></script>
-<script th:src="@{/assets/admin/js/admin-hoadonchitiet.js}"></script>
 </body>
 </html>

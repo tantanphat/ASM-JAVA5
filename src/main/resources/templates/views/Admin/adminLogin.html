@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Admin Login - Estore</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" th:href="@{/site.webmanifest}">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/assets/img/favicon.ico}">
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/admin/css/login.css}">
+    <script th:src="@{https://cdn.jsdelivr.net/npm/sweetalert2@11}"></script>
+    <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
+</head>
+<body>
+<div class="container">
+    <form class="left" id="loginForm" >
+        <div class="header">
+            <h2>Admin login</h2>
+            <h4>Please Login</h4>
+        </div>
+        <div class="input">
+            <input type="text" placeholder="user name" id="username" >
+            <i class="fa-solid fa-user"></i>
+        </div>
+        <div class="input">
+            <input type="password" placeholder="password" id="password">
+            <i class="fa-solid fa-lock"></i>
+        </div>
+        <div class="forget">
+            <label><input type="checkbox"> Remember me</label>
+        </div>
+        <button class="btn" type="submit">Sign in</button>
+    </form>
+<!--    <div class="right">-->
+<!--        <img src="https://i.pinimg.com/564x/3e/37/b1/3e37b1c21d82acbb4868777e53fe2510.jpg">-->
+<!--    </div>-->
+</div>
+<script th:inline="javascript">
+    $(document).ready(function() {
+        $('#loginForm').submit(function(event) {
+            event.preventDefault();
+
+            var username = $('#username').val();
+            var password = $('#password').val();
+            var regex = /[^a-zA-Z0-9]/;
+            var result = regex.test(username);
+            if (!username) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "Username cannot be empty",
+                });
+                return;
+            }
+
+            if (result) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "Username không được chứa ký tự đặc biệt",
+                });
+                return;
+            }
+
+
+
+            if (!password) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "Password cannot be empty",
+                });
+                return;
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/Dang-nhap',
+                data: $.param({ username: username, password: password }),
+                contentType: 'application/x-www-form-urlencoded',
+                success: function(response) {
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Login successful",
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(function() {
+                        window.location.href = '/admin';
+                    });
+
+                },
+                error: function(jqXHR, exception, exceptionText) {
+                    if (jqXHR.status === 401) {
+                        var errorResponse = JSON.parse(jqXHR.responseText);
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: errorResponse.error
+                        });
+                    } else {
+                        console.log('Error: ' + exceptionText);
+                    }
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

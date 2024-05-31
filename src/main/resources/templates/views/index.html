@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,12 +12,12 @@
 <body>
 <!-- Include common header -->
 <div th:include="/common/header :: header"></div>
-<main>
+<main layout:fragment="index">
     <!-- Include common slide -->
     <div th:replace="/common/slide :: slide"></div>
 
     <!-- Category Area Start-->
-    <section class="category-area section-padding30">
+    <section class="category-area section-padding30" >
         <div class="container-fluid">
             <!-- Section Tittle -->
             <div class="row">

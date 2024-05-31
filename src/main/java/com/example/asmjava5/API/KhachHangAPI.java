@@ -54,4 +54,9 @@ public class KhachHangAPI {
     public List<KhachHang> getAllKhachHang(){
         return khachHangServiceImpl.getAllKhachHang();
     }
+
+    @GetMapping("/demoKH")
+    public ResponseEntity<?> demoKH(){
+        return ResponseEntity.ok(khachHangServiceImpl.getAllKhachHang());
+    }
 }

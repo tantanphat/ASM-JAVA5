@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{views/index.html}" >
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -28,160 +28,157 @@
     <th:block th:include="/common/head :: head"></th:block>
     <link rel="stylesheet" type="text/css" th:href="@{/assets/other/css/product.css}"/>
 </head>
-<body ng-app="myApp">
-<div th:include="/common/header :: header"></div>
-
-<div class="border container-xl my-3 bg-danger bg-light bg-gradient shadow-lg">
-    <div class="row">
-        <article class="d-block" style="height: auto;">
-            <div class="d-flex flex-wrap w-100">
-                <!-- Khung ảnh sản phẩm -->
-                <form class="parent col-md-6 col-sm-12 me-auto carousel slide" id="carouelproduct"
-                      ng-controller="myctrl" th:action="@{/product}" method="post">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active product-img">
-                            <img th:src="@{/assets/sanpham/__${spDeltail.anh}__}" class="img-fluid child"/>
-                        </div>
-                        <!-- Add other carousel items here if needed -->
-                    </div>
-                </form>
-                <!-- Khung thông tin sản phẩm -->
-                <div class="col-md-6 col-sm-12">
-                    <form id="addToCartForm" th:action="@{/cart/add}" method="post">
-                        <div class="mx-3">
-                            <h1><strong class="d-inline-block mb-2" th:text="${spDeltail.tenSP}"></strong></h1>
-                            <label class="fs-3 d-block"></label>
-                            <label class="fs-2 d-block" th:text="${spDeltail.giaBan * 1000} + 'đ'"></label>
-                            <div class="d-flex flex-wrap">
-                                <hr/>
-                                <div class="d-flex">
-                                    <div class="me-5">
-                                        <label for="sizeSelect">Kích cỡ</label>
-                                        <select class="form-control" id="sizeSelect" name="size" required>
-                                            <option value="" disabled selected>Select Size</option>
-                                            <option value="32">32</option>
-                                            <option value="33">33</option>
-                                            <option value="34">34</option>
-                                            <option value="35">35</option>
-                                            <option value="36">36</option>
-                                            <option value="37">37</option>
-                                            <option value="38">38</option>
-                                            <option value="39">39</option>
-                                            <option value="40">40</option>
-                                            <option value="41">41</option>
-                                            <option value="42">42</option>
-                                            <option value="43">43</option>
-                                        </select>
-                                    </div>
-                                    <div class="d-block">
-                                        <label for="quantityInput">Số lượng</label>
-                                        <input type="number" class="form-control" id="quantityInput" name="soLuong"
-                                               value="1" min="1" required>
-                                    </div>
-                                </div>
+<body >
+<main layout:fragment="index">
+    <div class="border container-xl my-3 bg-danger bg-light bg-gradient shadow-lg" >
+        <div class="row">
+            <article class="d-block" style="height: auto;">
+                <div class="d-flex flex-wrap w-100">
+                    <!-- Khung ảnh sản phẩm -->
+                    <form class="parent col-md-6 col-sm-12 me-auto carousel slide" id="carouelproduct"
+                          ng-controller="myctrl" th:action="@{/product}" method="post">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active product-img">
+                                <img th:src="@{/assets/sanpham/__${spDeltail.anh}__}" class="img-fluid child"/>
                             </div>
-                            <hr/>
-                            <div class="nut-group">
-                                <input type="hidden" name="maSP" th:value="${spDeltail.maSP}"/>
-                                <button type="submit" class="my-3">Thêm vào giỏ hàng</button>
-                            </div>
-                            <div class="tit-quyenloi row">
-                                <ul class="my-2">
-                                    <li><i class="fa-solid fa-check"></i> Đổi miễn phí trong 72h</li>
-                                    <li><i class="fa-solid fa-check"></i> Bảo hành trọn đời</li>
-                                    <li><i class="fa-solid fa-check"></i> Trả góp 0%</li>
-                                    <li><i class="fa-solid fa-check"></i> Miễn phí giao hàng toàn quốc</li>
-                                </ul>
-                            </div>
+                            <!-- Add other carousel items here if needed -->
                         </div>
                     </form>
+                    <!-- Khung thông tin sản phẩm -->
+                    <div class="col-md-6 col-sm-12">
+                        <form id="addToCartForm" th:action="@{/cart/add}" method="post">
+                            <div class="mx-3">
+                                <h1><strong class="d-inline-block mb-2" th:text="${spDeltail.tenSP}"></strong></h1>
+                                <label class="fs-3 d-block"></label>
+                                <label class="fs-2 d-block" th:text="${spDeltail.giaBan * 1000} + 'đ'"></label>
+                                <div class="d-flex flex-wrap">
+                                    <hr/>
+                                    <div class="d-flex">
+                                        <div class="me-5">
+                                            <label for="sizeSelect">Kích cỡ</label>
+                                            <select class="form-control" id="sizeSelect" name="size" required>
+                                                <option value="" disabled selected>Select Size</option>
+                                                <option value="32">32</option>
+                                                <option value="33">33</option>
+                                                <option value="34">34</option>
+                                                <option value="35">35</option>
+                                                <option value="36">36</option>
+                                                <option value="37">37</option>
+                                                <option value="38">38</option>
+                                                <option value="39">39</option>
+                                                <option value="40">40</option>
+                                                <option value="41">41</option>
+                                                <option value="42">42</option>
+                                                <option value="43">43</option>
+                                            </select>
+                                        </div>
+                                        <div class="d-block">
+                                            <label for="quantityInput">Số lượng</label>
+                                            <input type="number" class="form-control" id="quantityInput" name="soLuong"
+                                                   value="1" min="1" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr/>
+                                <div class="nut-group">
+                                    <input type="hidden" name="maSP" th:value="${spDeltail.maSP}"/>
+                                    <button type="submit" class="my-3">Thêm vào giỏ hàng</button>
+                                </div>
+                                <div class="tit-quyenloi row">
+                                    <ul class="my-2">
+                                        <li><i class="fa-solid fa-check"></i> Đổi miễn phí trong 72h</li>
+                                        <li><i class="fa-solid fa-check"></i> Bảo hành trọn đời</li>
+                                        <li><i class="fa-solid fa-check"></i> Trả góp 0%</li>
+                                        <li><i class="fa-solid fa-check"></i> Miễn phí giao hàng toàn quốc</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </div>
-        </article>
-    </div>
-    <div class="line-new line-v1 d-block mt-3">
-        <h3><span>Ưu đãi</span></h3>
-    </div>
-    <!-- Review quyền lợi khách hàng -->
-    <section class="w-100 ">
-
-        <div class="rev-section">
-            <div class="rev-card mx-2">
-                <div class="rev-head">
-                    <img th:src="@{assets/other/img/ico/like-shapes-svgrepo-com.svg}" class="img-fluid">
-                    <h4>Giá trị chất lượng</h4>
-                </div>
-                <div class="rev-content">
-                    <p class="rev-body">Sản phẩm đẹp, chất lượng cao. Phong cách đơn giản, tinh tế. Sự lựa chọn hoàn hảo
-                        cho
-                        phong cách của bạn </p>
-                </div>
-            </div>
-            <div class="rev-card mx-2">
-                <div class="rev-head">
-                    <img th:src="@{assets/other/img/ico/money-svgrepo-com.svg}" class="img-fluid">
-                    <h4>Khuyễn mãi</h4>
-                </div>
-                <div class="rev-content">
-                    <p class="rev-body">Mỗi đơn hàng của bạn không chỉ là giao dịch, mà còn là cơ hội nhận nhiều phần
-                        quà hấp
-                        dẫn miễn phí từ chúng tôi. Hãy đặt
-                        hàng ngay!</p>
-                </div>
-            </div>
-            <div class="rev-card mx-2">
-                <div class="rev-head">
-                    <img th:src="@{assets/other/img/ico/card-holder-svgrepo-com.svg}" class="img-fluid">
-                    <h4>Thanh toán</h4>
-                </div>
-                <div class="rev-content">
-                    <p class="rev-body">Thanh toán với chúng tôi thật dễ dàng và vui nhộn! Trực tuyến, chỉ cần "click"
-                        là
-                        xong. Còn ngoại tuyến, thẻ tín dụng
-                        hoặc "cash" đều!</p>
-                </div>
-            </div>
+            </article>
         </div>
-    </section>
-    <section class="my-3" id="motasp">
-        <h2 class="display-5 link-body-emphasis mb-1">Thông tin về sản phẩm</h2>
-        <p class="card-text mb-auto fs-4" th:text="${spDeltail.ghiChu}"></p>
+        <div class="line-new line-v1 d-block mt-3">
+            <h3><span>Ưu đãi</span></h3>
+        </div>
+        <!-- Review quyền lợi khách hàng -->
+        <section class="w-100 ">
 
-
-    </section>
-
-    <section>
-        <div class="accordion " id="accordionVideo">
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapseOne"
-                            aria-expanded="true" aria-controls="collapseOne">
-                        Video
-                    </button>
-                </h2>
-                <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionVideo">
-                    <div class="accordion-body accBodyVideo">
-                        <video src="assets/img/product/daychuyen/7/7.mp4" loop></video>
+            <div class="rev-section">
+                <div class="rev-card mx-2">
+                    <div class="rev-head">
+                        <img th:src="@{assets/other/img/ico/like-shapes-svgrepo-com.svg}" class="img-fluid">
+                        <h4>Giá trị chất lượng</h4>
+                    </div>
+                    <div class="rev-content">
+                        <p class="rev-body">Sản phẩm đẹp, chất lượng cao. Phong cách đơn giản, tinh tế. Sự lựa chọn hoàn hảo
+                            cho
+                            phong cách của bạn </p>
+                    </div>
+                </div>
+                <div class="rev-card mx-2">
+                    <div class="rev-head">
+                        <img th:src="@{assets/other/img/ico/money-svgrepo-com.svg}" class="img-fluid">
+                        <h4>Khuyễn mãi</h4>
+                    </div>
+                    <div class="rev-content">
+                        <p class="rev-body">Mỗi đơn hàng của bạn không chỉ là giao dịch, mà còn là cơ hội nhận nhiều phần
+                            quà hấp
+                            dẫn miễn phí từ chúng tôi. Hãy đặt
+                            hàng ngay!</p>
+                    </div>
+                </div>
+                <div class="rev-card mx-2">
+                    <div class="rev-head">
+                        <img th:src="@{assets/other/img/ico/card-holder-svgrepo-com.svg}" class="img-fluid">
+                        <h4>Thanh toán</h4>
+                    </div>
+                    <div class="rev-content">
+                        <p class="rev-body">Thanh toán với chúng tôi thật dễ dàng và vui nhộn! Trực tuyến, chỉ cần "click"
+                            là
+                            xong. Còn ngoại tuyến, thẻ tín dụng
+                            hoặc "cash" đều!</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <section class="sec-comment" id="idComment">
-        <div class="fb-comments" data-href="https://developers.facebook.com/docs/plugins/comments#configurator"
-             data-width="100%" data-numposts="2"></div>
-    </section>
+        </section>
+        <section class="my-3" id="motasp">
+            <h2 class="display-5 link-body-emphasis mb-1">Thông tin về sản phẩm</h2>
+            <p class="card-text mb-auto fs-4" th:text="${spDeltail.ghiChu}"></p>
 
 
-</div>
-</div>
-<script th:inline="javascript">
-    var app = angular.module('myApp', []);
-    app.controller('myCtrl', function($scope, $http) {
-        $scope.formData = {};
-    });
-</script>
+        </section>
+
+        <section>
+            <div class="accordion " id="accordionVideo">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne"
+                                aria-expanded="true" aria-controls="collapseOne">
+                            Video
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionVideo">
+                        <div class="accordion-body accBodyVideo">
+                            <video src="assets/img/product/daychuyen/7/7.mp4" loop></video>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="sec-comment" id="idComment">
+            <div class="fb-comments" data-href="https://developers.facebook.com/docs/plugins/comments#configurator"
+                 data-width="100%" data-numposts="2"></div>
+        </section>
+
+
+    </div>
+
+</main>
+
+
+
 </body>
 </html>
