@@ -1,8 +1,7 @@
 package com.example.asmjava5.Service.ServiceImpl;
 
 import com.example.asmjava5.Entity.KhachHang;
-import com.example.asmjava5.Entity.NhanVien;
-import com.example.asmjava5.Model.request.KhachHangDto;
+import com.example.asmjava5.Model.request.KhachHangModel;
 import com.example.asmjava5.Repository.KhachHangRepository;
 
 import com.example.asmjava5.Service.KhachHangService;
@@ -30,7 +29,7 @@ public class KhachHangServiceImpl implements KhachHangService {
     }
 
     @Override
-    public KhachHang updateInfo(KhachHangDto khachHang) {
+    public KhachHang updateInfo(KhachHangModel khachHang) {
         KhachHang kh = khachHangRepository.findByEmail(khachHang.getEmail());
         kh.setTenKH(khachHang.getHoTen());
         kh.setDiaChi(khachHang.getDiaChi());

@@ -1,11 +1,11 @@
 package com.example.asmjava5.Model.mapper;
 
 import com.example.asmjava5.Entity.KhachHang;
-import com.example.asmjava5.Model.request.KhachHangDto;
+import com.example.asmjava5.Model.request.KhachHangModel;
 
 public class KhachHangMapper {
-    public static KhachHangDto khMapper(KhachHang kh){
-        KhachHangDto khDto = new KhachHangDto();
+    public static KhachHangModel khMapper(KhachHang kh){
+        KhachHangModel khDto = new KhachHangModel();
         khDto.setEmail(kh.getEmail());
         khDto.setHoTen(kh.getTenKH());
         khDto.setDiaChi(kh.getDiaChi());

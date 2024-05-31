@@ -2,6 +2,7 @@ package com.example.asmjava5.API;
 
 import com.example.asmjava5.Entity.NhanVien;
 import com.example.asmjava5.Repository.NhanVienRepository;
+import com.example.asmjava5.Service.NhanVienService;
 import com.example.asmjava5.Service.ServiceImpl.NhanVienServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,16 +19,15 @@ import java.util.Map;
 public class NhanVienAPI {
 
     @Autowired
-    private NhanVienServiceImpl nvServiceImpl;
+    private NhanVienService nhanVienService = new NhanVienServiceImpl();
 
     @GetMapping("")
     public List<NhanVien> getAllNhanVien() {
-        return nvServiceImpl.getALlNhanVien();
+        return nhanVienService.getALlNhanVien();
     }
 
     @GetMapping("/{manv}")
     public NhanVien getOneNhanVien(@PathVariable("manv") String manv) {
-        return nvServiceImpl.findByMaNV(manv);
+        return nhanVienService.findByMaNV(manv);
     }
-
 }

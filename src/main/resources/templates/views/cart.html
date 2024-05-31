@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{views/index.html}">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -84,7 +84,7 @@
             background-color: #ff3333;
         }
 
-        main a {
+        .btnN {
             text-decoration: none;
             color: #007bff;
             padding: 10px 15px;
@@ -93,7 +93,7 @@
             margin-right: 10px;
         }
 
-        main a:hover {
+        .btnN:hover {
             background-color: #007bff;
             color: white;
         }
@@ -109,6 +109,53 @@
             font-weight: bold;
             color: #ff6666;
         }
+
+        .number-control {
+            display: flex;
+            align-items: center;
+        }
+
+        .number-left::before,
+        .number-right::after {
+            content: attr(data-content);
+            background-color: #333333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid black;
+            width: 20px;
+            color: white;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+
+        .number-left::before {
+            content: "-";
+        }
+
+        .number-right::after {
+            content: "+";
+        }
+
+        .number-quantity {
+            /*padding: 0.25rem;*/
+            /*border: 0;*/
+            text-align: center;
+            width: 50px;
+            -moz-appearance: textfield;
+            border-top: 1px solid black;
+            border-bottom: 1px solid black;
+        }
+
+        .number-left:hover::before,
+        .number-right:hover::after {
+            background-color: #666666;
+        }
+
+        .deleteCart :hover{
+            cursor: pointer;
+        }
+
     </style>
 
 
@@ -116,9 +163,9 @@
 <body>
 <!-- Include common header -->
 <div th:include="/common/header :: header"></div>
-<main>
+<main layout:fragment="index">
     <h1>Your Cart</h1>
-    <table>
+    <table id="cartTable">
         <thead>
         <tr>
             <th>Product Image</th>
@@ -131,36 +178,23 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="item : ${cartItems}">
-            <td>
-                <img th:src="@{/assets/sanpham/__${item.anh}__}" alt="Product Image" width="50">
-            </td>
-            <td th:text="${item.tenSP}"></td>
-            <td th:text="${item.size}"></td>
-            <td th:text="${item.soLuong}"></td>
-            <td th:text="${item.giaBan}"></td>
-            <td th:text="${item.giaBan * item.soLuong}"></td>
-            <td>
-                <form th:action="@{/cart/remove}" method="post">
-                    <input type="hidden" name="maSP" th:value="${item.maSP}">
-                    <input type="hidden" name="size" th:value="${item.size}">
-                    <button type="submit">Remove</button>
-                </form>
-            </td>
-        </tr>
+
         </tbody>
     </table>
     <div>
-        <h3>Total: <span th:text="${total}"></span></h3>
+        <h3>Total: <span id="totalSum"></span></h3>
     </div>
     <div>
-        <a href="/Trang-chu">Continue Shopping</a>
-        <a href="/">Proceed to Checkout</a>
+        <a class="btnN" href="/Trang-chu">Continue Shopping</a>
+        <a class="btnN" href="/static">Proceed to Checkout</a>
+
     </div>
     </div>
 </main>
     <!-- Footer-->
     <div th:replace="/common/footer :: footer"></div>
+
+
 
 </body>
 </html>

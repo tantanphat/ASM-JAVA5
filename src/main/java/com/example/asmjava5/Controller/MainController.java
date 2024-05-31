@@ -76,19 +76,15 @@ public class MainController {
         return "views/productDeltails";
     }
 
-    @GetMapping("/views/demoLayout")
-    public String cartDel() {
-        return "views/demoLayout";
-    }
-
-    @GetMapping("/login")
-    String login() {
-        return "views/demo/login";
-    }
 
     @GetMapping("/error")
     String error() {
         return "views/demo/error";
+    }
+
+    @GetMapping("/Lien-he")
+    public String hienThiLienHe() {
+        return "views/contact";
     }
 }
 

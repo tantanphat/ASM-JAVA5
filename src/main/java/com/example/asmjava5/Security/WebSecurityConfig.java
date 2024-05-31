@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -138,11 +139,11 @@ public class WebSecurityConfig {
                         rememberMe
                                 .tokenRepository(persistentTokenRepository()) // Sử dụng persistentTokenRepository để lưu trữ token
                                 .tokenValiditySeconds(1 * 24 * 60 * 60) // Thời gian tồn tại của token là 24 giờ
+                )
+                .sessionManagement(sessionManagement ->
+                        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.NEVER)
+
                 );
-//                .sessionManagement(sessionManagement ->
-//                        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.ALWAYS) // Luôn tạo session mới
-//
-//                )
 //                .sessionManagement(sessionManagement ->
 //                        sessionManagement
 //                                .maximumSessions(1)

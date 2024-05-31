@@ -6,14 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estore</title>
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/assets/user/img/favicon.ico}">
-    <!-- Include common head -->
-    <th:block th:include="/common/head :: head"></th:block>
+    <!-- insert common head -->
+    <th:block th:insert="/common/head :: head"></th:block>
 </head>
 <body>
-<!-- Include common header -->
-<div th:include="/common/header :: header"></div>
+<!-- insert common header -->
+<div th:insert="/common/header :: header"></div>
 <main layout:fragment="index">
-    <!-- Include common slide -->
+    <!-- insert common slide -->
     <div th:replace="/common/slide :: slide"></div>
 
     <!-- Category Area Start-->
@@ -786,13 +786,26 @@
     </div>
 
 </main>
-<script th:inline="javascript">
+<script th:src="@{/assets/khachhang/js/gio-hang.js}"></script>
+<script th:src="@{/assets/khachhang/js/cartjs.js}"></script>
+<script>
 
+    $.ajax({
+        type: "GET",
+        url: "/api/countListCart", // Đường dẫn URL không có khoảng trắng
+        contentType: "application/json",
+        success: function(response) {
+            var totalCartItems = response; // Số lượng trong cart
+            // Hiển thị trong scss .shoppingcart phần content
+            console.log("totalCart: " + totalCartItems);
+            $(".header-bottom .header-right .shopping-card").attr("data-total", totalCartItems);
+        },
+        error: function(xhr, status, error) {
+            console.error("Lỗi" + status); // Xử lý lỗi nếu có
+        }
+    });
 
-
-    /*]]>*/
 </script>
-
 
 </body>
 </html>

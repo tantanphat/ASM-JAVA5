@@ -2,8 +2,7 @@ package com.example.asmjava5.API;
 
 import com.example.asmjava5.Entity.KhachHang;
 import com.example.asmjava5.Model.mapper.KhachHangMapper;
-import com.example.asmjava5.Model.request.KhachHangDto;
-import com.example.asmjava5.Repository.KhachHangRepository;
+import com.example.asmjava5.Model.request.KhachHangModel;
 import com.example.asmjava5.Service.ServiceImpl.KhachHangServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -27,8 +26,7 @@ public class KhachHangAPI {
     HttpServletResponse resp;
     @Autowired
     private KhachHangServiceImpl khachHangServiceImpl;
-    @Autowired
-    private KhachHangRepository khachHangRepository;
+
 
     //Lấy thông tin khách hàng qua email
     @GetMapping("/user")
@@ -44,8 +42,8 @@ public class KhachHangAPI {
 
     //Update thông tin khách hàng
     @PostMapping("/updateKhachHang")
-    public ResponseEntity<?> updateKhachHang(@RequestBody KhachHangDto khachHangDto) {
-        KhachHang khh = khachHangServiceImpl.updateInfo(khachHangDto);
+    public ResponseEntity<?> updateKhachHang(@RequestBody KhachHangModel khachHangModel) {
+        KhachHang khh = khachHangServiceImpl.updateInfo(khachHangModel);
         return ResponseEntity.ok(KhachHangMapper.khMapper(khh));
 
     }

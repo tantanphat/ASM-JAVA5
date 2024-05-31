@@ -102,16 +102,7 @@ function verificationForm() {
 
 
 function btnClear_click() {
-    var data = {
-        Gender: '...',
-        FullName: '',
-        Brithday: '',
-        Phone: '',
-        Password: '',
-        Password1: '',
-        Address: ''
-    };
-    btnFillForm(data);
+   window.location.href="http://localhost:8080/admin/nhan-vien?action=clear"
 }
 
 $(document).ready(function() {
@@ -161,9 +152,9 @@ $(document).ready(function() {
                 row.append('<td>' + item.tenNV + '</td>');
                 row.append('<td>' + (item.gioiTinh ? 'Nam':'Nữ') + '</td>');
                 row.append('<td>' + item.diaChi + '</td>');
-                row.append('<td>' + item.phone + '</td>');
+                row.append('<td>' + item.dienThoai + '</td>');
                 row.append('<td>' + item.ngaySinh + '</td>');
-                row.append('<td>' + item.matkhau + '</td>');
+                // row.append('<td>' + item.matkhau + '</td>');
                 row.append('<td>' + (item.vaiTro ? 'Admin' : 'Staff') + '</td>');
                 tbody.append(row);
             })
