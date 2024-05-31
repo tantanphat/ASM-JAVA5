@@ -16,8 +16,7 @@ import java.time.LocalDate;
 @Table(name = "NhanVien")
 public class NhanVien {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "MaNV")
+    @Column(name = "MaNV", nullable = false, length = 10)
     private String MaNV;
 
     @Column(name = "TenNV")

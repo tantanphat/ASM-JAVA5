@@ -17,7 +17,4 @@ public interface SanPhamService {
     float calculateTotal(HttpSession session);
 
     List<SanPham> getCartItems(HttpSession session);
-
-
-
 }
