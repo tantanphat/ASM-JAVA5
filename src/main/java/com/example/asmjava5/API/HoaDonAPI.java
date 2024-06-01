@@ -6,24 +6,20 @@ import com.example.asmjava5.Service.ServiceImpl.HoaDonServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/hoa-don")
 public class HoaDonAPI {
 
     @Autowired
     private HoaDonService hoaDonService;
 
-    @GetMapping("/api/hoadon")
-    public ResponseEntity<?> getAllHoaDon() {
-        return ResponseEntity.ok(hoaDonService.getAllHoaDon());
-    }
-
-    @GetMapping("list-hoadon")
+    @GetMapping("")
     public List<HoaDon> getAllHoadon() {
         return hoaDonService.getAllHoaDon();
     }
-
 }

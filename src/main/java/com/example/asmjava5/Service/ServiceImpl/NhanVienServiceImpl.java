@@ -16,10 +16,6 @@ public class NhanVienServiceImpl implements NhanVienService {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public String generateNewMaNV() {
-        return jdbcTemplate.queryForObject("SELECT dbo.AUTO_MaNV()", String.class);
-    }
-
     @Override
     public List<NhanVien> getALlNhanVien() {
         return nhanVienRepository.findAll();
@@ -28,6 +24,10 @@ public class NhanVienServiceImpl implements NhanVienService {
     @Override
     public NhanVien findByMaNV(String MaNV) {
         return nhanVienRepository.findByMaNV(MaNV);
+    }
+
+    public String generateNewMaNV() {
+        return jdbcTemplate.queryForObject("SELECT dbo.AUTO_MaNV()", String.class);
     }
 
     @Override
@@ -57,9 +57,9 @@ public class NhanVienServiceImpl implements NhanVienService {
 
     @Override
     public void deleteNhanVien(String maNV) {
-        NhanVien existingNhanVien = findByMaNV(maNV);
-        if (existingNhanVien != null) {
-            nhanVienRepository.delete(existingNhanVien);
+        NhanVien nv = findByMaNV(maNV);
+        if (nv != null) {
+            nhanVienRepository.delete(nv);
         }
     }
 }

@@ -98,11 +98,10 @@
 <body>
 <!-- Include common header -->
 <article layout:fragment="content">
-<main layout:fragment="hoaDon">
     <div class="container-fluid mb-4">
         <div class="row">
             <div class="col-12">
-                <form enctype="multipart/form-data" id="formUpdate">
+                <form enctype="multipart/form-data" id="formUpdate"layout:fragment="hoaDon">
                     <input name="__RequestVerificationToken" type="hidden">
                     <h1 class="h2 mb-3 mt-2 text-dark d-flex justify-content-center align-items-center">Hóa Đơn</h1>
                     <div class="tabs">
@@ -186,7 +185,6 @@
             </div>
         </div>
     </div>
-</main>
 </article>
 </body>
 </html>

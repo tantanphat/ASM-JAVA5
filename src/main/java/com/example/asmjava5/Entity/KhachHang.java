@@ -3,7 +3,8 @@ package com.example.asmjava5.Entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-
+@Setter
+@Getter
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,7 +13,7 @@ import lombok.*;
 public class KhachHang {
 
     @Id
-    @Column(name = "MaKH")
+    @Column(name = "MaKH", nullable = false, length = 10)
     private String maKH;
 
     @Column(name = "TenKH")
@@ -32,6 +33,5 @@ public class KhachHang {
 
     @Column(name = "Thanhvien")
     private boolean thanhVien = false;
-
 
 }

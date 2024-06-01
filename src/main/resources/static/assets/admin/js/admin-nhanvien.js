@@ -2,7 +2,7 @@
         var currentURL = window.location.href;
         var segments = currentURL.split('/');
         var manv = segments[segments.length - 1];
-        console.log(manv); // Logs "NV001"
+        console.log(manv);
 
         $.ajax({
             url: "/api/nhan-vien/" + manv,
@@ -59,54 +59,53 @@
         });
 });
 
-function btnCreat_click() {
-    // Lấy thông tin từ form
-    var tenNV = $('#FullName').val();
-    var gioiTinh = $('#Gender').val() === "1";
-    var diaChi = $('#Address').val();
-    var dienThoai = $('#Phone').val();
-    var ngaySinh = $('#Brithday').val();
-    var matkhau = $('#Password').val();
-    var vaiTro = $('#RoleNV').prop('checked'); // true nếu là quản lý
+    function btnCreat_click() {
+        // Lấy thông tin từ form
+        var tenNV = $('#FullName').val();
+        var gioiTinh = $('#Gender').val() === "1";
+        var diaChi = $('#Address').val();
+        var dienThoai = $('#Phone').val();
+        var ngaySinh = $('#Brithday').val();
+        var matkhau = $('#Password').val();
+        var vaiTro = $('#RoleNV').prop('checked'); // true nếu là quản lý
 
-    // Tạo đối tượng nhân viên mới (không bao gồm maNV)
-    var newNhanVien = {
-        tenNV: tenNV,
-        gioiTinh: gioiTinh,
-        diaChi: diaChi,
-        dienThoai: dienThoai,
-        ngaySinh: ngaySinh,
-        matkhau: matkhau,
-        vaiTro: vaiTro
-    };
+        // Tạo đối tượng nhân viên mới (không bao gồm maNV)
+        var newNhanVien = {
+            tenNV: tenNV,
+            gioiTinh: gioiTinh,
+            diaChi: diaChi,
+            dienThoai: dienThoai,
+            ngaySinh: ngaySinh,
+            matkhau: matkhau,
+            vaiTro: vaiTro
+        };
 
-    // Gửi yêu cầu POST để thêm nhân viên mới
-    $.ajax({
-        url: "/api/nhan-vien/add",
-        type: "POST",
-        contentType: "application/json",
-        data: JSON.stringify(newNhanVien),
-        success: function (data) {
-            // Cập nhật bảng hiển thị nhân viên
-            var tbody = $('#employeeTable tbody');
-            var row = $('<tr></tr>');
-            row.append('<td><a href="/admin/nhan-vien/' + data.maNV + '">' + data.maNV + '</a></td>');
-            row.append('<td>' + data.tenNV + '</td>');
-            row.append('<td>' + (data.gioiTinh ? 'Nam' : 'Nữ') + '</td>');
-            row.append('<td>' + data.diaChi + '</td>');
-            row.append('<td>' + data.dienThoai + '</td>');
-            row.append('<td>' + data.ngaySinh + '</td>');
-            row.append('<td>' + (data.vaiTro ? 'Admin' : 'Staff') + '</td>');
-            tbody.append(row);
-            // Reset form sau khi thêm
-            $('#formUpdate')[0].reset();
-        },
-        error: function (xhr, status, error) {
-            console.error("Error adding employee:", error);
-        }
-    });
-}
-
+        // Gửi yêu cầu POST để thêm nhân viên mới
+        $.ajax({
+            url: "/api/nhan-vien/add",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(newNhanVien),
+            success: function (data) {
+                // Cập nhật bảng hiển thị nhân viên
+                var tbody = $('#employeeTable tbody');
+                var row = $('<tr></tr>');
+                row.append('<td><a href="/admin/nhan-vien/' + data.maNV + '">' + data.maNV + '</a></td>');
+                row.append('<td>' + data.tenNV + '</td>');
+                row.append('<td>' + (data.gioiTinh ? 'Nam' : 'Nữ') + '</td>');
+                row.append('<td>' + data.diaChi + '</td>');
+                row.append('<td>' + data.dienThoai + '</td>');
+                row.append('<td>' + data.ngaySinh + '</td>');
+                row.append('<td>' + (data.vaiTro ? 'Admin' : 'Staff') + '</td>');
+                tbody.append(row);
+                // Reset form sau khi thêm
+                $('#formUpdate')[0].reset();
+            },
+            error: function (xhr, status, error) {
+                console.error("Error adding employee:", error);
+            }
+        });
+    }
 function btnClear_click() {
     window.location.href = "http://localhost:8080/admin/nhan-vien?action=Clear";
 }
@@ -152,6 +151,30 @@ function btnClear_click() {
         });
     }
 
+    function fetchEmployeeData() {
+        $.ajax({
+            url: "/api/nhan-vien",
+            type: "GET",
+            success: function (response) {
+                var tbody = $('#employeeTable tbody');
+                response.forEach(function (item) {
+                    var row = $('<tr></tr>');
+                    row.append('<td><a href="/admin/nhan-vien/' + item.maNV + '">' + item.maNV + '</a></td>');
+                    row.append('<td>' + item.tenNV + '</td>');
+                    row.append('<td>' + (item.gioiTinh ? 'Nam' : 'Nữ') + '</td>');
+                    row.append('<td>' + item.diaChi + '</td>');
+                    row.append('<td>' + item.dienThoai + '</td>');
+                    row.append('<td>' + item.ngaySinh + '</td>');
+                    row.append('<td>' + (item.vaiTro ? 'Admin' : 'Staff') + '</td>');
+                    tbody.append(row);
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error("Error fetching employee data:", error);
+            }
+        });
+    }
+
     function btnDelete_click() {
         // Lấy mã nhân viên từ form
         var maNV = $('#MANV').val();
@@ -161,8 +184,10 @@ function btnClear_click() {
             url: "/api/nhan-vien/" + maNV,
             type: "DELETE",
             success: function () {
-                $('#employeeTable tbody').find('tr[data-manv="' + maNV + '"]').remove();
+                $('#employeeTable tbody').empty(); // Xóa hết dữ liệu cũ trong bảng
+                fetchEmployeeData(); // Gọi lại hàm fetchEmployeeData() để lấy dữ liệu mới
                 alert("Nhân viên đã được xóa thành công!");
+                $('#formUpdate')[0].reset();
             },
             error: function (xhr, status, error) {
                 console.error("Error deleting employee:", error);

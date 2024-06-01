@@ -1,9 +1,11 @@
 package com.example.asmjava5.API;
 
 import com.example.asmjava5.Entity.KhachHang;
+import com.example.asmjava5.Entity.NhanVien;
 import com.example.asmjava5.Model.mapper.KhachHangMapper;
 import com.example.asmjava5.Model.request.KhachHangDto;
 import com.example.asmjava5.Repository.KhachHangRepository;
+import com.example.asmjava5.Service.KhachHangService;
 import com.example.asmjava5.Service.ServiceImpl.KhachHangServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,7 +19,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/khach-hang")
 public class KhachHangAPI {
     @Autowired
     HttpSession session;
@@ -26,7 +28,7 @@ public class KhachHangAPI {
     @Autowired
     HttpServletResponse resp;
     @Autowired
-    private KhachHangServiceImpl khachHangServiceImpl;
+    private KhachHangService khachHangServiceImpl;
     @Autowired
     private KhachHangRepository khachHangRepository;
 
@@ -50,7 +52,7 @@ public class KhachHangAPI {
 
     }
 
-    @GetMapping("/list-khach-hang")
+    @GetMapping("")
     public List<KhachHang> getAllKhachHang(){
         return khachHangServiceImpl.getAllKhachHang();
     }
@@ -58,5 +60,32 @@ public class KhachHangAPI {
     @GetMapping("/demoKH")
     public ResponseEntity<?> demoKH(){
         return ResponseEntity.ok(khachHangServiceImpl.getAllKhachHang());
+    }
+
+    @GetMapping("/{maKH}")
+    public KhachHang getOneNhanVien(@PathVariable("maKH") String maKH) {
+        return khachHangServiceImpl.findBymaKH(maKH);
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<KhachHang> addKhachHang(@RequestBody KhachHang khachHang) {
+        KhachHang newKhachHang = khachHangServiceImpl.addKhachHang(khachHang);
+        return ResponseEntity.ok(newKhachHang);
+    }
+
+    @PutMapping("/{maKH}")
+    public ResponseEntity<KhachHang> updateKhachHang(@PathVariable("maKH") String maKH, @RequestBody KhachHang khachHang) {
+        KhachHang updateKhachHang = khachHangServiceImpl.updateKhachHang(maKH, khachHang);
+        if (updateKhachHang != null) {
+            return ResponseEntity.ok(updateKhachHang);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{maKH}")
+    public ResponseEntity<Void> deleteKhachHang(@PathVariable("maKH") String maKH) {
+        khachHangServiceImpl.deleteKhachHang(maKH);
+        return ResponseEntity.noContent().build();
     }
 }

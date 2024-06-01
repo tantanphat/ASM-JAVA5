@@ -13,5 +13,11 @@ public interface KhachHangService {
 
     KhachHang updateInfo(KhachHangDto khachHang);
 
-    KhachHang findByMaKH(String MaKH);
+    KhachHang findBymaKH(String MaKH); //Đổ dữ liệu lên form
+
+    KhachHang addKhachHang(KhachHang khachHang);//thêm khách hàng mới
+
+    KhachHang updateKhachHang(String maKH, KhachHang khachHang);// cập nhật khách hàng
+
+    void deleteKhachHang(String maKH);// xóa khách hàng
 }
