@@ -1,8 +1,11 @@
 package com.example.asmjava5.API;
 
+import com.example.asmjava5.Constant.MailConstant;
 import com.example.asmjava5.Entity.KhachHang;
 import com.example.asmjava5.Model.mapper.KhachHangMapper;
-import com.example.asmjava5.Model.request.KhachHangModel;
+import com.example.asmjava5.Model.request.DangKyKhachHang;
+import com.example.asmjava5.Model.request.KhachHangThongTin;
+import com.example.asmjava5.Service.MailService;
 import com.example.asmjava5.Service.ServiceImpl.KhachHangServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -25,6 +28,8 @@ public class KhachHangAPI {
     @Autowired
     HttpServletResponse resp;
     @Autowired
+    private MailService emailService;
+    @Autowired
     private KhachHangServiceImpl khachHangServiceImpl;
 
 
@@ -42,8 +47,8 @@ public class KhachHangAPI {
 
     //Update thông tin khách hàng
     @PostMapping("/updateKhachHang")
-    public ResponseEntity<?> updateKhachHang(@RequestBody KhachHangModel khachHangModel) {
-        KhachHang khh = khachHangServiceImpl.updateInfo(khachHangModel);
+    public ResponseEntity<?> updateKhachHang(@RequestBody KhachHangThongTin khachHangThongTin) {
+        KhachHang khh = khachHangServiceImpl.updateInfo(khachHangThongTin);
         return ResponseEntity.ok(KhachHangMapper.khMapper(khh));
 
     }
@@ -53,8 +58,19 @@ public class KhachHangAPI {
         return khachHangServiceImpl.getAllKhachHang();
     }
 
-    @GetMapping("/demoKH")
-    public ResponseEntity<?> demoKH(){
-        return ResponseEntity.ok(khachHangServiceImpl.getAllKhachHang());
+    @GetMapping("/check-khach-hang")
+    public Boolean getMailKH(String mail){
+        KhachHang kh = khachHangServiceImpl.getLoginByEmail(mail);
+        if (kh != null) {
+            return true;
+        }
+        return false;
+    }
+
+    @PostMapping("/add-khach-hang")
+    public ResponseEntity<?>  addKhachHang(@RequestBody DangKyKhachHang dangKyKhachHang) {
+//        emailService.sendMail(MailConstant.KEY_MAIL_SIGNIN_WELCOME,dangKyKhachHang.getEmail());
+        khachHangServiceImpl.dangKyKhachHangMoi(dangKyKhachHang);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 }

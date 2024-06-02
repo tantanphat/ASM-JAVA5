@@ -3,13 +3,15 @@ package com.example.asmjava5.Entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
+
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "KhachHang")
-public class KhachHang {
+public class KhachHang implements Serializable {
 
     @Id
     @Column(name = "MaKH")

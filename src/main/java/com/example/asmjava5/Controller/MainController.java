@@ -2,6 +2,7 @@ package com.example.asmjava5.Controller;
 
 import com.example.asmjava5.Entity.DanhMucSP;
 import com.example.asmjava5.Entity.SanPham;
+import com.example.asmjava5.Service.MailService;
 import com.example.asmjava5.Service.ServiceImpl.DanhMucSPServceImpl;
 import com.example.asmjava5.Service.ServiceImpl.KhachHangServiceImpl;
 import com.example.asmjava5.Service.ServiceImpl.SanPhamServiceImpl;
@@ -22,21 +23,16 @@ import java.util.List;
 public class MainController {
     @Autowired
     HttpServletRequest req;
-
     @Autowired
     HttpServletResponse resp;
-
     @Autowired
     HttpSession session;
-
-    @Autowired
-    private KhachHangServiceImpl khachHangServiceImpl;
-
     @Autowired
     private SanPhamServiceImpl sanPhamServiceImpl;
-
     @Autowired
     private DanhMucSPServceImpl danhMucSPServceImpl;
+    @Autowired
+    private MailService mailService;
 
     @GetMapping("/Trang-chu")
     public String hienThiAllSP(Model model) {
@@ -86,5 +82,6 @@ public class MainController {
     public String hienThiLienHe() {
         return "views/contact";
     }
+
 }
 

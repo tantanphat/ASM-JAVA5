@@ -91,5 +91,10 @@ public class LoginController {
         return "/views/Admin/adminLogin";
     }
 
+//    @GetMapping("/oauth2/authorization/google")
+//    public String doGetGoogleLoginController() {
+//        return "views/login";
+//    }
+
 
 }

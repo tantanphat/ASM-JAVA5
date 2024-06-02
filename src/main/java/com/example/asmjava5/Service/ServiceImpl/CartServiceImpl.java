@@ -1,8 +1,10 @@
 package com.example.asmjava5.Service.ServiceImpl;
 
+import com.example.asmjava5.Constant.SessionAttr;
 import com.example.asmjava5.Model.DTO.CartItemsDTO;
 import com.example.asmjava5.Service.CartService;
 import com.example.asmjava5.Service.SanPhamService;
+import com.example.asmjava5.Utils.SessionUtils;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +18,7 @@ public class CartServiceImpl implements CartService {
     List<CartItemsDTO> cartItemsDTOS = new ArrayList<>();
 
     @Autowired
-    private HttpSession session;
+    private SessionUtils sessionUtils ;
 
 
     @Autowired
@@ -40,12 +42,23 @@ public class CartServiceImpl implements CartService {
             cartItemsDTOS.add(cartItem);
         }
 
+        // Lưu lại giỏ hàng vào session
+//        session.setAttribute(SessionAttr.SESSION_KEY_CART, cartItemsDTOS);
+
         return items;
     }
 
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<CartItemsDTO> getAllCartItems() {
+        cartItemsDTOS =  (List<CartItemsDTO>) sessionUtils.laySession(SessionAttr.SESSION_KEY_CART);
+
+        // Nếu không có giỏ hàng trong session, tạo một giỏ hàng mới
+        if (cartItemsDTOS == null) {
+            cartItemsDTOS = new ArrayList<>();
+            sessionUtils.addSession(SessionAttr.SESSION_KEY_CART, cartItemsDTOS);
+        }
         return cartItemsDTOS;
     }
 

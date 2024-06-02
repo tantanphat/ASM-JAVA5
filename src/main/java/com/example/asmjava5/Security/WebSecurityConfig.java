@@ -114,7 +114,7 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests(authorize  -> authorize
+                .authorizeHttpRequests(auth  -> auth
                         .requestMatchers("/user/**","/cart","/cart/**").authenticated() // Cho phép truy cập vào tài nguyên tĩnh
                         .requestMatchers("/user/**","/cart").hasRole("USER")
                                 .anyRequest().permitAll() // Yêu cầu xác thực cho tất cả các yêu cầu khác
@@ -128,6 +128,13 @@ public class WebSecurityConfig {
                                 .defaultSuccessUrl("/Trang-chu", true) // URL thành công sau khi đăng nhập
                                 .permitAll() // Cho phép tất cả truy cập vào trang login
                                 .failureHandler(authenticationFailureHandler())
+                )
+                .oauth2Login(oauth2Login ->
+                        oauth2Login
+                                .loginPage("/oauth2/authorization/google")
+//                                .loginProcessingUrl("/Dang-nhap")
+                                .defaultSuccessUrl("/Trang-chu", true)
+                                .permitAll()
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
@@ -144,6 +151,7 @@ public class WebSecurityConfig {
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.NEVER)
 
                 );
+
 //                .sessionManagement(sessionManagement ->
 //                        sessionManagement
 //                                .maximumSessions(1)

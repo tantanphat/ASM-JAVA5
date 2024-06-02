@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 //Khách hàng update thông tin
-public class KhachHangModel {
+public class KhachHangThongTin {
     private String email;
     private String hoTen;
     private String diaChi;

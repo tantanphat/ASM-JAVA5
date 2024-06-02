@@ -102,17 +102,7 @@ $(document).ready(function() {
         });
     });
 
-    //Nếu chưa login thì hiện alert
-    $('#notAuth').click(function(e) {
-        Swal.fire({
-            title: "Bạn chưa đăng nhập",
-            text: "Vui lòng đăng nhập để mua sắm",
-            icon: "question"
-        });
-        window.setTimeout(function() {
-            window.location.href = "/Dang-nhap";
-        }, 2000);
-    });
+
 
     //Đổ thông tin sản phẩm
     var url = new URL(window.location.href);

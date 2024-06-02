@@ -1,11 +1,13 @@
 package com.example.asmjava5.Controller;
 
+import com.example.asmjava5.Constant.SessionAttr;
 import com.example.asmjava5.Entity.SanPham;
 import com.example.asmjava5.Model.DTO.CartItemsDTO;
 import com.example.asmjava5.Service.CartService;
 import com.example.asmjava5.Service.SanPhamService;
 import com.example.asmjava5.Service.ServiceImpl.CartServiceImpl;
 import com.example.asmjava5.Service.ServiceImpl.SanPhamServiceImpl;
+import com.example.asmjava5.Utils.SessionUtils;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,12 +21,17 @@ import java.util.List;
 //@RequestMapping("/user")
 public class CartController {
     @Autowired
-    private HttpSession session;
+    private SessionUtils sessionUtils ;
     @Autowired
     private CartService cartService = new CartServiceImpl();
 
     @GetMapping("/cart")
+    @SuppressWarnings("unchecked")
     public String showCart(Model model) {
+        List<CartItemsDTO> cartItems = (List<CartItemsDTO>) sessionUtils.laySession(SessionAttr.SESSION_KEY_CART);
+        for (CartItemsDTO cartItem : cartItems) {
+            System.out.println(cartItem);
+        }
         return "views/cart";
     }
 
