@@ -7,4 +7,8 @@ import java.util.List;
 
 public interface HoaDonChiTietService {
     List<HoaDonChiTiet> getAllHoaDonChiTiet();
+
+    HoaDonChiTiet getHoaDonChiTietById(int id);
+
+    List<HoaDonChiTiet> getAllHDCTByMaHD(String MaHDBan);
 }

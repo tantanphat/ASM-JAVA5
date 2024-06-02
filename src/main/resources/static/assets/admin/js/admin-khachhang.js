@@ -136,8 +136,8 @@ function btnUpdateKH_click() {
         data: JSON.stringify(updatedKhachHang),
         success: function (data) {
             // Cập nhật thông tin khách hàng trong bảng hiển thị
-            $('#employeeTable tbody').empty(); // Xóa hết dữ liệu cũ trong bảng
-            fetchEmployeeData(); // Gọi lại hàm fetchEmployeeData() để lấy dữ liệu mới
+            $('#khach-hang-table tbody').empty(); // Xóa hết dữ liệu cũ trong bảng
+            fetchEmployeeDataKH(); // Gọi lại hàm fetchEmployeeData() để lấy dữ liệu mới
             alert("Thông tin nhân viên đã được cập nhật!");
         },
         error: function (xhr, status, error) {
@@ -146,7 +146,7 @@ function btnUpdateKH_click() {
     });
 }
 
-function fetchEmployeeData() {
+function fetchEmployeeDataKH() {
     $.ajax({
         url: "/api/khach-hang",
         type: "GET",
@@ -186,7 +186,7 @@ function btnDeleteKH_click() {
         type: "DELETE",
         success: function () {
             $('#employeeTable tbody').empty(); // Xóa hết dữ liệu cũ trong bảng
-            fetchEmployeeData(); // Gọi lại hàm fetchEmployeeData() để lấy dữ liệu mới
+            fetchEmployeeDataKH(); // Gọi lại hàm fetchEmployeeData() để lấy dữ liệu mới
             alert("Nhân viên đã được xóa thành công!");
             $('#formUpdate')[0].reset();
         },

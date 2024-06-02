@@ -48,7 +48,6 @@
                     row.append('<td>' + item.diaChi + '</td>');
                     row.append('<td>' + item.dienThoai + '</td>');
                     row.append('<td>' + item.ngaySinh + '</td>');
-                    // row.append('<td>' + item.matkhau + '</td>');
                     row.append('<td>' + (item.vaiTro ? 'Admin' : 'Staff') + '</td>');
                     tbody.append(row);
                 })

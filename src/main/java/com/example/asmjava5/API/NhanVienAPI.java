@@ -2,6 +2,7 @@ package com.example.asmjava5.API;
 
 import com.example.asmjava5.Entity.NhanVien;
 import com.example.asmjava5.Repository.NhanVienRepository;
+import com.example.asmjava5.Service.NhanVienService;
 import com.example.asmjava5.Service.ServiceImpl.NhanVienServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ import java.util.Map;
 public class NhanVienAPI {
 
     @Autowired
-    private NhanVienServiceImpl nvServiceImpl;
+    private NhanVienService nvServiceImpl;
 
     @GetMapping("")
     public List<NhanVien> getAllNhanVien() {

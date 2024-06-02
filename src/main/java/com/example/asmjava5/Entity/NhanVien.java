@@ -1,10 +1,12 @@
 package com.example.asmjava5.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 
 
 @AllArgsConstructor
@@ -39,6 +41,7 @@ public class NhanVien {
 
     @Column(name = "VaiTro")
     private Boolean VaiTro;
+
 
 }
 
