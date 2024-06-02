@@ -1,10 +1,12 @@
 package com.example.asmjava5.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 
 
 @AllArgsConstructor
@@ -16,8 +18,7 @@ import java.time.LocalDate;
 @Table(name = "NhanVien")
 public class NhanVien {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "MaNV")
+    @Column(name = "MaNV", nullable = false, length = 10)
     private String MaNV;
 
     @Column(name = "TenNV")
@@ -40,6 +41,7 @@ public class NhanVien {
 
     @Column(name = "VaiTro")
     private Boolean VaiTro;
+
 
 }
 

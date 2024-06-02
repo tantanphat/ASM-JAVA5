@@ -32,7 +32,7 @@
         }
 
         #khach-hang-table th, #khach-hang-table td {
-            border: 1px solid #ddd; /* Đường viền cho ô */
+            border: 1px solid #ff0000; /* Đường viền cho ô */
             padding: 8px; /* Khoảng cách bên trong ô */
             text-align: left; /* Canh trái */
         }
@@ -42,12 +42,12 @@
             color: black; /* Màu chữ cho tiêu đề */
         }
 
-        #khach-hang-table tr:nth-child(even) {
-            background-color: #f9f9f9; /* Màu nền cho các hàng chẵn */
+        #khach-hang-table tr {
+            background-color: #734f4f; /* Màu nền cho các hàng chẵn */
         }
 
         #khach-hang-table tr:hover {
-            background-color: #ddd; /* Màu nền khi di chuột qua */
+            background-color: #2e8768; /* Màu nền khi di chuột qua */
         }
 
         #khach-hang-table th {
@@ -95,8 +95,7 @@
 </head>
 <body>
 <!-- Include common header -->
-<article layout:fragment="content"  >
-<main>
+<article layout:fragment="content">
     <div class="container-fluid mb-4">
         <div class="row">
             <div class="col-12">
@@ -111,18 +110,18 @@
                         <div class="form-group row">
                             <div class="col-md-6">
                                 <label for="MAKH" class="text-black">Mã khách hàng <span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="MAKH"  disabled>
+                                <input type="text" class="required form-control" id="MAKH" disabled>
                             </div>
                             <div class="col-md-6">
-                                <label for="Email" class="text-black">Mã khách hàng <span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="Email" >
+                                <label for="Email" class="text-black">Email <span class="text-danger">*</span></label>
+                                <input type="text" class="required form-control" id="Email">
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label for="FullName" class="text-black">Tên khách hàng <span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="FullName" >
+                                <label for="FullNameKH" class="text-black">Tên khách hàng <span class="text-danger">*</span></label>
+                                <input type="text" class="required form-control" id="FullNameKH">
                             </div>
                             <div class="col-md-6">
                                 <label class="text-black">Thành viên <span class="text-danger">*</span></label>
@@ -132,8 +131,8 @@
                                         <label class="form-check-label" for="Roletrue">Có</label>
                                     </div>
                                     <div class="form-check">
-                                        <input type="radio" class="form-check-input" id="Rolefalse" name="role_radio">Không
-                                        <label class="form-check-label" for="Rolefalse"></label>
+                                        <input type="radio" class="form-check-input" id="Rolefalse" name="role_radio">
+                                        <label class="form-check-label" for="Rolefalse">Không</label>
                                     </div>
                                 </div>
                             </div>
@@ -141,19 +140,19 @@
 
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label for="Phone" class="text-black">Số điện thoại <span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="Phone" >
+                                <label for="PhoneKH" class="text-black">Số điện thoại <span class="text-danger">*</span></label>
+                                <input type="text" class="required form-control" id="PhoneKH">
                             </div>
                             <div class="col-md-6">
-                                <label for="Address" class="text-black">Địa chỉ <span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="Address" >
+                                <label for="AddressKH" class="text-black">Địa chỉ <span class="text-danger">*</span></label>
+                                <input type="text" class="required form-control" id="AddressKH">
                             </div>
                         </div>
                         <div class="button-container">
-                            <button type="button" class="btn btn-outline-success" onclick="btnCreat_click()">Creat</button>
-                            <button type="button" class="btn btn-outline-success" onclick="btnClear_click()">Clear</button>
-                            <button type="button" class="btn btn-outline-success">Update</button>
-                            <button type="button" class="btn btn-outline-success">Delete</button>
+                            <button type="button" class="btn btn-outline-success" onclick="btnCreatKH_click()">Creat</button>
+                            <button type="button" class="btn btn-outline-success" onclick="btnClearKH_click()">Clear</button>
+                            <button type="button" class="btn btn-outline-success" onclick="btnUpdateKH_click()">Update</button>
+                            <button type="button" class="btn btn-outline-success" onclick="btnDeleteKH_click()">Delete</button>
                         </div>
                         <br>
                         <h2 class="h3 mb-3 mt-4 text-black d-flex justify-content-center align-items-center">Danh sách</h2>
@@ -167,7 +166,6 @@
                         <th>Address</th>
                         <th>Phone</th>
                         <th>Email</th>
-                        <th>Password</th>
                         <th>Member</th>
                     </tr>
                     </thead>
@@ -177,7 +175,6 @@
             </div>
         </div>
     </div>
-</main>
-    </article>
+</article>
 </body>
 </html>

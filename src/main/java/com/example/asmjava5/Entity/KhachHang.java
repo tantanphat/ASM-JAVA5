@@ -1,20 +1,22 @@
 package com.example.asmjava5.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.io.Serializable;
+import java.util.List;
 
-
+@Setter
+@Getter
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "KhachHang")
-public class KhachHang implements Serializable {
+public class KhachHang {
 
     @Id
-    @Column(name = "MaKH")
+    @Column(name = "MaKH", nullable = false, length = 10)
     private String maKH;
 
     @Column(name = "TenKH")
@@ -34,6 +36,5 @@ public class KhachHang implements Serializable {
 
     @Column(name = "Thanhvien")
     private boolean thanhVien = false;
-
 
 }

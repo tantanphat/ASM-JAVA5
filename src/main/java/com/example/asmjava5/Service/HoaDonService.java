@@ -7,4 +7,8 @@ import java.util.List;
 public interface HoaDonService {
 
     List<HoaDon> getAllHoaDon();
+
+    HoaDon getHoaDonByID(String hd_MaHDBan);
+
+    HoaDon addHoaDon(HoaDon hoaDon);
 }

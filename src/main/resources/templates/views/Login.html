@@ -13,7 +13,7 @@
 
 </head>
 <body>
-    <div th:include="/common/header :: header"></div>
+<div th:include="/common/header :: header"></div>
 
 <main >
     <div class="container" id="container">
@@ -179,7 +179,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/api/check-khach-hang',
+                url: '/api/khach-hang/check-khach-hang',
                 data: { mail: email },
                 contentType: 'application/x-www-form-urlencoded',
                 success: function(response) {
@@ -192,7 +192,7 @@
                     } else {
                         $.ajax({
                             type: 'POST',
-                            url: '/api/add-khach-hang',
+                            url: '/api/khâch-hang/add-khach-hang',
                             data: JSON.stringify(data),
                             contentType: 'application/json',
                             dataType: 'json',

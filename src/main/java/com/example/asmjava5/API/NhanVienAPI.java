@@ -19,15 +19,37 @@ import java.util.Map;
 public class NhanVienAPI {
 
     @Autowired
-    private NhanVienService nhanVienService = new NhanVienServiceImpl();
+    private NhanVienService nvServiceImpl;
 
     @GetMapping("")
     public List<NhanVien> getAllNhanVien() {
-        return nhanVienService.getALlNhanVien();
+        return nvServiceImpl.getALlNhanVien();
     }
 
     @GetMapping("/{manv}")
     public NhanVien getOneNhanVien(@PathVariable("manv") String manv) {
-        return nhanVienService.findByMaNV(manv);
+        return nvServiceImpl.findByMaNV(manv);
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<NhanVien> addNhanVien(@RequestBody NhanVien nhanVien) {
+        NhanVien newNhanVien = nvServiceImpl.addNhanVien(nhanVien);
+        return ResponseEntity.ok(newNhanVien);
+    }
+
+    @PutMapping("/{maNV}")
+    public ResponseEntity<NhanVien> updateNhanVien(@PathVariable("maNV") String maNV, @RequestBody NhanVien nhanVien) {
+        NhanVien updatedNhanVien = nvServiceImpl.updateNhanVien(maNV, nhanVien);
+        if (updatedNhanVien != null) {
+            return ResponseEntity.ok(updatedNhanVien);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{maNV}")
+    public ResponseEntity<Void> deleteNhanVien(@PathVariable("maNV") String maNV) {
+        nvServiceImpl.deleteNhanVien(maNV);
+        return ResponseEntity.noContent().build();
     }
 }

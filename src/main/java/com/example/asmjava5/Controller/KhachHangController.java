@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/admin/khach-hang")
@@ -15,12 +16,12 @@ public class KhachHangController {
     private NhanVienServiceImpl nvServiceImpl;
 
     @GetMapping("")
-    public String hienThiTrangQLKH() {
-        return "views/Admin/customerManager";
+    public String hienThiTrangQLKH(@RequestParam(name = "maKH",required = false) String maKH) {
+        return "views/Admin/QuanLyKhachHang";
     }
 
     @GetMapping("/{makh}")
     public String hienThiTrangQLKHL(@PathVariable("makh") String makh) {
-        return "views/Admin/customerManager";
+        return "views/Admin/QuanLyKhachHang";
     }
 }

@@ -10,5 +10,11 @@ public interface NhanVienService {
 
     NhanVien findByMaNV(String MaNV);
 
+    //Thêm một nhân viên
+    NhanVien addNhanVien(NhanVien nhanVien);
+
+    NhanVien updateNhanVien(String maNV, NhanVien nhanVien);
+
+    void deleteNhanVien(String maNV);
 
 }

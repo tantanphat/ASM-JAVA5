@@ -10,5 +10,4 @@ public interface SanPhamService {
 
     SanPham getSanPhamById(String maSP);
 
-
 }

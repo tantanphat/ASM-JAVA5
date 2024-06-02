@@ -99,29 +99,28 @@
 <body>
 <!-- Include common header -->
 <article layout:fragment="content">
-<main layout:fragment="hoaDon">
     <div class="container-fluid mb-4">
         <div class="row">
             <div class="col-12">
-                <form enctype="multipart/form-data" id="formUpdate">
+                <form enctype="multipart/form-data" id="formUpdate" layout:fragment="hoaDon">
                     <input name="__RequestVerificationToken" type="hidden">
                     <h1 class="h2 mb-3 mt-2 text-dark d-flex justify-content-center align-items-center">Hóa Đơn Chi Tiết</h1>
                     <div class="tabs">
-                        <ul class="nav nav-underline">
-                            <li class="nav-item">
-                                <a id="linkBill" class="nav-link " aria-current="page" href="/admin/hoa-don">Hóa Đơn</a>
-                            </li>
-                            <li class="nav-item">
-                                <a id="linkBillChiTiet" class="nav-link active" href="/admin/hoa-don-chi-tiet">Hóa Đơn chi tiết</a>
-                            </li>
+                    <ul class="nav nav-underline">
+                        <li class="nav-item">
+                            <a id="linkBill" class="nav-link " aria-current="page" th:href="@{/admin/hoa-don}">Hóa Đơn</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="linkBillChiTiet" class="nav-link active" th:href="@{/admin/hoa-don-chi-tiet}">Hóa Đơn chi tiết</a>
+                        </li>
 
-                        </ul>
-                    </div>
-                    <div class="p-3 p-lg-5 border">
+                    </ul>
+            </div>
+                    <div class="p-3 p-lg-5 border" id="HoaDonChiTietContainer">
                         <div class="form-group row">
-                            <div class="col-md-6">
-                                <label for="LoaiSP" class="text-black">Loại Sản Phẩm <span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="LoaiSP"  disabled>
+                            <div class="col-md-6" >
+                                <label for="MHDCT" class="text-black">Mã hóa đơn chi tiết <span class="text-danger">*</span></label>
+                                <input type="text" class="required form-control" id="MHDCT"  disabled>
                             </div>
                             <div class="col-md-6">
                                 <label for="DonGia" class="form-label">Đơn Giá<span class="text-danger">*</span></label>
@@ -131,23 +130,23 @@
 
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label for="TênSP" class="text-black">Tên Sản Phẩm <span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="TênSP" >
+                                <label for="TenSP" class="text-black">Tên Sản Phẩm <span class="text-danger">*</span></label>
+                                <input type="text" class="required form-control" id="TenSP" >
                             </div>
                             <div class="col-md-6">
-                                <label for="SL" class="text-black">Số Lượng<span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="SL">
+                                <label for="Quantity" class="text-black">Số Lượng<span class="text-danger">*</span></label>
+                                <input type="text" class="required form-control" id="Quantity">
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label for="MaSP" class="text-black">Mã Sản Phẩm <span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="MaSP" >
+                                <label for="MaSP_CT" class="text-black">Mã Sản Phẩm <span class="text-danger">*</span></label>
+                                <input type="text" class="required form-control" id="MaSP_CT" >
                             </div>
                             <div class="col-md-6">
-                                <label for="sale" class="text-black">Giảm Giá <span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="sale">
+                                <label for="Sale" class="text-black">Giảm Giá <span class="text-danger">*</span></label>
+                                <input type="text" class="required form-control" id="Sale">
                             </div>
                         </div>
 
@@ -155,7 +154,7 @@
 
                             <div class="col-md-6">
                                 <label for="ThanhTien" class="text-black">Thành Tiền <span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="ThanhTien" >
+                                <input type="text" class="required form-control" id="ThanhTien" disabled>
                             </div>
                         </div>
                         <div class="button-container">
@@ -173,10 +172,11 @@
                     <tr>
                         <th>Mã HDCT</th>
                         <th>Mã Hóa Đơn</th>
+                        <th>Mã sản phẩm</th>
                         <th>Số lượng</th>
                         <th>Đơn Giá</th>
                         <th>Giảm Giá</th>
-<!--                        <th>Thành Tiền</th>-->
+                        <th>Thành Tiền</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -185,7 +185,6 @@
             </div>
         </div>
     </div>
-</main>
 </article>
 </body>
 </html>

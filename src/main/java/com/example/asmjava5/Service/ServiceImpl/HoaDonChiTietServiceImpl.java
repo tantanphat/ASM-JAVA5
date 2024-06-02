@@ -18,4 +18,15 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
     public List<HoaDonChiTiet> getAllHoaDonChiTiet() {
         return hoaDonChiTietRepository.findAll();
     }
+
+    @Override
+    public HoaDonChiTiet getHoaDonChiTietById(int id) {
+        return hoaDonChiTietRepository.findByMaHDCT(id);
+    }
+
+    @Override
+    public List<HoaDonChiTiet> getAllHDCTByMaHD(String MaHDBan) {
+        return hoaDonChiTietRepository.findAllByMaHDBan(MaHDBan);
+
+    }
 }
