@@ -102,7 +102,7 @@ public class KhachHangAPI {
     }
 
     @PostMapping("/add-khach-hang")
-    public ResponseEntity<?>  addKhachHang(@RequestBody DangKyKhachHang dangKyKhachHang) {
+    public ResponseEntity<?> addKhachHang(@RequestBody DangKyKhachHang dangKyKhachHang) {
 //        emailService.sendMail(MailConstant.KEY_MAIL_SIGNIN_WELCOME,dangKyKhachHang.getEmail());
         khachHangServiceImpl.dangKyKhachHangMoi(dangKyKhachHang);
         return ResponseEntity.ok(HttpStatus.OK);
