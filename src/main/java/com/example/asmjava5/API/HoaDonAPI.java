@@ -13,7 +13,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/hoa-don")
 public class HoaDonAPI {
-
     @Autowired
     private HoaDonService hoaDonService;
 
@@ -31,5 +30,11 @@ public class HoaDonAPI {
     public ResponseEntity<HoaDon> addHoaDon(@RequestBody HoaDon hoaDon) {
         HoaDon newHoaDon = hoaDonService.addHoaDon(hoaDon);
         return ResponseEntity.ok(newHoaDon);
+    }
+
+    @PostMapping("/thanh-toan")
+    public ResponseEntity<?> thanhToan() {
+
+        return ResponseEntity.ok(null);
     }
 }

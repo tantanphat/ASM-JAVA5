@@ -60,6 +60,16 @@ $(document).ready(function() {
             console.error("Lỗi khi lấy dữ liệu khách hàng:", error);
         }
     });
+
+    $('#XuatListKH').click(function(e) {
+        $.ajax({
+            url:'/api/khach-hang/xuat-ra-excel',
+            type: 'GET',
+        }).done(function() {
+            alert('Xuất ra file thành công')
+        })
+    })
+
 });
 
 function btnCreatKH_click() {
@@ -187,7 +197,7 @@ function btnDeleteKH_click() {
         success: function () {
             $('#employeeTable tbody').empty(); // Xóa hết dữ liệu cũ trong bảng
             fetchEmployeeDataKH(); // Gọi lại hàm fetchEmployeeData() để lấy dữ liệu mới
-            alert("Nhân viên đã được xóa thành công!");
+            alert("Khách hàng đã được xóa thành công!");
             $('#formUpdate')[0].reset();
         },
         error: function (xhr, status, error) {
@@ -195,3 +205,4 @@ function btnDeleteKH_click() {
         }
     });
 }
+

@@ -8,7 +8,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,12 +15,15 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
@@ -129,13 +131,16 @@ public class WebSecurityConfig {
                                 .permitAll() // Cho phép tất cả truy cập vào trang login
                                 .failureHandler(authenticationFailureHandler())
                 )
-                .oauth2Login(oauth2Login ->
-                        oauth2Login
-                                .loginPage("/oauth2/authorization/google")
-//                                .loginProcessingUrl("/Dang-nhap")
-                                .defaultSuccessUrl("/Trang-chu", true)
-                                .permitAll()
-                )
+//                .oauth2Login(oauth2Login ->
+//                        oauth2Login
+////                                .userInfoEndpoint(userInfoEndpoint ->
+////                                        userInfoEndpoint
+////                                                .userService(oAuth2UserService()
+////                                                )
+////                                )
+//                                .successHandler(oAuth2AuthenticationSuccessHandler())
+//                )
+                .oauth2Client(Customizer.withDefaults())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/Dang-nhap")
@@ -148,7 +153,7 @@ public class WebSecurityConfig {
                                 .tokenValiditySeconds(1 * 24 * 60 * 60) // Thời gian tồn tại của token là 24 giờ
                 )
                 .sessionManagement(sessionManagement ->
-                        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.NEVER)
+                        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
 
                 );
 
@@ -162,6 +167,19 @@ public class WebSecurityConfig {
 
         return http.build();
     }
+
+//    //Tải thông tin người dùng khi đăng nhập bằng google
+//    @Bean
+//    public OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserService() {
+//        return new DefaultOAuth2UserService();
+//    }
+//
+//
+//    //Xử lý thông tin khi đăng nhập bằng google
+//    @Bean
+//    public AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler() {
+//        return new CustomOAuth2AuthenticationSuccessHandler();
+//    }
 
 
 }

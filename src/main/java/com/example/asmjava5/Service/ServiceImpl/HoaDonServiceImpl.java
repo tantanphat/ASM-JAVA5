@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -37,6 +39,20 @@ public class HoaDonServiceImpl implements HoaDonService {
         String newMaHD = generateNewMaNV();
         hoaDon.setHd_MaHDBan(newMaHD);
         return hoaDonRepository.save(hoaDon);
+    }
+
+    @Override
+    public String AU_MaHD() {
+        return hoaDonRepository.AUTO_MaHD();
+    }
+
+    @Override
+    public void ThanhToanHoaDon(String maHDBan, String hd_MaNV, LocalDate hd_NgayBan, String hd_MaKH) {
+        HoaDon hoaDon = new HoaDon();
+        hoaDon.setHd_MaHDBan(maHDBan);
+        hoaDon.setHd_MaNV(hd_MaNV);
+        hoaDon.setHd_NgayBan(hd_NgayBan);
+        hoaDon.setHd_MaKH(hd_MaKH);
     }
 
 

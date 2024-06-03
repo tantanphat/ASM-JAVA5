@@ -23,16 +23,17 @@
                                         <img th:src="@{/assets/user/img/icon/header_icon.png}" alt="">
                                     </div>
                                 </div>
-<!--                                <div class="header-info-right col align-self-end">-->
-<!--                                    <ul class="text-right">-->
-<!--                                        <li sec:authorize="hasRole('ROLE_USER')"><a th:href="@{/user/myaccount}">My-->
-<!--                                            Account </a></li>-->
-<!--                                        <li><a href="product_list.html">Wish List </a></li>-->
-<!--                                        <li><a href="">Shopping</a></li>-->
-<!--                                        <li><a href="">Cart</a></li>-->
-<!--                                        <li sec:authorize="hasRole('ROLE_USER')"><a th:href="@{/logout}">Logout</a></li>-->
-<!--                                    </ul>-->
-<!--                                </div>-->
+
+                                <div class="header-info-right col align-self-end">
+                                    <ul class="text-right">
+                                        <li sec:authorize="hasRole('ROLE_USER')"><a th:href="@{/user/myaccount}">My
+                                            Account </a></li>
+                                        <li><a href="product_list.html">Wish List </a></li>
+                                        <li><a href="">Shopping</a></li>
+                                        <li><a href="">Cart</a></li>
+                                        <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>

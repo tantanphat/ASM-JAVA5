@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{views/index.html}" >
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,11 +10,7 @@
     <th:block th:include="/common/head :: head"></th:block>
 </head>
 <body>
-<!-- Include common header -->
-<div th:include="/common/header :: header"></div>
-
-
-    <div class="col-md-9 col-sm-12 col-xs-12">
+    <main layout:fragment="index" class="col-md-9 col-sm-12 col-xs-12">
         <div class="page-wrapper">
             <div class="heading-page">
                 <h1>Giới thiệu</h1>
@@ -43,11 +39,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Gallery End-->
-    <div th:replace="/common/footer :: footer"></div>
-
-
-
+    </main>
 </body>
 </html>

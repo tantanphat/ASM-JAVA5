@@ -21,4 +21,8 @@ public class SessionUtils {
     public Object laySession(String key) {
         return session.getAttribute(key);
     }
+
+    public void removeSession(String key) {
+        session.removeAttribute(key);
+    }
 }

@@ -6,6 +6,7 @@ $(document).ready(function() {
             success: function(response) {
                 var totalCartItems = response; // Số lượng trong cart
                 // Hiển thị trong scss .shoppingcart phần content
+                $('#totalCartItems').text("Số lượng sản phẩm: "+totalCartItems)
                 console.log("totalCart: " + totalCartItems);
                 $(".header-bottom .header-right .shopping-card").attr("data-total", totalCartItems);
             },
@@ -21,6 +22,7 @@ $(document).ready(function() {
             url: "/api/getListCart",
             contentType: "application/json",
             success: function(response) {
+
                 var tbody = $('#cartTable tbody');
                 tbody.empty();
                 var totalSum = 0;
@@ -36,7 +38,7 @@ $(document).ready(function() {
                         '</div></td>');
                     row.append('<td>' + item.giaBan + '</td>');
                     row.append('<td>' + (item.giaBan * item.quantity) + '</td>');
-                    row.append('<td><button  class="btnN deleteCart" data-masp="' + item.maSP + '" data-size="' + item.size + '" >Remove</button></td>');
+                    row.append('<td><button  class="btn border deleteCart" data-masp="' + item.maSP + '" data-size="' + item.size + '" >Remove</button></td>');
                     tbody.append(row);
                     totalSum += item.giaBan * item.quantity;
                     var maSP = item.maSP;
@@ -141,6 +143,7 @@ $(document).ready(function() {
             success: function(response) {
                 updateCountCart();
                 updateCartTable();
+                
             },
             error: function(xhr, status, error) {
                 console.log(error);
@@ -160,7 +163,8 @@ $(document).ready(function() {
             url: "/cart/minus",
             data: { maSP: maSP, size: size },
             success: function(response) {
-                updateCountCart()
+                updateCountCart();
+                
                 updateCartTable();
             },
             error: function(xhr, status, error) {
@@ -179,7 +183,8 @@ $(document).ready(function() {
             url: "/cart/plus",
             data: { maSP: maSP, size: size},
             success: function(response) {
-                updateCountCart()
+                updateCountCart();
+                
                 updateCartTable();
             },
             error: function(xhr, status, error) {
@@ -189,7 +194,8 @@ $(document).ready(function() {
     });
 
     // Khi thay đổi update và đổ lại
-
+    updateCountCart();
+    
     updateCartTable();
 
 });

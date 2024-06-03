@@ -11,4 +11,6 @@ public interface HoaDonChiTietService {
     HoaDonChiTiet getHoaDonChiTietById(int id);
 
     List<HoaDonChiTiet> getAllHDCTByMaHD(String MaHDBan);
+
+    void saveHoaDonChiTiet(HoaDonChiTiet hoaDonChiTiet);
 }

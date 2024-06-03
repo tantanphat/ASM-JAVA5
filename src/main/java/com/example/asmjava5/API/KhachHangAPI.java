@@ -9,6 +9,7 @@ import com.example.asmjava5.Model.request.KhachHangThongTin;
 import com.example.asmjava5.Repository.KhachHangRepository;
 import com.example.asmjava5.Service.KhachHangService;
 import com.example.asmjava5.Service.ServiceImpl.KhachHangServiceImpl;
+import com.example.asmjava5.Utils.ExcelKhachHangUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -102,9 +103,19 @@ public class KhachHangAPI {
     }
 
     @PostMapping("/add-khach-hang")
-    public ResponseEntity<?>  addKhachHang(@RequestBody DangKyKhachHang dangKyKhachHang) {
+    public ResponseEntity<?> addKhachHang(@RequestBody DangKyKhachHang dangKyKhachHang) {
 //        emailService.sendMail(MailConstant.KEY_MAIL_SIGNIN_WELCOME,dangKyKhachHang.getEmail());
         khachHangServiceImpl.dangKyKhachHangMoi(dangKyKhachHang);
         return ResponseEntity.ok(HttpStatus.OK);
+    }
+    @GetMapping("/xuat-ra-excel")
+    public void xuatListKhachHangRaExcel() {
+        List<KhachHang> kh = khachHangServiceImpl.getAllKhachHang();
+        String excelFilePath = "E:/Khachhang.xlsx";
+        try {
+            ExcelKhachHangUtils.writeExcel(kh,excelFilePath);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

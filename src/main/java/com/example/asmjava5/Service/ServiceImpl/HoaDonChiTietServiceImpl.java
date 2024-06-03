@@ -27,6 +27,10 @@ public class HoaDonChiTietServiceImpl implements HoaDonChiTietService {
     @Override
     public List<HoaDonChiTiet> getAllHDCTByMaHD(String MaHDBan) {
         return hoaDonChiTietRepository.findAllByMaHDBan(MaHDBan);
+    }
 
+    @Override
+    public void saveHoaDonChiTiet(HoaDonChiTiet hoaDonChiTiet) {
+        hoaDonChiTietRepository.save(hoaDonChiTiet);
     }
 }

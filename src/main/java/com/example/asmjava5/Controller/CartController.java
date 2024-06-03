@@ -4,6 +4,7 @@ import com.example.asmjava5.Constant.SessionAttr;
 import com.example.asmjava5.Entity.SanPham;
 import com.example.asmjava5.Model.DTO.CartItemsDTO;
 import com.example.asmjava5.Service.CartService;
+import com.example.asmjava5.Service.HoaDonService;
 import com.example.asmjava5.Service.SanPhamService;
 import com.example.asmjava5.Service.ServiceImpl.CartServiceImpl;
 import com.example.asmjava5.Service.ServiceImpl.SanPhamServiceImpl;
@@ -24,6 +25,8 @@ public class CartController {
     private SessionUtils sessionUtils ;
     @Autowired
     private CartService cartService = new CartServiceImpl();
+    @Autowired
+    private HoaDonService hoaDonService;
 
     @GetMapping("/cart")
     @SuppressWarnings("unchecked")
@@ -53,6 +56,13 @@ public class CartController {
     public String minusQuanlity(@RequestParam("maSP") String maSP, @RequestParam("size") String size) {
         cartService.minus(maSP, size);
         return  "redirect:/cart";
+    }
+
+    @GetMapping("/cart/Thanh-toan")
+    public String getThanhToan(Model model) {
+        String maHD = hoaDonService.AU_MaHD();
+        model.addAttribute("maHD", maHD);
+        return  "user/ThanhToan";
     }
 
 
