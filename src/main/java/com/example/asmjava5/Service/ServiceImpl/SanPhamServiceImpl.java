@@ -91,6 +91,6 @@ public class SanPhamServiceImpl implements SanPhamService {
 
     @Override
     public List<SanPham> timKiemSanPham(String key) {
-        return sanPhamRepository.timKiemSanPham("%" + key + "%");
+        return sanPhamRepository.timKiemSanPham(key);
     }
 }

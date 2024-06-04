@@ -21,11 +21,6 @@ public class SanPhamController {
         model.addAttribute("spDeltail",sp);
         return "views/productDeltails";
     }
-    @GetMapping("/search")
-    public String timKiemSanPham(@RequestParam("key") String key, Model model) {
-        List<SanPham> sanPhams = sanPhamServiceImpl.timKiemSanPham(key);
-        model.addAttribute("sanPhams", sanPhams);
-        return "views/searchResults";
-    }
+
 
 }

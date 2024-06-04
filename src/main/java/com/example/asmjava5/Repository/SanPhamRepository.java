@@ -13,8 +13,8 @@ public interface SanPhamRepository extends JpaRepository<SanPham, String> {
         @Query("select s from SanPham s where s.maSP = :maSP")
         SanPham findSanPhambyMaSP(@Param("maSP") String maSP);
 
-        @Query("select s from SanPham s where s.tenSP LIKE ?1")
-        List<SanPham> timKiemSanPham(String key);
+        @Query("SELECT s FROM SanPham s WHERE s.tenSP LIKE %:keyword%")
+        List<SanPham> timKiemSanPham(@Param("keyword") String keyword);
 
 }
 
