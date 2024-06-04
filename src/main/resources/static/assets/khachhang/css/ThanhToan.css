@@ -1,0 +1,242 @@
+body * {
+    box-sizing: border-box;
+}
+
+body,
+:root {
+    background-color: #514B48!important;
+    display: block;
+    font-family: Rokkitt;
+    font-size: 16px;
+    height: 100%;
+    width: 100%;
+}
+
+#container {
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 8px 8px rgba(0, 0, 0, .5);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 1rem auto;
+    overflow: auto;
+    padding: 2rem;
+}
+
+.order-table {
+    max-width: calc(100% - 2em);
+    width: 50rem;
+}
+
+header {
+    display: block;
+    font-size: 1.2rem;
+    margin-bottom: 4rem;
+    width: 100%;
+}
+
+.icon {
+    height: 50px;
+    width: 50px;
+}
+
+header span {
+    float: left;
+    width: 45%;
+}
+
+header span + span {
+    float: right;
+    margin-top: 50px;
+    text-align: right;
+    width: 45%;
+}
+
+p {
+    line-height: 1.25;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+span p + p {
+    margin-top: 0;
+}
+
+.order-number:before {
+    content: 'Order #';
+}
+
+table {
+    font-family: 'Rokkitt';
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    width: 100%;
+}
+
+.order-table tr {
+    border-color: #ccc;
+}
+
+.order-table th {
+    font-weight: 700;
+    padding-left: 1rem;
+}
+
+.order-table td {
+    padding: 1rem;
+    vertical-align: middle;
+}
+
+.order-table td:first-child {
+    padding: .5rem;
+}
+
+.order-table th,
+.order-table td {
+    line-height: 1.125;
+    margin: .25rem 1rem;
+    text-align: left;
+}
+
+@media screen and (max-width: 700px) {
+    table,
+    .order-table tr,
+    .order-table td {
+        display: block;
+    }
+    .order-table td:first-child {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 100px;
+    }
+    .order-table td:not(:first-child) {
+        clear: both;
+        margin-left: 120px;
+        padding: 4px 20px 4px 90px;
+        position: relative;
+        text-align: left;
+    }
+    .order-table td:not(:first-child):before {
+        content: '';
+        display: block;
+        font-weight: 700;
+        left: 0;
+        position: absolute;
+    }
+    .order-table td:nth-child(2):before {
+        content: 'Item:';
+    }
+    .order-table td:nth-child(3):before {
+        content: 'SKU:';
+    }
+    .order-table td:nth-child(4):before {
+        content: 'Quantity:';
+    }
+    .order-table td:nth-child(5):before {
+        content: 'Subtotal:';
+    }
+    .order-table tr {
+        padding: 10px 0;
+        position: relative;
+    }
+    .order-table tr:first-child {
+        display: none;
+    }
+}
+
+@media (min-width: 480px) {
+    table {
+        font-size: 1.25rem;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .order-table img {
+        height: 100px;
+        margin: auto;
+        width: 100px;
+        display: block;
+    }
+    .order-table td:first-child {
+        background: rgba(0, 0, 0, 0.1);
+        margin: 0;
+        position: relative;
+        top: 0;
+        transform: translateY(0);
+        width: 100%;
+    }
+    .order-table td:not(:first-child) {
+        margin: 0;
+        padding: 5px 1em;
+        width: 100%;
+    }
+    .order-table td:not(:first-child):before {
+        font-size: 1rem;
+        padding-top: 0.3rem;
+        position: relative;
+    }
+    .order-table td:last-child {
+        padding-bottom: 1rem !important;
+    }
+    .order-table tr {
+        background-color: white!important;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        margin: 1rem 0;
+        padding: 0;
+    }
+    .order-table tr:last-child {
+        border-bottom: none;
+    }
+    .order-table {
+        overflow: visible;
+    }
+    table {
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        border-radius: 4px;
+    }
+    tbody {
+        width: 90%;
+        margin: auto;
+        display: block;
+    }
+}
+
+footer {
+    display: block;
+}
+
+footer section {
+    width: 100%;
+    margin: .5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+footer ul {
+    flex-direction: column;
+    margin: 0;
+    width: 50%;
+}
+
+footer ul:before {
+    font-weight: 700;
+}
+
+.billing-info:before {
+    content: 'BILLING INFORMATION';
+}
+
+.payment-method:before {
+    content: 'PAYMENT METHOD';
+}
+
+/*.shipping-info:before {*/
+/*    content: 'SHIPPING INFORMATION';*/
+/*}*/
+
+.shipping-method:before {
+    content: 'SHIPPING METHOD';
+}

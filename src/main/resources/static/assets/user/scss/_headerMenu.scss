@@ -221,9 +221,9 @@
         }
         .shopping-card{
             position: relative;
-            &::before{
+                &::before{
                 position: absolute;
-                content: "02";
+                content: attr(data-total);
                 width: 25px;
                 height: 25px;
                 background:#00b1ff;

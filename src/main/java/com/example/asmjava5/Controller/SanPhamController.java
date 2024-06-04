@@ -14,11 +14,11 @@ public class SanPhamController {
     private SanPhamServiceImpl sanPhamServiceImpl;
 
     @GetMapping("/product")
-    public String hienThiSanPhamChiTiet(@RequestParam("maSP") String maSP, Model model) {
-        SanPham sp = sanPhamServiceImpl.getSanPhamById(maSP);
-        model.addAttribute("spDeltail",sp);
+    public String hienThiSanPhamChiTiet() {
         return "views/productDeltails";
     }
+
+
 
 
 }

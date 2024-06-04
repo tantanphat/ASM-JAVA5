@@ -1,14 +1,15 @@
 package com.example.asmjava5.Service.ServiceImpl;
 
 import com.example.asmjava5.Entity.KhachHang;
-import com.example.asmjava5.Entity.NhanVien;
-import com.example.asmjava5.Model.request.KhachHangDto;
+import com.example.asmjava5.Model.request.DangKyKhachHang;
+import com.example.asmjava5.Model.request.KhachHangThongTin;
 import com.example.asmjava5.Repository.KhachHangRepository;
 
 import com.example.asmjava5.Service.KhachHangService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +18,7 @@ import java.util.List;
 @Service
 @Transactional
 public class KhachHangServiceImpl implements KhachHangService {
-
+    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     @Autowired
     private KhachHangRepository khachHangRepository;
     @Autowired
@@ -34,7 +35,7 @@ public class KhachHangServiceImpl implements KhachHangService {
     }
 
     @Override
-    public KhachHang updateInfo(KhachHangDto khachHang) {
+    public KhachHang updateInfo(KhachHangThongTin khachHang) {
         KhachHang kh = khachHangRepository.findByEmail(khachHang.getEmail());
         kh.setTenKH(khachHang.getHoTen());
         kh.setDiaChi(khachHang.getDiaChi());
@@ -47,6 +48,7 @@ public class KhachHangServiceImpl implements KhachHangService {
     public KhachHang findBymaKH(String MaKH) {
         return khachHangRepository.findByMaKH(MaKH);
     }
+
 
     public String generateNewMaKH() {
         return jdbcTemplate.queryForObject("SELECT dbo.AUTO_MaKH()", String.class);
@@ -83,5 +85,23 @@ public class KhachHangServiceImpl implements KhachHangService {
         }
     }
 
+    @Override
+    public void dangKyKhachHangMoi(DangKyKhachHang dkkh) {
+        String autoMaKH = khachHangRepository.AUTO_MaKH();
+        KhachHang kh = new KhachHang();
+        kh.setMaKH(autoMaKH);
+        kh.setTenKH(dkkh.getTenKH());
+        kh.setDiaChi(dkkh.getDiaChi());
+        kh.setSdt(dkkh.getSdt());
+        kh.setEmail(dkkh.getEmail());
+        kh.setMatKhau(encoder.encode(dkkh.getMatKhau()));
+        kh.setThanhVien(false);
+        khachHangRepository.insertKH(kh.getTenKH(), kh.getDiaChi(), kh.getSdt(), kh.getEmail(),kh.getMatKhau(), kh.isThanhVien());
+    }
+
+    @Override
+    public String AUTO_MAKH() {
+        return khachHangRepository.AUTO_MaKH();
+    }
 
 }

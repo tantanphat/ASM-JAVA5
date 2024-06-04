@@ -2,7 +2,8 @@ package com.example.asmjava5.Service;
 
 import com.example.asmjava5.Entity.KhachHang;
 import com.example.asmjava5.Entity.NhanVien;
-import com.example.asmjava5.Model.request.KhachHangDto;
+import com.example.asmjava5.Model.request.DangKyKhachHang;
+import com.example.asmjava5.Model.request.KhachHangThongTin;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public interface KhachHangService {
 
     KhachHang getLoginByEmail(String email);
 
-    KhachHang updateInfo(KhachHangDto khachHang);
+    KhachHang updateInfo(KhachHangThongTin khachHang);
 
     KhachHang findBymaKH(String MaKH); //Đổ dữ liệu lên form
 
@@ -20,4 +21,8 @@ public interface KhachHangService {
     KhachHang updateKhachHang(String maKH, KhachHang khachHang);// cập nhật khách hàng
 
     void deleteKhachHang(String maKH);// xóa khách hàng
+
+    void  dangKyKhachHangMoi(DangKyKhachHang dkkh);
+
+    String AUTO_MAKH();
 }

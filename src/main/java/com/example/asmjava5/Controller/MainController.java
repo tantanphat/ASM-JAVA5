@@ -1,10 +1,17 @@
 package com.example.asmjava5.Controller;
 
+import com.example.asmjava5.Constant.SessionAttr;
 import com.example.asmjava5.Entity.DanhMucSP;
+import com.example.asmjava5.Entity.KhachHang;
 import com.example.asmjava5.Entity.SanPham;
+
+import com.example.asmjava5.Service.KhachHangService;
+import com.example.asmjava5.Service.MailService;
 import com.example.asmjava5.Service.ServiceImpl.DanhMucSPServceImpl;
 import com.example.asmjava5.Service.ServiceImpl.KhachHangServiceImpl;
 import com.example.asmjava5.Service.ServiceImpl.SanPhamServiceImpl;
+import com.example.asmjava5.Utils.ExcelKhachHangUtils;
+import com.example.asmjava5.Utils.SessionUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -16,27 +23,27 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class MainController {
+    private ExcelKhachHangUtils excel;
     @Autowired
     HttpServletRequest req;
-
     @Autowired
     HttpServletResponse resp;
 
-    @Autowired
-    HttpSession session;
-
-    @Autowired
-    private KhachHangServiceImpl khachHangServiceImpl;
-
+    SessionUtils sessionUtils;
     @Autowired
     private SanPhamServiceImpl sanPhamServiceImpl;
-
     @Autowired
     private DanhMucSPServceImpl danhMucSPServceImpl;
+    @Autowired
+    private MailService mailService;
+    @Autowired
+    private KhachHangService khachHangService;
 
     @GetMapping("/Trang-chu")
     public String hienThiAllSP(Model model) {
@@ -56,12 +63,16 @@ public class MainController {
 //        System.out.println("User Name: " + userName);
 //        KhachHangDetails loginedUser = (KhachHangDetails) ((Authentication) principal).getPrincipal();
 //        System.out.println("Hello" +loginedUser.getUsername());
-        SecurityContext context = SecurityContextHolder.getContext();
-        Authentication authentication = context.getAuthentication();
-        if (authentication != null && authentication.isAuthenticated()) {
-            String username = authentication.getName();
-            model.addAttribute("CURRENT_USER",username);
-        }
+//        SecurityContext context = SecurityContextHolder.getContext();
+//        Authentication authentication = context.getAuthentication();
+//        if (authentication != null && authentication.isAuthenticated()) {
+//            String username = authentication.getName();
+//            model.addAttribute("CURRENT_USER",username);
+//        }
+//        System.out.println("Hello "+sessionUtils.laySession(SessionAttr.CURRENT_USER));
+
+
+
 
         return "views/index";
     }
@@ -76,19 +87,16 @@ public class MainController {
         return "views/productDeltails";
     }
 
-    @GetMapping("/views/demoLayout")
-    public String cartDel() {
-        return "views/demoLayout";
-    }
-
-    @GetMapping("/login")
-    String login() {
-        return "views/demo/login";
-    }
 
     @GetMapping("/error")
     String error() {
         return "views/demo/error";
     }
+
+    @GetMapping("/Lien-he")
+    public String hienThiLienHe() {
+        return "views/contact";
+    }
+
 }
 

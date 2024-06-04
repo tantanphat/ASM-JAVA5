@@ -1,6 +1,7 @@
 package com.example.asmjava5.Repository;
 
 import com.example.asmjava5.Entity.HoaDonChiTiet;
+import jakarta.persistence.NamedStoredProcedureQueries;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -11,5 +12,10 @@ public interface HoaDonChiTietRepository extends JpaRepository<HoaDonChiTiet, Lo
     HoaDonChiTiet findByMaHDCT(int MaHDCT);
 
     @Query("SELECT hdct FROM HoaDonChiTiet hdct WHERE hdct.hdct_maHDBan = ?1")
-    List<HoaDonChiTiet> findAllByMaHDBan(String MaHDBan);  // Use String type here
+    List<HoaDonChiTiet> findAllByMaHDBan(String MaHDBan);
+
+    @Query("UPDATE HoaDonChiTiet SET hdct_maSP = ?1,hdct_soLuong = ?2,hdct_giamGia = ?3 WHERE hdct_maHDCT = ?4")
+    void updateHoaDonChiTiet( String maSP,int SoLuong, Double GiamGia, int MaHDCT);
+
+
 }

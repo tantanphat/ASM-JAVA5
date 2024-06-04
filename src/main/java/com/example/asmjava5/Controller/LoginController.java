@@ -3,8 +3,10 @@ package com.example.asmjava5.Controller;
 
 
 
+import com.example.asmjava5.Constant.SessionAttr;
 import com.example.asmjava5.Model.request.LoginRequest;
 import com.example.asmjava5.Service.ServiceImpl.KhachHangServiceImpl;
+import com.example.asmjava5.Utils.SessionUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ import java.security.Principal;
 
 @Controller
 public class LoginController {
+    private SessionUtils session;
     @Autowired
     HttpServletRequest request;
     @Autowired
@@ -69,6 +72,7 @@ public class LoginController {
             context.setAuthentication(authentication);//Tạo một SecurityContextvà đặt Authenticationtrong đó
             securityContextHolderStrategy.setContext(context);
             securityContextRepository.saveContext(context, request, response);//Lưu SecurityContexttrongSecurityContextRepository
+            session.addSession(SessionAttr.CURRENT_USER,loginRequest.getUsername());
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
@@ -90,6 +94,8 @@ public class LoginController {
     public String doGetAdminLoginController() {
         return "/views/Admin/adminLogin";
     }
+
+
 
 
 }

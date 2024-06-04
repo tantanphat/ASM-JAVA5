@@ -1,21 +1,29 @@
 package com.example.asmjava5.Controller;
 
+import com.example.asmjava5.Entity.NhanVien;
+import com.example.asmjava5.Service.NhanVienService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
 
 public class AdminController {
+    @Autowired
+    private NhanVienService nhanVienService;
 
     @GetMapping("")
     @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")

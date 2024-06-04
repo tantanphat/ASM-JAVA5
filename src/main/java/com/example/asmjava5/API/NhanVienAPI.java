@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,27 +20,28 @@ import java.util.Map;
 public class NhanVienAPI {
 
     @Autowired
-    private NhanVienService nvServiceImpl;
+    private NhanVienService nvService;
+
 
     @GetMapping("")
     public List<NhanVien> getAllNhanVien() {
-        return nvServiceImpl.getALlNhanVien();
+        return nvService.getALlNhanVien();
     }
 
     @GetMapping("/{manv}")
     public NhanVien getOneNhanVien(@PathVariable("manv") String manv) {
-        return nvServiceImpl.findByMaNV(manv);
+        return nvService.findByMaNV(manv);
     }
 
     @PostMapping("/add")
     public ResponseEntity<NhanVien> addNhanVien(@RequestBody NhanVien nhanVien) {
-        NhanVien newNhanVien = nvServiceImpl.addNhanVien(nhanVien);
+        NhanVien newNhanVien = nvService.addNhanVien(nhanVien);
         return ResponseEntity.ok(newNhanVien);
     }
 
     @PutMapping("/{maNV}")
     public ResponseEntity<NhanVien> updateNhanVien(@PathVariable("maNV") String maNV, @RequestBody NhanVien nhanVien) {
-        NhanVien updatedNhanVien = nvServiceImpl.updateNhanVien(maNV, nhanVien);
+        NhanVien updatedNhanVien = nvService.updateNhanVien(maNV, nhanVien);
         if (updatedNhanVien != null) {
             return ResponseEntity.ok(updatedNhanVien);
         } else {
@@ -49,7 +51,17 @@ public class NhanVienAPI {
 
     @DeleteMapping("/{maNV}")
     public ResponseEntity<Void> deleteNhanVien(@PathVariable("maNV") String maNV) {
-        nvServiceImpl.deleteNhanVien(maNV);
+        nvService.deleteNhanVien(maNV);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/listMaNV")
+    public List<String> listMaNV() {
+        List<NhanVien> nv = nvService.getALlNhanVien();
+        List<String> manv = new ArrayList<>();
+        for (NhanVien v : nv) {
+            manv.add(v.getMaNV());
+        }
+        return manv;
     }
 }

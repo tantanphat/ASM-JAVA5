@@ -8,19 +8,18 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
@@ -113,9 +112,9 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests(authorize  -> authorize
+                .authorizeHttpRequests(auth  -> auth
                         .requestMatchers("/user/**","/cart","/cart/**").authenticated() // Cho phép truy cập vào tài nguyên tĩnh
-                        .requestMatchers("/user/**","/cart").hasRole("USER")
+                        .requestMatchers("/user/**","/cart","/cart/**").hasRole("USER")
                                 .anyRequest().permitAll() // Yêu cầu xác thực cho tất cả các yêu cầu khác
 
                 )
@@ -128,6 +127,16 @@ public class WebSecurityConfig {
                                 .permitAll() // Cho phép tất cả truy cập vào trang login
                                 .failureHandler(authenticationFailureHandler())
                 )
+//                .oauth2Login(oauth2Login ->
+//                        oauth2Login
+////                                .userInfoEndpoint(userInfoEndpoint ->
+////                                        userInfoEndpoint
+////                                                .userService(oAuth2UserService()
+////                                                )
+////                                )
+//                                .successHandler(oAuth2AuthenticationSuccessHandler())
+//                )
+//                .oauth2Client(Customizer.withDefaults())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/Dang-nhap")
@@ -138,11 +147,12 @@ public class WebSecurityConfig {
                         rememberMe
                                 .tokenRepository(persistentTokenRepository()) // Sử dụng persistentTokenRepository để lưu trữ token
                                 .tokenValiditySeconds(1 * 24 * 60 * 60) // Thời gian tồn tại của token là 24 giờ
+                )
+                .sessionManagement(sessionManagement ->
+                        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+
                 );
-//                .sessionManagement(sessionManagement ->
-//                        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.ALWAYS) // Luôn tạo session mới
-//
-//                )
+
 //                .sessionManagement(sessionManagement ->
 //                        sessionManagement
 //                                .maximumSessions(1)
@@ -153,6 +163,19 @@ public class WebSecurityConfig {
 
         return http.build();
     }
+
+//    //Tải thông tin người dùng khi đăng nhập bằng google
+//    @Bean
+//    public OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserService() {
+//        return new DefaultOAuth2UserService();
+//    }
+//
+//
+//    //Xử lý thông tin khi đăng nhập bằng google
+//    @Bean
+//    public AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler() {
+//        return new CustomOAuth2AuthenticationSuccessHandler();
+//    }
 
 
 }

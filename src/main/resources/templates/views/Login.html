@@ -8,23 +8,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" th:href="@{/site.webmanifest}">
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/assets/img/favicon.ico}">
-    <th:block th:include="/common/head :: head"></th:block>
+    <th:block th:include="~{/common/head :: head}"></th:block>
     <link rel="stylesheet" type="text/css" th:href="@{/assets/user/css/login.css}">
 
 </head>
 <body>
-    <div th:include="/common/header :: header"></div>
+<div th:replace="~{/common/header :: header}"></div>
+
 
 <main >
     <div class="container" id="container">
         <div class="form-container sign-up-container">
-            <form >
+            <form id="DangKyFrom">
                 <h1>Create Account</h1>
-                <input type="text" placeholder="Username" name="username"/>
-                <input type="password" placeholder="Password" name="password"/>
-                <input type="text" placeholder="Phone" name="phone"/>
-                <input type="text" placeholder="Email" name="email"/>
-                <input type="text" placeholder="Address" name="address"/>
+                <input type="text" placeholder="Username" id="hoTen" required/>
+                <input type="password" placeholder="Password" id="matKhau" required/>
+                <input type="text" placeholder="Phone" id="phone" required/>
+                <input type="email" placeholder="Email" id="email" required/>
+                <input type="text" placeholder="Address" id="address" required/>
                 <button>Sign Up</button>
             </form>
         </div>
@@ -33,21 +34,23 @@
                 <h1>Sign in</h1>
                 <div class="social-container">
                     <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                    <a th:href="@{/oauth2/authorization/google}" class="social"><i class="fab fa-google-plus-g"></i></a>
                     <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
                 </div>
 
                 <span>or use your account</span>
-                <input type="email" name="username"  id="username" placeholder="Email"/>
+                <input type="email"   id="username" placeholder="Email"/>
 
-                <input type="password" name="password" id="password" placeholder="Password"/>
+                <input type="password" id="password" placeholder="Password"/>
 
                 <a href="#">Forgot your password?</a>
                 <button type="submit">Sign In</button>
             </form>
         </div>
+
         <div class="overlay-container">
             <div class="overlay">
+
                 <div class="overlay-panel overlay-left">
                     <h1>Welcome Back!</h1>
                     <p>To keep connected with us please login with your personal info</p>
@@ -80,6 +83,15 @@
 
 
     $(document).ready(function() {
+        function validateHoTen(hoTen) {
+            return /^[a-zA-ZÀ-ỹ\s]+$/.test(hoTen);
+        }
+
+        function validatePhone(phone) {
+            return /^[0-9]{10}$/.test(phone);
+        }
+
+        //Đăng nhập
         $('#loginForm').submit(function(event) {
             event.preventDefault();
 
@@ -137,6 +149,83 @@
                 }
             });
         });
+
+        //Đăng ký
+        $('#DangKyFrom').submit(function(event) {
+            event.preventDefault();
+            let hoTen = $('#hoTen').val().trim();
+            let matKhau = $('#matKhau').val().trim();
+            let phone = $('#phone').val().trim();
+            let email = $('#email').val().trim();
+            let address = $('#address').val().trim();
+            if (!validateHoTen(hoTen)) {
+                Swal.fire("Họ tên không được chứa số và kí tự đặc biệt!");
+                return;
+            }
+            if (matKhau.length < 9){
+                Swal.fire("Mật khẩu phải tối thiểu 9 kí tự!");
+                return;
+            }
+            if (!validatePhone(phone)) {
+                Swal.fire("SDT phải 10 số");
+                return;
+            }
+            var data = {
+                diaChi: address,
+                email: email,
+                matKhau: matKhau,
+                sdt: phone,
+                tenKH: hoTen
+            };
+
+            $.ajax({
+                type: 'GET',
+                url: '/api/khach-hang/check-khach-hang',
+                data: { mail: email },
+                contentType: 'application/x-www-form-urlencoded',
+                success: function(response) {
+                    if (response == true ) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "Email đã tồn tại"
+                        });
+                    } else {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/api/khach-hang/add-khach-hang',
+                            data: JSON.stringify(data),
+                            contentType: 'application/json',
+                            dataType: 'json',
+                            success: function(response) {
+                                Swal.fire({
+                                    position: "top-end",
+                                    icon: "success",
+                                    title: "Đăng ký thành công",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                }).then(function() {
+                                    container.classList.remove("right-panel-active");
+                                    $('#username').val(email);
+                                    $('#password').val(matKhau);
+
+                                    $('#hoTen').val(null);
+                                    $('#matKhau').val(null);
+                                    $('#phone').val(null);
+                                    $('#email').val(null);
+                                    $('#address').val(null);
+
+                                });
+
+                            }
+                        })
+                    }
+                },
+                error: function(jqXHR, exception, exceptionText) {
+
+                }
+            });
+        })
     });
 </script>
 </body>

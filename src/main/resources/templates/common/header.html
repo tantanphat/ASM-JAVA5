@@ -23,13 +23,15 @@
                                         <img th:src="@{/assets/user/img/icon/header_icon.png}" alt="">
                                     </div>
                                 </div>
-                                <div class="header-info-right col align-self-end" >
-                                    <ul class="text-right   ">
-                                        <li sec:authorize="hasRole('ROLE_USER')"><a th:href="@{/user/myaccount}">My Account </a></li>
-                                        <li><a href="product_list.html">Wish List  </a></li>
+
+                                <div class="header-info-right col align-self-end">
+                                    <ul class="text-right">
+                                        <li sec:authorize="hasRole('ROLE_USER')"><a th:href="@{/user/myaccount}">My
+                                            Account </a></li>
+                                        <li><a href="product_list.html">Wish List </a></li>
                                         <li><a href="">Shopping</a></li>
                                         <li><a href="">Cart</a></li>
-                                        <li sec:authorize="hasRole('ROLE_USER')"><a th:href="@{/logout}" >Logout</a></li>
+                                        <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -42,7 +44,8 @@
                             <!-- Logo -->
                             <div class="col-xl-1 col-lg-1 col-md-1 col-sm-3">
                                 <div class="logo">
-                                    <a th:href="@{/Trang-chu}"><img th:src="@{/assets/user/img/logo/logo.png}" alt=""></a>
+                                    <a th:href="@{/Trang-chu}"><img th:src="@{/assets/user/img/logo/logo.png}"
+                                                                    alt=""></a>
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-8 col-md-7 col-sm-5">
@@ -51,8 +54,8 @@
                                     <nav>
                                         <ul id="navigation">
                                             <li><a th:href="@{/Trang-chu}">Home</a></li>
-                                            <li><a >Catagori</a>
-                                                <ul class="submenu" >
+                                            <li><a>Catagori</a>
+                                                <ul class="submenu">
                                                     <li><a class="dropdown-item" href="#">Áo</a></li>
                                                     <li><a class="dropdown-item" href="#">Quần</a></li>
                                                     <li><a class="dropdown-item" href="#">Mũ nón</a></li>
@@ -61,13 +64,13 @@
                                                     <li><a class="dropdown-item" href="#">Khác</a></li>
                                                 </ul>
                                             </li>
-                                            <li class="hot"><a href="#">Latest</a>
-                                                <ul class="submenu">
-                                                    <li><a href="product_list.html"> Product list</a></li>
-                                                    <li><a href="single-product.html"> Product Details</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="/Lien-he">Contact</a></li>
+<!--                                            <li class="hot"><a href="#">Latest</a>-->
+<!--                                                <ul class="submenu">-->
+<!--                                                    <li><a href="product_list.html"> Product list</a></li>-->
+<!--                                                    <li><a href="single-product.html"> Product Details</a></li>-->
+<!--                                                </ul>-->
+<!--                                            </li>-->
+                                            <li><a th:href="@{/Lien-he}">Contact</a></li>
                                             <li><a th:href="@{/Gioi-thieu}">Introduce</a></li>
                                         </ul>
                                     </nav>
@@ -91,14 +94,61 @@
                                     </li>
                                     <li>
                                         <div class="shopping-card">
-                                            <a href="/cart"><i class="fas fa-shopping-cart"></i></a>
+                                            <a th:href="@{/cart}"><i class="fas fa-shopping-cart"></i></a>
                                         </div>
                                     </li>
                                     <!-- Hiển thị nút "Hello" và chuyển hướng đến trang Login nếu có người dùng trong session -->
                                     <li class="d-none d-lg-block" sec:authorize="hasRole('ROLE_USER')">
-                                        <span th:text="'Hello '+ ${#authentication.name}"></span>
+
+                                        <button class="" style=" background: none; border: none; padding: 0; margin: 0; color: inherit; font: inherit;" data-bs-toggle="offcanvas"
+                                                data-bs-target="#offcanvaMenu" aria-controls="offcanvaMenu">
+                                            <img th:src="@{https://i.pinimg.com/564x/1e/06/29/1e062913ddf3ca649e35db67fd146fb8.jpg}" alt="mdo"
+                                                 width="64" height="64" class="rounded-circle border border-black">
+                                        </button>
+
+                                        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvaMenu"
+                                             aria-labelledby="offcanvaMenuLabel" style="width: 20%;">
+                                            <div class="offcanvas-header">
+                                                <div class="offcanvas-title d-flex align-items-center justify-content-center w-100"
+                                                     id="offcanvaMenuLabel">
+                                                    <a class="text-center">
+                                                        <img th:src="@{https://i.pinimg.com/564x/1e/06/29/1e062913ddf3ca649e35db67fd146fb8.jpg}"
+                                                             alt="mdo" width="32"
+                                                             height="32" class="rounded-circle border border-black"/>
+                                                    </a>
+                                                </div>
+
+                                            </div>
+                                            <div class="offcanvas-body">
+                                                <div class="menu-user ">
+                                                    <div class="text-center mb-5">
+                                                        <strong class="text-black" th:text="${#authentication.name}"></strong>
+                                                    </div>
+                                                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link active" aria-current="page" th:href="@{/user/myaccount}">My profile</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" href="#">Link</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" href="#">Change Password</a>
+                                                        </li>
+                                                        <li>
+                                                            <hr class="dropdown-divider">
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" th:href="@{/logout}">Logout</a>
+                                                        </li>
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
                                     </li>
-                                    
+
                                     <li class="d-none d-lg-block" sec:authorize="!isAuthenticated()">
                                         <a th:href="@{/Dang-nhap}" class="btn header-btn">Sign in</a>
                                     </li>
@@ -113,6 +163,6 @@
                 </div>
             </div>
         </div>
-        <!-- Header End -->
+
     </header>
 </div>
