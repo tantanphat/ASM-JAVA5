@@ -99,4 +99,9 @@ public class KhachHangServiceImpl implements KhachHangService {
         khachHangRepository.insertKH(kh.getTenKH(), kh.getDiaChi(), kh.getSdt(), kh.getEmail(),kh.getMatKhau(), kh.isThanhVien());
     }
 
+    @Override
+    public String AUTO_MAKH() {
+        return khachHangRepository.AUTO_MaKH();
+    }
+
 }

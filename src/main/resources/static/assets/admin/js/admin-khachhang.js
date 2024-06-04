@@ -36,14 +36,15 @@ $(document).ready(function() {
     $.ajax({
         url: "/api/khach-hang",
         type: "GET",
-        headers: {
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBWZXIiOiIwLjAuMCIsImV4cCI6NDcyNjM4OTEyMiwibG9jYWxlIjoiIiwibWFzdGVyVmVyIjoiIiwicGxhdGZvcm0iOiIiLCJwbGF0Zm9ybVZlciI6IiIsInVzZXJJZCI6IiJ9.QIZbmB5_9Xlap_gDhjETfMI6EAmR15yBtIQkWFWJkrg',
-        },
+        // headers: {
+        //     'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBWZXIiOiIwLjAuMCIsImV4cCI6NDcyNjM4OTEyMiwibG9jYWxlIjoiIiwibWFzdGVyVmVyIjoiIiwicGxhdGZvcm0iOiIiLCJwbGF0Zm9ybVZlciI6IiIsInVzZXJJZCI6IiJ9.QIZbmB5_9Xlap_gDhjETfMI6EAmR15yBtIQkWFWJkrg',
+        // },
         success: function(response) {
-            // Xử lý thành công, đổ dữ liệu vào bảng
+
             var tbody = $('#khach-hang-table tbody');
             tbody.empty(); // Xóa nội dung cũ của bảng
             response.forEach(function(item) {
+                console.log(item)
                 var row = $('<tr></tr>');
                 row.append('<td><a href="/admin/khach-hang/' + item.maKH + '">' + item.maKH+ '</td>'); // Mã khách hàng
                 row.append('<td>' + item.tenKH + '</td>'); // Tên khách hàng

@@ -4,7 +4,7 @@ import com.example.asmjava5.Constant.SessionAttr;
 import com.example.asmjava5.Entity.DanhMucSP;
 import com.example.asmjava5.Entity.KhachHang;
 import com.example.asmjava5.Entity.SanPham;
-import com.example.asmjava5.Security.service.CustomOAuth2User;
+
 import com.example.asmjava5.Service.KhachHangService;
 import com.example.asmjava5.Service.MailService;
 import com.example.asmjava5.Service.ServiceImpl.DanhMucSPServceImpl;
@@ -19,8 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

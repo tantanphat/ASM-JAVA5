@@ -101,90 +101,176 @@
     <div class="container-fluid mb-4">
         <div class="row">
             <div class="col-12">
-                <form enctype="multipart/form-data" id="formUpdate"layout:fragment="hoaDon">
-                    <input name="__RequestVerificationToken" type="hidden">
-                    <h1 class="h2 mb-3 mt-2 text-dark d-flex justify-content-center align-items-center">Hóa Đơn</h1>
-                    <div class="tabs">
-                        <ul class="nav nav-underline">
-                            <li class="nav-item">
-                                <a id="linkBill" class="nav-link active" aria-current="page" th:href="@{/admin/hoa-don}">Hóa Đơn</a>
-                            </li>
-                            <li class="nav-item">
-                                <a id="linkBillChiTiet" class="nav-link" th:href="@{/admin/hoa-don-chi-tiet}">Hóa Đơn chi tiết</a>
-                            </li>
+                <ul class="tabs">
+                    <li class="active" rel="tab1">Hóa đơn</li>
+                    <li class="" rel="tab2">Hóa đơn chi tiết</li>
+                </ul>
+                <div class="tab_container">
+                    <h3 class="d_active tab_drawer_heading" rel="tab1">Tab 1</h3>
+                    <div id="tab1" class="tab_content">
+                        <h1 class="h2 mb-3 mt-2 text-dark d-flex justify-content-center align-items-center">Hóa Đơn</h1>
+                        <form enctype="multipart/form-data" id="hoaDonForm" class="">
+                            <div class="p-3 p-lg-5">
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label for="MaHD" class="text-black">Mã hoá đơn <span class="text-danger">*</span></label>
+                                        <input type="text" class="required form-control" id="MaHD"  disabled>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="MaKH_HD" class="text-black">Mã khách hàng <span class="text-danger">*</span></label>
+                                        <input type="text" class="required form-control" id="MaKH_HD" disabled>
+                                    </div>
 
-                        </ul>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label for="Date" class="text-black">Ngày bán <span class="text-danger">*</span></label>
+                                        <input type="date" class="required form-control" id="Date" placeholder="MM/DD/YYYY" disabled >
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="TenKH_HD" class="form-label">Tên khách hàng <span class="text-danger">*</span></label>
+                                        <input type="text" class="required form-control" id="TenKH_HD" disabled>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label for="MaNV_HD" class="text-black">Mã nhân viên <span class="text-danger">*</span></label>
+                                        <select id="MaNV_HD" class="form-select" aria-label="Default select example">
+<!--                                            <option th:each="maNhanVien : *{manv}" th:value="${maNhanVien}" th:text="${maNhanVien}" th:selected="${maNhanVien == 'NV001'}"></option>-->
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="Address_HD" class="text-black">Địa chỉ <span class="text-danger">*</span></label>
+                                        <input type="text" class="required form-control" id="Address_HD" disabled>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label for="TenNV_HD" class="text-black">Tên nhân viên <span class="text-danger">*</span></label>
+                                        <input type="text" class="required form-control" id="TenNV_HD" disabled >
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="Phone_HD" class="text-black">Số điện thoại <span class="text-danger">*</span></label>
+                                        <input type="text" class="required form-control" id="Phone_HD" disabled>
+                                    </div>
+
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="Mail_KH" class="text-black">Email <span class="text-danger">*</span></label>
+                                        <input type="email" class="required form-control" id="Mail_KH" disabled>
+                                    </div>
+                                </div>
+                                <div class="button-container">
+                                    <button type="button" class="btn btn-outline-success" id="createHD" >Save</button>
+                                    <button type="button" class="btn btn-outline-success" id="deleteHD" >Delete</button>
+                                    <button type="button" class="btn btn-outline-success" id="editHD" >Edit</button>
+                                    <button type="button" class="btn btn-outline-success" id="clearHD">Clear</button>
+                                </div>
+                                <br>
+                                <h2 class="h3 mb-3 mt-4 text-black d-flex justify-content-center align-items-center">Danh sách</h2>
+                            </div>
+                        </form>
+                        <table id="HoaDon-Table" class="col-md-12" border="1">
+                            <thead>
+                            <tr>
+                                <th>Mã hóa đơn</th>
+                                <th>Mã nhân viên</th>
+                                <th>Ngày bán</th>
+                                <th>Mã khách hàng</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="p-3 p-lg-5 border">
-                        <div class="form-group row">
-                            <div class="col-md-6">
-                                <label for="MaHD" class="text-black">Mã hoá đơn <span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="MaHD"  disabled>
+                    <!-- #tab1 -->
+                    <h3 class="tab_drawer_heading"  rel="tab2" >Tab 2</h3>
+                    <div id="tab2" class="tab_content">
+                        <form enctype="multipart/form-data" id="hoaDonChiTietForm" layout:fragment="hoaDon">
+                            <h1 class="h2 mb-3 mt-2 text-dark d-flex justify-content-center align-items-center">Hóa Đơn Chi Tiết</h1>
+                            <div class="tabs">
                             </div>
-                            <div class="col-md-6">
-                                <label for="TenKH_HD" class="form-label">Tên khách hàng <span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="TenKH_HD">
-                            </div>
-                        </div>
+                            <div class="p-3 p-lg-5 border" id="HoaDonChiTietContainer">
+                                <div class="form-group row">
+                                    <div class="col-md-6" >
+                                        <label for="MHDCT" class="text-black">Mã hóa đơn chi tiết <span class="text-danger">*</span></label>
+                                        <input type="text" class="required form-control" id="MHDCT"  disabled>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="DonGia" class="form-label">Đơn Giá<span class="text-danger">*</span></label>
+                                        <input type="text" class="required form-control" id="DonGia" disabled>
+                                    </div>
+                                </div>
 
-                        <div class="form-group row">
-                            <div class="col-md-6">
-                                <label for="Date" class="text-black">Ngày bán <span class="text-danger">*</span></label>
-                                <input type="date" class="required form-control" id="Date" placeholder="MM/DD/YYYY" >
-                            </div>
-                            <div class="col-md-6">
-                                <label for="MaKH_HD" class="text-black">Mã khách hàng <span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="MaKH_HD">
-                            </div>
-                        </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label for="TenSP" class="text-black">Tên Sản Phẩm <span class="text-danger">*</span></label>
+                                        <input type="text" class="required form-control" id="TenSP" disabled>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="Quantity" class="text-black">Số Lượng<span class="text-danger">*</span></label>
+                                        <input type="number" min="1" class="required form-control" id="Quantity">
+                                    </div>
+                                </div>
 
-                        <div class="form-group row">
-                            <div class="col-md-6">
-                                <label for="MaNV_HD" class="text-black">Mã nhân viên <span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="MaNV_HD" >
-                            </div>
-                            <div class="col-md-6">
-                                <label for="Address_HD" class="text-black">Địa chỉ <span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="Address_HD">
-                            </div>
-                        </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label for="MaSP_CT" class="text-black">Mã Sản Phẩm <span class="text-danger">*</span></label>
+                                        <input type="text" class="required form-control" id="MaSP_CT" >
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="Sale" class="text-black">Giảm Giá <span class="text-danger">*</span></label>
+                                        <input type="text" class="required form-control" id="Sale">
+                                    </div>
+                                </div>
 
-                        <div class="form-group row">
-                            <div class="col-md-6">
-                                <label for="TenNV_HD" class="text-black">Tên nhân viên <span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="TenNV_HD" >
+                                <div class="form-group row">
+
+                                    <div class="col-md-6">
+                                        <label for="ThanhTien" class="text-black">Thành Tiền <span class="text-danger">*</span></label>
+                                        <input type="text" class="required form-control" id="ThanhTien" disabled>
+                                    </div>
+                                </div>
+                                <div class="button-container">
+                                    <button type="button" class="btn btn-outline-success" id="hdct_add">Add</button>
+                                    <button type="button" class="btn btn-outline-success" id="updateHDCT">Update</button>
+                                    <button type="button" class="btn btn-outline-success" id="deleteHDCT">Delete</button>
+                                </div>
+                                <br>
+                                <h2 class="h3 mb-3 mt-4 text-black d-flex justify-content-center align-items-center">Danh sách</h2>
                             </div>
-                            <div class="col-md-6">
-                                <label for="Phone_HD" class="text-black">Số điện thoại <span class="text-danger">*</span></label>
-                                <input type="text" class="required form-control" id="Phone_HD" >
-                            </div>
-                        </div>
-                        <div class="button-container">
-                            <button type="button" class="btn btn-outline-success" onclick="btnCreatHD_click()">Save</button>
-                            <button type="button" class="btn btn-outline-success" onclick="btnClearHD_click()">Edit</button>
-                            <button type="button" class="btn btn-outline-success" onclick="btnUpdateHD_click()">Update</button>
-                            <button type="button" class="btn btn-outline-success" onclick="btnDeleteHD_click()">Delete</button>
-                        </div>
-                        <br>
-                        <h2 class="h3 mb-3 mt-4 text-black d-flex justify-content-center align-items-center">Danh sách</h2>
+                        </form>
+                        <table id="hoadonchitiet-Table" class="col-md-12" border="1">
+                            <thead>
+                            <tr>
+                                <th>Mã HDCT</th>
+                                <th>Mã Hóa Đơn</th>
+                                <th>Mã sản phẩm</th>
+                                <th>Đơn Giá</th>
+                                <th>Số lượng</th>
+                                <th>Giảm Giá</th>
+                                <th>Thành Tiền</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
-                </form>
-                <table id="HoaDon-Table" class="col-md-12" border="1">
-                    <thead>
-                    <tr>
-                        <th>Mã hóa đơn</th>
-                        <th>Mã nhân viên</th>
-                        <th>Ngày bán</th>
-                        <th>Mã khách hàng</th>
-<!--                        <th>Tổng cộng</th>-->
-                    </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
+                    <!-- #tab2 -->
+
+                </div>
+                <!-- .tab_container -->
+            </div>
+
             </div>
         </div>
-    </div>
 </article>
 </body>
 </html>

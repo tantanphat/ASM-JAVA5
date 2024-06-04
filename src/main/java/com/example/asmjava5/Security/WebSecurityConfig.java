@@ -17,10 +17,6 @@ import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -118,7 +114,7 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests(auth  -> auth
                         .requestMatchers("/user/**","/cart","/cart/**").authenticated() // Cho phép truy cập vào tài nguyên tĩnh
-                        .requestMatchers("/user/**","/cart").hasRole("USER")
+                        .requestMatchers("/user/**","/cart","/cart/**").hasRole("USER")
                                 .anyRequest().permitAll() // Yêu cầu xác thực cho tất cả các yêu cầu khác
 
                 )
@@ -140,7 +136,7 @@ public class WebSecurityConfig {
 ////                                )
 //                                .successHandler(oAuth2AuthenticationSuccessHandler())
 //                )
-                .oauth2Client(Customizer.withDefaults())
+//                .oauth2Client(Customizer.withDefaults())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/Dang-nhap")

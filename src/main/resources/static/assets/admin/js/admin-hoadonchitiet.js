@@ -12,10 +12,10 @@ $(document).ready(function() {
             $('#MHDCT').val(data.hdct_maHDCT);
             $('#DonGia').val(data.sanPham.giaBan*100 + 'đ');
             $('#TenSP').val(data.sanPham.tenSP);
-            $('#Quantity').val(data.sanPham.soLuong);
-            $('#MaSP_CT').val(data.sanPham.maSP);
+            $('#Quantity').val(data.hdct_soLuong);
+            $('#MaSP_CT').val(data.hdct.maSP);
             $('#Sale').val(data.hdct_giamGia);
-            $('#ThanhTien').val((data.sanPham.soLuong*data.sanPham.giaBan)*(100-(data.hdct_giamGia)) + 'đ');
+            $('#ThanhTien').val((data.hdct.soLuong*data.sanPham.giaBan)*(100-(data.hdct_giamGia)) + 'đ');
             var formContainer = document.getElementById('formUpdate');
             formContainer.scrollIntoView({ behavior: 'smooth' });
         }

@@ -17,7 +17,7 @@ public class HoaDonChiTiet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MaHDCT")
     private Integer hdct_maHDCT;
-    @Column(name = "MaHDBan")
+    @Column(name = "MaHDBan" ,nullable = true)
     private String hdct_maHDBan;
     @Column(name = "MaSP")
     private String hdct_maSP;
@@ -26,7 +26,12 @@ public class HoaDonChiTiet {
     @Column(name = "GiamGia")
     private Double hdct_giamGia;
 
-    @ManyToOne
+//    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+//    @JoinColumn(name="MaHDBan", referencedColumnName = "MaHDBan", insertable = false, updatable = false)
+//    @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
+//    private HoaDon hoaDon;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="MaSP", referencedColumnName = "MaSP", insertable = false, updatable = false)
     @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
     private SanPham sanPham;

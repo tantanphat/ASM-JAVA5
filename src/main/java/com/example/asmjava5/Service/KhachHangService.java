@@ -23,4 +23,6 @@ public interface KhachHangService {
     void deleteKhachHang(String maKH);// xóa khách hàng
 
     void  dangKyKhachHangMoi(DangKyKhachHang dkkh);
+
+    String AUTO_MAKH();
 }

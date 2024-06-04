@@ -1,5 +1,6 @@
 package com.example.asmjava5.Service.ServiceImpl;
 
+import com.example.asmjava5.Model.request.TimKiemSP;
 import com.example.asmjava5.Repository.SanPhamRepository;
 import com.example.asmjava5.Entity.SanPham;
 import com.example.asmjava5.Service.SanPhamService;
@@ -29,5 +30,13 @@ public class SanPhamServiceImpl implements SanPhamService {
     public SanPham getSanPhamById(String maSP) {
         return sanPhamRepository.findSanPhambyMaSP(maSP);
     }
+
+    @Override
+    public TimKiemSP timSPinHDCCT(String masp) {
+        SanPham sp= sanPhamRepository.findSanPhambyMaSP(masp);
+        TimKiemSP tk = new TimKiemSP(sp.getTenSP(), sp.getGiaBan());
+        return tk;
+    }
+
 
 }

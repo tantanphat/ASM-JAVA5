@@ -37,4 +37,8 @@ public class KhachHang {
     @Column(name = "Thanhvien")
     private boolean thanhVien = false;
 
+//    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+//    @JoinColumn(name="MaKH", referencedColumnName = "MaKH")
+//    private List<HoaDon> hoaDon;
+
 }
