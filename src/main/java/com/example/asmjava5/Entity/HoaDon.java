@@ -29,11 +29,6 @@ public class HoaDon {
     @Column(name = "MaKH", nullable = false, length = 10)
     private String hd_MaKH;
 
-    @OneToMany
-    @JoinColumn(name="MaHDBan", referencedColumnName = "MaHDBan")
-    @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
-    private List<HoaDonChiTiet> hoaDonChiTiet;
-
     @ManyToOne
     @JoinColumn(name="MaNV", referencedColumnName = "MaNV", insertable = false, updatable = false)
     @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})

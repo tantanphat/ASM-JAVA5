@@ -4,20 +4,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Estore</title>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <link rel="stylesheet" th:href="@{Admin/css/styles.css}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .sidebar {
+            background-color: #343a40;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        .sidebar h2 {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        .user-info {
+            margin-bottom: 20px;
+        }
+        .nav-underline .nav-link {
+            color: #007bff;
+        }
+        .nav-underline .nav-link.active {
+            color: #495057;
+        }
+        .tabs {
+            margin-top: 20px;
+        }
+        .report {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .report .search {
+            margin-bottom: 20px;
+        }
+        .report-content h3 {
+            margin-top: 20px;
+        }
+        .table {
+            width: 100%;
+            margin-bottom: 1rem;
+            color: #212529;
+            border-collapse: collapse;
+        }
+        .table th,
+        .table td {
+            padding: 0.75rem;
+            vertical-align: top;
+            border-top: 1px solid #dee2e6;
+        }
+        .table thead th {
+            vertical-align: bottom;
+            border-bottom: 2px solid #dee2e6;
+        }
+        .table tbody + tbody {
+            border-top: 2px solid #dee2e6;
+        }
+        .btn-dark {
+            color: #fff;
+            background-color: #343a40;
+            border-color: #343a40;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .btn-dark:hover {
+            background-color: #23272b;
+            border-color: #1d2124;
+        }
+    </style>
 </head>
 <body>
 <article layout:fragment="content">
-    <main>
         <div class="sidebar">
             <h2>ESTORE STORE</h2>
             <section class="row">
 
                 <div class="user-info">
-                    <p>User : NV003</p>
+                    <p>User : <strong th:text="${#authentication.name}"></strong></p>
                     <p>Vai trò : Quản lí</p>
                     <button type="button" class="btn btn-dark">Đăng xuất</button>
                 </div>
@@ -43,20 +111,14 @@
                 <h1>THỐNG KÊ BÁO CÁO</h1>
             </div>
             <div class="report">
-                <table class="table">
                     <div class="search">
                         <label for="month-search">Tìm kiếm theo tháng:</label>
                         <input type="text" id="month-search" placeholder="Nhập tháng">
-                        <button type="button" class="btn btn-dark">Nhập lại</button>
-                        <label for="date-search">Tìm kiếm theo ngày:</label>
-                        <input type="text" id="date-search" placeholder="Nhập ngày">
-                        <button type="button" class="btn btn-dark">Tìm kiếm</button>
-                        <p>Ngày hôm nay :</p>
+                        <button type="button" id="search-button" class="btn btn-dark">Tìm kiếm</button>
                     </div>
-                </table>
                 <div class="report-content">
                     <h3>Nhân viên có đơn</h3>
-                    <table class="table">
+                    <table class="table" id="NhanVienThang_Table">
                         <thead>
                         <tr>
                             <th scope="col">Mã nhân viên</th>
@@ -71,7 +133,7 @@
                         </tbody>
                     </table>
                     <h3>Chi tiết </h3>
-                    <table class="table">
+                    <table class="table" id="NhanVienChiTiet_Table">
                         <thead>
                         <tr>
                             <th scope="col">Mã hóa đơn</th>
@@ -93,7 +155,6 @@
                 </div>
             </div>
         </div>
-    </main>
 </article>
 </body>
 </html>
