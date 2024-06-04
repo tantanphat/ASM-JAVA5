@@ -84,4 +84,13 @@ public class SanPhamServiceImpl implements SanPhamService {
     public List<SanPham> getCartItems(HttpSession session) {
         return getCart(session);
     }
+    @Override
+    public SanPham findSanPhamByMaSP(String maSP) {
+        return sanPhamRepository.findSanPhambyMaSP(maSP);
+    }
+
+    @Override
+    public List<SanPham> timKiemSanPham(String key) {
+        return sanPhamRepository.timKiemSanPham("%" + key + "%");
+    }
 }

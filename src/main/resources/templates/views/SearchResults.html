@@ -1,0 +1,17 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Kết quả tìm kiếm</title>
+</head>
+<body>
+<h1>Kết quả tìm kiếm</h1>
+<ul>
+    <li th:each="sanPham : ${sanPhams}">
+        <a th:href="@{/product(maSP=${sanPham.maSP})}" th:text="${sanPham.tenSP}">Tên sản phẩm</a>
+    </li>
+</ul>
+</body>
+</html>
+</html>

@@ -17,4 +17,6 @@ public interface SanPhamService {
     float calculateTotal(HttpSession session);
 
     List<SanPham> getCartItems(HttpSession session);
+    SanPham findSanPhamByMaSP(String maSP);
+    List<SanPham> timKiemSanPham(String key);
 }
