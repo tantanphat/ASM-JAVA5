@@ -1,6 +1,7 @@
 package com.example.asmjava5.Service.ServiceImpl;
 
 import com.example.asmjava5.Entity.HoaDonChiTiet;
+import com.example.asmjava5.Entity.SanPham;
 import com.example.asmjava5.Service.ThongKeService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.ParameterMode;
@@ -36,4 +37,46 @@ public class ThongKeServiceImpl implements ThongKeService {
 
         return storedProcedure.getResultList();
     }
+
+    @Override
+    public List<HoaDonChiTiet> thongKeDoanhThu(int thang) {
+        StoredProcedureQuery storedProcedure = entityManager
+                .createStoredProcedureQuery("sp_DoanhThuTheoThang")
+                .registerStoredProcedureParameter("thang", Integer.class, ParameterMode.IN)
+                .setParameter("thang", thang);
+
+        return storedProcedure.getResultList();
+    }
+
+    @Override
+    public List<HoaDonChiTiet> thongKeSanPhamBan(int thang) {
+        StoredProcedureQuery storedProcedure = entityManager
+                .createStoredProcedureQuery("sp_ThongKeSanPhamDaBanTheoThang")
+                .registerStoredProcedureParameter("thang", Integer.class, ParameterMode.IN)
+                .setParameter("thang", thang);
+
+        return storedProcedure.getResultList();
+    }
+
+    @Override
+    public List<SanPham> thongKeSanPhamBanDuoc(int thang) {
+        StoredProcedureQuery storedProcedure = entityManager
+                .createStoredProcedureQuery("sp_Top5SanPhamTheoThang")
+                .registerStoredProcedureParameter("thang", Integer.class, ParameterMode.IN)
+                .setParameter("thang", thang);
+
+        return storedProcedure.getResultList();
+    }
+
+    @Override
+    public List<SanPham> thongKeSanPhamKBanDuoc(int thang) {
+        StoredProcedureQuery storedProcedure = entityManager
+                .createStoredProcedureQuery("sp_KhBanDuocThang")
+                .registerStoredProcedureParameter("thang", Integer.class, ParameterMode.IN)
+                .setParameter("thang", thang);
+
+        return storedProcedure.getResultList();
+    }
+
+
 }

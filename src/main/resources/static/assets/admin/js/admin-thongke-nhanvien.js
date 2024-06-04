@@ -1,6 +1,6 @@
 $(document).ready(function() {
     // Function to fetch data from the API and populate the table
-    function fetchDataAndPopulateTable(month) {
+    function TableNhanVien(month) {
         $.ajax({
             url: '/api/thong-ke/nhan-vien-co-don/' + month,
             type: 'GET',
@@ -49,6 +49,6 @@ $(document).ready(function() {
     $('#search-button').click(function() {
         // Get the month from the input field
         var month = $('#month-search').val();
-        fetchDataAndPopulateTable(month);
+        TableNhanVien(month);
     });
 });
