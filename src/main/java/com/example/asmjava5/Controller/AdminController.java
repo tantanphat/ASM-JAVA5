@@ -70,11 +70,21 @@ public class AdminController {
         return "views/Admin/BillChiTiet";
     }
 
+    @GetMapping("/san-pham")
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
+    public String hienThiTrangQLSP() {
+        return "views/Admin/productMaganer";
+    }
+
+    @GetMapping("/san-pham/masp/{masp}")
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
+    public String hienThiTrangQLSPByID(@PathVariable("masp") String masp) {
+        return "views/Admin/productMaganer";
+    }
+
     @GetMapping("/hoa-don-chi-tiet/{mahdct}")
     @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
-    public String hienThiTrangQLHDCTByID(@PathVariable("mahdct") String mahdct) {
-        return "views/Admin/BillChiTiet";
-    }
+    public String hienThiTrangQLHDCTByID(@PathVariable("mahdct") String mahdct) {return "views/Admin/BillChiTiet";}
 
     @GetMapping("/hoa-don-chi-tiet/mahd/{mahd}")
     @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")

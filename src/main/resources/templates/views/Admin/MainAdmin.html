@@ -199,13 +199,13 @@
                 </a>
             </li>
             <li>
-                <a href="/admin/nhan-vien" class="nav-link text-white">
+                <a th:href="@{/admin/nhan-vien}" class="nav-link text-white">
                     <i class="fa-solid fa-clipboard-user me-2" width="16" height="16"></i>
                     Nhân viên
                 </a>
             </li>
             <li>
-                <a href="#" class="nav-link text-white">
+                <a th:href="@{/admin/san-pham}" class="nav-link text-white">
                     <i class="fa-brands fa-product-hunt me-2" width="16" height="16"></i>
                     Sản phẩm
                 </a>
@@ -257,11 +257,11 @@
 <script th:src="@{/assets/admin/js/admin.js}"></script>
 <script th:src="@{/assets/admin/js/admin-nhanvien.js}"></script>
 <script th:src="@{/assets/admin/js/admin-hoadon.js}"></script>
-<!--<script th:src="@{/assets/admin/js/admin-hoadonchitiet.js}"></script>-->
 <script th:src="@{/assets/admin/js/admin-khachhang.js}"></script>
 <script th:src="@{/assets/admin/js/admin-thongke-nhanvien.js}"></script>
 <script th:src="@{/assets/admin/js/admin-thongke-doanhthu.js}"></script>
 <script th:src="@{/assets/admin/js/admin-thongke-sanpham.js}"></script>
+<script th:src="@{/assets/admin/js/admin-sanpham.js}"></script>
 <script th:src="@{/assets/admin/js/billTab.js}"></script>
 <script>
     $("#tabs").tabs({

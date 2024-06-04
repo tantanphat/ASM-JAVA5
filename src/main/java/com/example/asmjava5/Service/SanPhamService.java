@@ -10,16 +10,6 @@ public interface SanPhamService {
 
     SanPham getSanPhamById(String maSP);
 
-    void addToCart(String maSP, String size, int soLuong, HttpSession session);
-
-    void removeFromCart(String maSP, String size, HttpSession session);
-
-    float calculateTotal(HttpSession session);
-
-    List<SanPham> getCartItems(HttpSession session);
-
-    SanPham findSanPhamByMaSP(String maSP);
-
     List<SanPham> timKiemSanPham(String key);
 
 }
