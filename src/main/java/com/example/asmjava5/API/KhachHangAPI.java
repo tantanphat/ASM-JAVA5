@@ -1,14 +1,11 @@
 package com.example.asmjava5.API;
 
 import com.example.asmjava5.Entity.KhachHang;
-import com.example.asmjava5.Entity.NhanVien;
 import com.example.asmjava5.Model.mapper.KhachHangMapper;
-
 import com.example.asmjava5.Model.request.DangKyKhachHang;
 import com.example.asmjava5.Model.request.KhachHangThongTin;
 import com.example.asmjava5.Repository.KhachHangRepository;
 import com.example.asmjava5.Service.KhachHangService;
-import com.example.asmjava5.Service.ServiceImpl.KhachHangServiceImpl;
 import com.example.asmjava5.Utils.ExcelKhachHangUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,7 +13,6 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -33,8 +29,8 @@ public class KhachHangAPI {
     HttpServletResponse resp;
     @Autowired
     private KhachHangService khachHangServiceImpl;
-
-
+    @Autowired
+    private KhachHangRepository khachHangRepository;
 
     //Lấy thông tin khách hàng qua email
     @GetMapping("/user")
@@ -117,5 +113,10 @@ public class KhachHangAPI {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @GetMapping("/tim-kiem")
+    public KhachHang timKiemKH(@RequestParam("key") String  key) {
+        return khachHangServiceImpl.timKiemKH(key);
     }
 }

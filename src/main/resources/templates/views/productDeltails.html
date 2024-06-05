@@ -8,8 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 <!--    <link rel="manifest" th:href="@{/site.webmanifest}">-->
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/assets/img/favicon.ico}">
-
-
     <script async defer crossorigin="anonymous"
             th:src="@{https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v14.0&appId=426751025725203&autoLogAppEvents=1}"
             nonce="c85uz917"></script>
@@ -45,7 +43,7 @@
                     </form>
                     <!-- Khung thông tin sản phẩm -->
                     <div class="col-md-6 col-sm-12">
-                        <form id="addToCartForm" th:action="@{/cart/add}" method="post">
+                        <form id="addToCartForm">
                             <div class="mx-3">
                                 <h1><strong class="d-inline-block mb-2"  id="tenSP"></strong></h1>
                                 <label class="fs-3 d-block"></label>

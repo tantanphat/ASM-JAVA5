@@ -36,15 +36,14 @@ $(document).ready(function() {
     $.ajax({
         url: "/api/khach-hang",
         type: "GET",
-        // headers: {
-        //     'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBWZXIiOiIwLjAuMCIsImV4cCI6NDcyNjM4OTEyMiwibG9jYWxlIjoiIiwibWFzdGVyVmVyIjoiIiwicGxhdGZvcm0iOiIiLCJwbGF0Zm9ybVZlciI6IiIsInVzZXJJZCI6IiJ9.QIZbmB5_9Xlap_gDhjETfMI6EAmR15yBtIQkWFWJkrg',
-        // },
+        headers: {
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBWZXIiOiIwLjAuMCIsImV4cCI6NDcyNjM4OTEyMiwibG9jYWxlIjoiIiwibWFzdGVyVmVyIjoiIiwicGxhdGZvcm0iOiIiLCJwbGF0Zm9ybVZlciI6IiIsInVzZXJJZCI6IiJ9.QIZbmB5_9Xlap_gDhjETfMI6EAmR15yBtIQkWFWJkrg',
+        },
         success: function(response) {
-
+            // Xử lý thành công, đổ dữ liệu vào bảng
             var tbody = $('#khach-hang-table tbody');
             tbody.empty(); // Xóa nội dung cũ của bảng
             response.forEach(function(item) {
-                console.log(item)
                 var row = $('<tr></tr>');
                 row.append('<td><a href="/admin/khach-hang/' + item.maKH + '">' + item.maKH+ '</td>'); // Mã khách hàng
                 row.append('<td>' + item.tenKH + '</td>'); // Tên khách hàng
@@ -69,6 +68,36 @@ $(document).ready(function() {
         }).done(function() {
             alert('Xuất ra file thành công')
         })
+    })
+
+    $("#searchKH").on('input', function(e) {
+        var key = $(this).val();
+        $.ajax({
+            url: "/api/khach-hang/tim-kiem",
+            type: "GET",
+            data: {key: key},
+            success: function (data) {
+                console.log(data.tenKH)
+                $('#MAKH').val(data.maKH);
+                $('#FullNameKH').val(data.tenKH);
+                $('#AddressKH').val(data.diaChi);
+                $('#PhoneKH').val(data.sdt);
+                $('#Email').val(data.email);
+                var tbody = $('#khach-hang-table tbody');
+                tbody.empty(); // Xóa nội dung cũ của bảng
+                var row = $('<tr></tr>');
+                row.append('<td><a href="/admin/khach-hang/' + data.maKH + '">' + data.maKH+ '</td>'); // Mã khách hàng
+                row.append('<td>' + data.tenKH + '</td>'); // Tên khách hàng
+                row.append('<td>' + data.diaChi + '</td>'); // Địa chỉ
+                row.append('<td>' + data.sdt + '</td>'); // Số điện thoại
+                row.append('<td>' + data.email + '</td>'); // Email
+                // row.append('<td>' + item.matKhau + '</td>'); // Mật khẩu
+                row.append('<td>' + data.thanhVien + '</td>'); // Thành viên
+                tbody.append(row); // Thêm hàng vào bảng
+                var formContainer = document.getElementById('htmlKH');
+                formContainer.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
     })
 
 });
@@ -206,4 +235,3 @@ function btnDeleteKH_click() {
         }
     });
 }
-

@@ -12,4 +12,11 @@ public interface SanPhamService {
 
     List<SanPham> timKiemSanPham(String key);
 
+    void updateSP(SanPham sp);
+
+    void addSP(SanPham sp);
+
+    void deleteSP(String sp);
+
+    String AUTO_MASP();
 }

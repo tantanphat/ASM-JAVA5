@@ -142,6 +142,9 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
+        select option {
+            color: black;
+        }
     </style>
 </head>
 <body>
@@ -157,48 +160,53 @@
         </ul>
     </div>
     <h1 class="h2 mb-3 mt-2 text-dark d-flex justify-content-center align-items-center">Thông tin sản phẩm</h1>
-    <form action="#">
-        <div class="form-group">
-            <label for="maSanPham">Mã sản phẩm:</label>
-            <input type="text" id="maSanPham" name="maSanPham" required>
+    <form action="#" enctype="multipart/form-data">
+        <div class="w-100">
+            <div class="form-group">
+                <label for="anhSP">Ảnh sản phẩm:</label>
+                <img th:src="@{/assets/sanpham/noImage.png}" id="anhSP" height="300px"/>
+                <input type="file" id="fileInput">
+            </div>
         </div>
-        <div class="form-group">
-            <label for="tenSanPham">Tên sản phẩm:</label>
-            <input type="text" id="tenSanPham" name="tenSanPham" required>
-        </div>
-        <div class="form-group">
-            <label for="danhMucSanPham">Danh mục sản phẩm:</label>
-            <select id="danhMucSanPham" name="danhMucSanPham" required>
-                <option value="ao">Áo</option>
-                <option value="quan">Quần</option>
-                <option value="quan">Mũ-Nón</option>
-                <option value="giay">Giày-Dép</option>
-                <option value="phuKien">Phụ kiện</option>
-                <option value="khac">Khác</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="Sl_SP">Số lượng:</label>
-            <input type="text" id="Sl_SP" name="Sl" >
+        <div class="w-100">
+            <div class="form-group">
+                <label for="maSanPham">Mã sản phẩm:</label>
+                <input type="text" id="maSanPham" required>
+            </div>
+            <div class="form-group">
+                <label for="tenSanPham">Tên sản phẩm:</label>
+                <input type="text" id="tenSanPham"  required>
+            </div>
+            <div class="form-group">
+                <label for="danhMucSanPham">Danh mục sản phẩm:</label>
+                <select id="danhMucSanPham" >
+<!--                    <option value="" selected></option>-->
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="Sl_SP">Số lượng:</label>
+                <input type="text" id="Sl_SP" >
+            </div>
         </div>
         <div class="form-group">
             <label for="donGiaBan">Đơn giá bán:</label>
-            <input type="text" id="donGiaBan" name="donGiaBan">
+            <input type="text" id="donGiaBan" >
         </div>
         <div class="form-group">
             <label for="size">Kích cỡ:</label>
-            <input type="text" id="size" name="donGiaBan">
+            <input type="text" id="size" >
         </div>
         <div class="form-group full-width">
             <label for="ghiChu">Ghi chú:</label>
-            <textarea id="ghiChu" name="ghiChu" rows="5"></textarea>
+            <textarea id="ghiChu"  rows="5"></textarea>
         </div>
     </form>
     <div class="button-container">
         <button type="button" class="btn btn-outline-success" onclick="btnCreatKH_click()">Create</button>
         <button type="button" class="btn btn-outline-success" onclick="btnClearKH_click()">Clear</button>
-        <button type="button" class="btn btn-outline-success" onclick="btnUpdateKH_click()">Update</button>
+        <button type="button" class="btn btn-outline-success" id="updateSP">Update</button>
         <button type="button" class="btn btn-outline-success" onclick="btnDeleteKH_click()">Delete</button>
+        <button type="button" class="btn btn-outline-success" id="demo">Demo</button>
     </div>
     <table class="col-md-12" id="SanPham_Table">
         <thead>

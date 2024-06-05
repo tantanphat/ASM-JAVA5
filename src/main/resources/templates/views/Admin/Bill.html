@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estore</title>
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/assets/img/favicon.ico}">
-    <!-- Include common head -->
     <th:block th:include="/common/head :: head"></th:block>
     <style>
         .form-check-inline {
@@ -186,14 +185,15 @@
                                 <th>Mã khách hàng</th>
                             </tr>
                             </thead>
-                            <tbody>
+                             <tbody>
+
                             </tbody>
                         </table>
                     </div>
                     <!-- #tab1 -->
                     <h3 class="tab_drawer_heading"  rel="tab2" >Tab 2</h3>
                     <div id="tab2" class="tab_content">
-                        <form enctype="multipart/form-data" id="hoaDonChiTietForm" layout:fragment="hoaDon">
+                        <form enctype="multipart/form-data" id="hoaDonChiTietForm">
                             <h1 class="h2 mb-3 mt-2 text-dark d-flex justify-content-center align-items-center">Hóa Đơn Chi Tiết</h1>
                             <div class="tabs">
                             </div>

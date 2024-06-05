@@ -1,6 +1,7 @@
 $(document).ready(function() {
     let check = false;
 
+    //Đổ thông tin từ table hd lên form
     function doThonTinHoaDonLenForm(data) {
         $.ajax({
             url: "/api/hoa-don/" + data,
@@ -21,6 +22,8 @@ $(document).ready(function() {
             }
         });
     }
+
+    //Đổ thông tin hdct vào table
     function doHDCTLenTableTheoMaHDBan(data) {
         $.ajax({
             url: "/api/hoa-don-chi-tiet/mahd/"+data,
@@ -64,13 +67,15 @@ $(document).ready(function() {
             }
         });
     }
+
+    //Đổ data hd vào table
     function doHoaDonLenTable() {
         $.ajax({
             url: "/api/hoa-don",
             type: "GET",
-            headers: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBWZXIiOiIwLjAuMCIsImV4cCI6NDcyNjM4OTEyMiwibG9jYWxlIjoiIiwibWFzdGVyVmVyIjoiIiwicGxhdGZvcm0iOiIiLCJwbGF0Zm9ybVZlciI6IiIsInVzZXJJZCI6IiJ9.QIZbmB5_9Xlap_gDhjETfMI6EAmR15yBtIQkWFWJkrg',
-            },
+            // headers: {
+            //     'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBWZXIiOiIwLjAuMCIsImV4cCI6NDcyNjM4OTEyMiwibG9jYWxlIjoiIiwibWFzdGVyVmVyIjoiIiwicGxhdGZvcm0iOiIiLCJwbGF0Zm9ybVZlciI6IiIsInVzZXJJZCI6IiJ9.QIZbmB5_9Xlap_gDhjETfMI6EAmR15yBtIQkWFWJkrg',
+            // },
             success: function(response) {
                 var tbody = $('#HoaDon-Table tbody');
                 tbody.empty();
@@ -81,12 +86,14 @@ $(document).ready(function() {
                     row.append('<td>' + item.hd_NgayBan + '</td>');
                     row.append('<td>' + item.hd_MaKH + '</td>');
                     tbody.append(row);
-                    $('.hdMaHD').click(function(e) {
-                        var hd_MaHDBan = $(this).text();
-                        doThonTinHoaDonLenForm(hd_MaHDBan)
-                        doHDCTLenTableTheoMaHDBan(hd_MaHDBan)
-                    });
-                })
+
+                });
+                $('.hdMaHD').click(function(e) {
+                    var hd_MaHDBan = $(this).text();
+                    doThonTinHoaDonLenForm(hd_MaHDBan)
+                    doHDCTLenTableTheoMaHDBan(hd_MaHDBan)
+                });
+
             },
             error: function(xhr, status, error) {
                 // Xử lý lỗi
@@ -94,6 +101,8 @@ $(document).ready(function() {
             }
         });
     }
+
+    //Lấy danh sách mã nhân viên
     function listMaNV() {
         $.ajax({
             url: "/api/nhan-vien/listMaNV",
@@ -111,6 +120,8 @@ $(document).ready(function() {
             }
         });
     }
+
+    //Đổ hdct từ table lên form
     function doLaiHDCTTable(mahd){
         $.ajax({
             url: "/api/hoa-don-chi-tiet/mahd/"+mahd,
@@ -145,7 +156,6 @@ $(document).ready(function() {
         $("#Sale").val("")
         $("#ThanhTien").val("")
     }
-
     function doTenSPKhiNhapMaSP() {
         $('#MaSP_CT').on('input', function() {
             var timSP = $(this).val();
@@ -196,7 +206,6 @@ $(document).ready(function() {
         }
 
     })
-
     $('#updateHDCT').click(function(e) {MHDCT
         var MHDCT = $("#MHDCT").val()
         var maHDBan = $("#MaHD").val()
@@ -241,7 +250,6 @@ $(document).ready(function() {
 
 
     })
-
     $('#deleteHDCT').click(function(e) {
         var MHDCT = $("#MHDCT").val()
         var maHDBan = $("#MaHD").val()
@@ -271,7 +279,6 @@ $(document).ready(function() {
         }
 
     })
-
     $("#deleteHD").click(function () {
         var mahd = $('#MaHD').val();
         $.ajax({
@@ -353,11 +360,11 @@ $(document).ready(function() {
     });
 
     doThonTinHoaDonLenForm();
-    doHoaDonLenTable();
-    doHDCTLenTableTheoMaHDBan();
+
+    // doHDCTLenTableTheoMaHDBan("HD00001");
     doTenSPKhiNhapMaSP();
     listMaNV();
-
+    doHoaDonLenTable();
 
 
 });

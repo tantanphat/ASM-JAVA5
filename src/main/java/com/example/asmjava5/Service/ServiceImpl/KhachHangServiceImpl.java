@@ -4,9 +4,7 @@ import com.example.asmjava5.Entity.KhachHang;
 import com.example.asmjava5.Model.request.DangKyKhachHang;
 import com.example.asmjava5.Model.request.KhachHangThongTin;
 import com.example.asmjava5.Repository.KhachHangRepository;
-
 import com.example.asmjava5.Service.KhachHangService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -48,7 +46,6 @@ public class KhachHangServiceImpl implements KhachHangService {
     public KhachHang findBymaKH(String MaKH) {
         return khachHangRepository.findByMaKH(MaKH);
     }
-
 
     public String generateNewMaKH() {
         return jdbcTemplate.queryForObject("SELECT dbo.AUTO_MaKH()", String.class);
@@ -102,6 +99,11 @@ public class KhachHangServiceImpl implements KhachHangService {
     @Override
     public String AUTO_MAKH() {
         return khachHangRepository.AUTO_MaKH();
+    }
+
+    @Override
+    public KhachHang timKiemKH(String key) {
+        return khachHangRepository.searchKH(key);
     }
 
 }

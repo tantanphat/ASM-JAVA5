@@ -10,10 +10,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface HoaDonRepository extends JpaRepository<HoaDon, Object> {
     @Query("SELECT hd FROM HoaDon hd WHERE hd.hd_MaHDBan = ?1")
-     HoaDon findByMaHD(String MaHDBan);
+    HoaDon findByMaHD(String MaHDBan);
 
     @Query(value = "SELECT dbo.AUTO_MaHD() AS newId")
     String AUTO_MaHD();
 
-    
+
 }

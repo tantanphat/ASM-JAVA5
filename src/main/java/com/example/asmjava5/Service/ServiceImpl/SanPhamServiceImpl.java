@@ -43,4 +43,32 @@ public class SanPhamServiceImpl implements SanPhamService {
     public List<SanPham> timKiemSanPham(String key) {
         return sanPhamRepository.timKiemSanPham(key);
     }
+
+    @Override
+    public void updateSP(SanPham sp) {
+        SanPham spp = sanPhamRepository.findSanPhambyMaSP(sp.getMaSP());
+        spp.setSoLuong(sp.getSoLuong());
+        spp.setGhiChu(sp.getGhiChu());
+        spp.setMaDM(sp.getMaDM());
+        spp.setAnh(sp.getAnh());
+        spp.setGiaBan(sp.getGiaBan());
+        spp.setSize(sp.getSize());
+        spp.setTenSP(sp.getTenSP());
+        sanPhamRepository.save(spp);
+    }
+
+    @Override
+    public void addSP(SanPham sp) {
+        sanPhamRepository.save(sp);
+    }
+
+    @Override
+    public void deleteSP(String sp) {
+        sanPhamRepository.deleteById(sp);
+    }
+
+    @Override
+    public String AUTO_MASP() {
+        return sanPhamRepository.AUTO_MA_SP();
+    }
 }

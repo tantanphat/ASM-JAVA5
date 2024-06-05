@@ -10,11 +10,15 @@ import java.util.List;
 
 @Repository
 public interface SanPhamRepository extends JpaRepository<SanPham, String> {
+
         @Query("select s from SanPham s where s.maSP = :maSP")
         SanPham findSanPhambyMaSP(@Param("maSP") String maSP);
 
         @Query("SELECT s FROM SanPham s WHERE s.tenSP LIKE %:keyword%")
         List<SanPham> timKiemSanPham(@Param("keyword") String keyword);
+
+        @Query(value = "SELECT dbo.AUTO_MaSP() AS newId")
+        String AUTO_MA_SP();
 
 }
 

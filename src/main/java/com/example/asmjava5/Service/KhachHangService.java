@@ -1,7 +1,6 @@
 package com.example.asmjava5.Service;
 
 import com.example.asmjava5.Entity.KhachHang;
-import com.example.asmjava5.Entity.NhanVien;
 import com.example.asmjava5.Model.request.DangKyKhachHang;
 import com.example.asmjava5.Model.request.KhachHangThongTin;
 
@@ -25,4 +24,6 @@ public interface KhachHangService {
     void  dangKyKhachHangMoi(DangKyKhachHang dkkh);
 
     String AUTO_MAKH();
+
+    KhachHang timKiemKH(String key);
 }

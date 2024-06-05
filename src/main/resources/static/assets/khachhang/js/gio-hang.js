@@ -104,15 +104,13 @@ $(document).ready(function() {
         });
     });
 
-
-
     //Đổ thông tin sản phẩm
     var url = new URL(window.location.href);
     var maSP = url.searchParams.get("maSP");
     $.ajax({
         type: "GET",
-        url: "/api/san-pham",
-        data: { maSP: maSP }, // Sử dụng đối tượng để chuyển dữ liệu
+        url: "/api/san-pham/c",
+        data: { maSP: maSP }, 
         contentType: "application/json",
         success: function(response) {
             console.log(response);
@@ -193,7 +191,7 @@ $(document).ready(function() {
         });
     });
 
-    // Khi thay đổi update và đổ lại
+
     updateCountCart();
     
     updateCartTable();

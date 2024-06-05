@@ -36,8 +36,7 @@ public class HoaDonAPI {
     private SessionUtils session;
     @Autowired
     private SessionUtils sessionUtils;
-    @Autowired
-    private SanPhamServiceImpl sanPhamServiceImpl;
+
 
     BCryptPasswordEncoder encoder =  new BCryptPasswordEncoder();
 

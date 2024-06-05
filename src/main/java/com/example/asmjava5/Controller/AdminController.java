@@ -53,7 +53,7 @@ public class AdminController {
     }
 
     @GetMapping("/hoa-don")
-    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
+//    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     public String hienThiTrangQLHD() {
         return "views/Admin/Bill";
     }
@@ -64,11 +64,11 @@ public class AdminController {
         return "views/Admin/Bill";
     }
 
-    @GetMapping("/hoa-don-chi-tiet")
-    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
-    public String hienThiTrangQLHDCT() {
-        return "views/Admin/BillChiTiet";
-    }
+//    @GetMapping("/hoa-don-chi-tiet")
+//    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
+//    public String hienThiTrangQLHDCT() {
+//        return "views/Admin/BillChiTiet";
+//    }
 
     @GetMapping("/san-pham")
     @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
@@ -82,13 +82,13 @@ public class AdminController {
         return "views/Admin/productMaganer";
     }
 
-    @GetMapping("/hoa-don-chi-tiet/{mahdct}")
-    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
-    public String hienThiTrangQLHDCTByID(@PathVariable("mahdct") String mahdct) {return "views/Admin/BillChiTiet";}
-
-    @GetMapping("/hoa-don-chi-tiet/mahd/{mahd}")
-    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
-    public String hienThiTrangQLHDCTByMaHD(@PathVariable("mahd") String mahd) {
-        return "views/Admin/BillChiTiet";
-    }
+//    @GetMapping("/hoa-don-chi-tiet/{mahdct}")
+//    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
+//    public String hienThiTrangQLHDCTByID(@PathVariable("mahdct") String mahdct) {return "views/Admin/BillChiTiet";}
+//
+//    @GetMapping("/hoa-don-chi-tiet/mahd/{mahd}")
+//    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
+//    public String hienThiTrangQLHDCTByMaHD(@PathVariable("mahd") String mahd) {
+//        return "views/Admin/BillChiTiet";
+//    }
 }
