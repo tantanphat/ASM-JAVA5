@@ -1,4 +1,7 @@
 $(document).ready(function() {
+    var currentPage = 1;
+    var pageSize = 10;
+
     // Lấy URL hiện tại
     var currentURL = window.location.href;
     // Tách URL để lấy mã khách hàng (makh)

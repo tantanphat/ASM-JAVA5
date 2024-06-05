@@ -26,29 +26,24 @@ public class HoaDonChiTiet {
     @Column(name = "GiamGia")
     private Double hdct_giamGia;
 
-//    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-//    @JoinColumn(name="MaHDBan", referencedColumnName = "MaHDBan", insertable = false, updatable = false)
-//    @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
-//    private HoaDon hoaDon;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="MaSP", referencedColumnName = "MaSP", insertable = false, updatable = false)
     @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
     private SanPham sanPham;
 
-    @ManyToOne
-    @JoinColumn(name="MaHDBan", referencedColumnName = "MaHDBan", insertable = false, updatable = false)
-    @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
-    private HoaDon hoaDon;
-
-    @Transient
-    private NhanVien nhanVien;
-
-    @PostLoad
-    private void postLoad() {
-        if (nhanVien != null) {
-            this.nhanVien = hoaDon.getNhanVien();
-        }
-    }
+//    @ManyToOne
+//    @JoinColumn(name="MaHDBan", referencedColumnName = "MaHDBan", insertable = false, updatable = false)
+//    @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
+//    private HoaDon hoaDon;
+//
+//    @Transient
+//    private NhanVien nhanVien;
+//
+//    @PostLoad
+//    private void postLoad() {
+//        if (nhanVien != null) {
+//            this.nhanVien = hoaDon.getNhanVien();
+//        }
+//    }
 
 }

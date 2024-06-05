@@ -4,6 +4,7 @@ import com.example.asmjava5.Entity.KhachHang;
 import com.example.asmjava5.Entity.NhanVien;
 import com.example.asmjava5.Model.request.DangKyKhachHang;
 import com.example.asmjava5.Model.request.KhachHangThongTin;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -25,4 +26,5 @@ public interface KhachHangService {
     void  dangKyKhachHangMoi(DangKyKhachHang dkkh);
 
     String AUTO_MAKH();
+
 }

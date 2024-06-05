@@ -114,27 +114,27 @@ public class HoaDonAPI {
 
     @PostMapping("/createHD")
     public ResponseEntity<?> createHD(@RequestBody TaoHoaDon hoaDon) {
-            try {
-                String makh = khachHangService.AUTO_MAKH();
+        try {
+            String makh = khachHangService.AUTO_MAKH();
 //                KhachHang khachHangIsExist = khachHangService.findBymaKH(hoaDon.getMaKH());
-                if (hoaDon.getMaKH().equalsIgnoreCase("")) {
-                    DangKyKhachHang kha = new DangKyKhachHang();
-                    kha.setTenKH(hoaDon.getTenKH());
-                    kha.setDiaChi(hoaDon.getDiaChi());
-                    kha.setSdt(hoaDon.getSdt());
-                    kha.setEmail(hoaDon.getEmail());
-                    kha.setMatKhau(encoder.encode(hoaDon.getSdt()));
-                    kha.setThanhVien(false);
-                    khachHangService.dangKyKhachHangMoi(kha);
-                    hoaDonService.creatHD(hoaDon.getMaNV(),makh);
-                } else {
-                    hoaDonService.creatHD(hoaDon.getMaNV(),hoaDon.getMaKH());
-                }
-
-                return ResponseEntity.ok(HttpStatus.OK);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Đã xảy ra lỗi khi Thêm hóa đơn");
+            if (hoaDon.getMaKH().equalsIgnoreCase("")) {
+                DangKyKhachHang kha = new DangKyKhachHang();
+                kha.setTenKH(hoaDon.getTenKH());
+                kha.setDiaChi(hoaDon.getDiaChi());
+                kha.setSdt(hoaDon.getSdt());
+                kha.setEmail(hoaDon.getEmail());
+                kha.setMatKhau(encoder.encode(hoaDon.getSdt()));
+                kha.setThanhVien(false);
+                khachHangService.dangKyKhachHangMoi(kha);
+                hoaDonService.creatHD(hoaDon.getMaNV(),makh);
+            } else {
+                hoaDonService.creatHD(hoaDon.getMaNV(),hoaDon.getMaKH());
             }
+
+            return ResponseEntity.ok(HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Đã xảy ra lỗi khi Thêm hóa đơn");
         }
+    }
 }
