@@ -1,10 +1,10 @@
 package com.example.asmjava5.Entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,7 +15,7 @@ import lombok.*;
 @Table(name = "SanPham")
 public class SanPham {
     @Id
-    @Column(name = "MaSP", length = 10)
+    @Column(name = "MaSP",nullable = false, length = 10)
     private String maSP;
 
     @Column(name = "TenSP", length = 50, nullable = false)
@@ -38,4 +38,15 @@ public class SanPham {
 
     @Column(name = "KichCo", length = 50)
     private String size;
+
+    @ManyToOne
+    @JoinColumn(name="MaDM", referencedColumnName = "MaDM", insertable = false, updatable = false)
+    @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
+    private DanhMucSP danhMucSP;
+//
+//    @OneToMany(fetch = FetchType.LAZY)
+//    @JoinColumn(name="MaSP", referencedColumnName = "MaSP" , updatable = false)
+//    @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
+//    private List<HoaDonChiTiet> hoaDonChiTiet;
+
 }

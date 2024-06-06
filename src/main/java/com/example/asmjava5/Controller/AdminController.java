@@ -91,4 +91,9 @@ public class AdminController {
 //    public String hienThiTrangQLHDCTByMaHD(@PathVariable("mahd") String mahd) {
 //        return "views/Admin/BillChiTiet";
 //    }
+
+    @GetMapping("/danh-muc-san-pham")
+    public String trangADDMSP() {
+        return "views/Admin/DanhMucSP";
+    }
 }

@@ -12,4 +12,7 @@ public interface DanhMucSPRepository extends JpaRepository<DanhMucSP,String> {
     @Query("select d from DanhMucSP d where d.maDM = :maDM")
      DanhMucSP findDanhMucSPbyMaDM(@Param("maDM") String maDM);
 
+    @Query("select d from DanhMucSP d where d.maDM = :maDM")
+    DanhMucSP getAllDanhMucSP(@Param("maDM") int maDM);
+
 }

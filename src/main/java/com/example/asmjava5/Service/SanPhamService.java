@@ -19,4 +19,6 @@ public interface SanPhamService {
     void deleteSP(String sp);
 
     String AUTO_MASP();
+
+    List<SanPham> getAllSP(Integer pageNo, Integer pageSize, String sortBy, String sortOrder);
 }

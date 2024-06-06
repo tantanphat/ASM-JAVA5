@@ -2,6 +2,7 @@ package com.example.asmjava5.Repository;
 
 import com.example.asmjava5.Entity.SanPham;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -9,7 +10,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface SanPhamRepository extends JpaRepository<SanPham, String> {
+public interface SanPhamRepository extends JpaRepository<SanPham, Object> {
+        public static final String SAN_PHAM = "SanPham";
+        public static final String AUTO_MA_SP = "[dbo].[AUTO_MaSP]()";
 
         @Query("select s from SanPham s where s.maSP = :maSP")
         SanPham findSanPhambyMaSP(@Param("maSP") String maSP);
@@ -19,6 +22,7 @@ public interface SanPhamRepository extends JpaRepository<SanPham, String> {
 
         @Query(value = "SELECT dbo.AUTO_MaSP() AS newId")
         String AUTO_MA_SP();
+
 
 }
 

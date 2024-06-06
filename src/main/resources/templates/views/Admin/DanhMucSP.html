@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{views/Admin/MainAdmin.html}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estore</title>
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/assets/img/favicon.ico}">
+    <!-- Include common head -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        form {
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto 15px auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="file"],
+        textarea,
+        select {
+            padding: 8px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="file"] {
+            padding: 5px;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .button-container button {
+            margin: 0 5px; /* Khoảng cách giữa các nút */
+        }
+
+
+        @media (max-width: 600px) {
+            form {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+        }
+
+        #DanhMucSPTable {
+            width: 100%;
+            border-collapse: collapse; /* Loại bỏ khoảng cách giữa các ô */
+            margin-top: 20px;
+        }
+
+        #DanhMucSPTable th, #SanPham_Table td {
+            border: 1px solid #ff0000; /* Đường viền cho ô */
+            padding: 8px; /* Khoảng cách bên trong ô */
+            text-align: left; /* Canh trái */
+        }
+
+        #DanhMucSPTable th {
+            background-color: #f2f2f2; /* Màu nền cho tiêu đề */
+            color: black; /* Màu chữ cho tiêu đề */
+        }
+
+        #DanhMucSPTable tr {
+            background-color: #31a58d; /* Màu nền cho các hàng chẵn */
+        }
+
+        #DanhMucSPTable tr:hover {
+            background-color: #b62689; /* Màu nền khi di chuột qua */
+        }
+
+        #DanhMucSPTable th {
+            padding-top: 12px; /* Khoảng cách bên trên cho ô tiêu đề */
+            padding-bottom: 12px; /* Khoảng cách bên dưới cho ô tiêu đề */
+            text-align: left;
+            background-color: #4CAF50; /* Màu nền cho tiêu đề */
+            color: white; /* Màu chữ cho tiêu đề */
+        }
+
+
+    </style>
+</head>
+<body id="productHTML">
+<article layout:fragment="content">
+    <div class="tab">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" th:href="@{/admin/san-pham}">Sản phẩm</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/admin/danh-muc-san-pham}">Danh mục sản phẩm</a>
+            </li>
+        </ul>
+    </div>
+    <h1 class="h2 mb-3 mt-2 text-dark d-flex justify-content-center align-items-center">Thông tin sản phẩm</h1>
+    <form action="#" >
+            <div class="form-group">
+                <label for="maDanhMMuc">Mã danh mục:</label>
+                <input type="text" id="maDanhMMuc" disabled />
+            </div>
+            <div class="form-group full-width">
+                <label for="tenDanhMuc">Tên danh mục:</label>
+                <input type="text"  id="tenDanhMuc"/>
+            </div>
+    </form>
+    <div class="button-container">
+        <button type="button" class="btn btn-outline-success" id="createDMSP">Create</button>
+        <button type="button" class="btn btn-outline-success" id="updateDMSP">Update</button>
+        <button type="button" class="btn btn-outline-success" id="clearDMSP">Clear</button>
+    </div>
+    <table class="col-md-12" id="DanhMucSPTable">
+        <thead>
+        <tr>
+            <th class="ad_masp">Mã danh  mục</th>
+            <th class="ad_tenSP">Tên danh  mục</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+
+</article>
+</body>
+</html>

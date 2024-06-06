@@ -17,4 +17,9 @@ public class DanhMucSPServceImpl implements DanhMucSPService {
     public List<DanhMucSP> findAllDMSP() {
         return dmDao.findAll();
     }
+
+    @Override
+    public DanhMucSP findDMSPByID(int id) {
+        return dmDao.getAllDanhMucSP(id);
+    }
 }

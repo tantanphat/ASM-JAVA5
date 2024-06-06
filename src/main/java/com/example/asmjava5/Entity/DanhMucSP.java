@@ -1,9 +1,6 @@
 package com.example.asmjava5.Entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
@@ -15,6 +12,7 @@ import lombok.*;
 @Table(name = "DanhMucSP")
 public class DanhMucSP {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "MaDM")
     private int maDM;
 

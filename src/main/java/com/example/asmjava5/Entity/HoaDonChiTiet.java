@@ -36,19 +36,19 @@ public class HoaDonChiTiet {
     @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
     private SanPham sanPham;
 
-    @ManyToOne
-    @JoinColumn(name="MaHDBan", referencedColumnName = "MaHDBan", insertable = false, updatable = false)
-    @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
-    private HoaDon hoaDon;
-
-    @Transient
-    private NhanVien nhanVien;
-
-    @PostLoad
-    private void postLoad() {
-        if (nhanVien != null) {
-            this.nhanVien = hoaDon.getNhanVien();
-        }
-    }
+//    @ManyToOne
+//    @JoinColumn(name="MaHDBan", referencedColumnName = "MaHDBan", insertable = false, updatable = false)
+//    @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
+//    private HoaDon hoaDon;
+//
+//    @Transient
+//    private NhanVien nhanVien;
+//
+//    @PostLoad
+//    private void postLoad() {
+//        if (nhanVien != null) {
+//            this.nhanVien = hoaDon.getNhanVien();
+//        }
+//    }
 
 }

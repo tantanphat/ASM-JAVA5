@@ -5,6 +5,11 @@ import com.example.asmjava5.Entity.SanPham;
 import com.example.asmjava5.Service.SanPhamService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +23,8 @@ public class SanPhamServiceImpl implements SanPhamService {
 
     @Autowired
     private SanPhamRepository sanPhamRepository;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     private List<SanPham> getCart(HttpSession session) {
         List<SanPham> cart = (List<SanPham>) session.getAttribute("cart");
@@ -26,6 +33,10 @@ public class SanPhamServiceImpl implements SanPhamService {
             session.setAttribute("cart", cart);
         }
         return cart;
+    }
+
+    public String generateNewMaSP() {
+        return jdbcTemplate.queryForObject("SELECT dbo.AUTO_MaSP()", String.class);
     }
 
     @Override
@@ -59,7 +70,9 @@ public class SanPhamServiceImpl implements SanPhamService {
 
     @Override
     public void addSP(SanPham sp) {
-        sanPhamRepository.save(sp);
+        String newMaNV = generateNewMaSP();
+        sp.setMaSP(newMaNV);
+         sanPhamRepository.save(sp);
     }
 
     @Override
@@ -70,5 +83,24 @@ public class SanPhamServiceImpl implements SanPhamService {
     @Override
     public String AUTO_MASP() {
         return sanPhamRepository.AUTO_MA_SP();
+    }
+
+    @Override
+    public List<SanPham> getAllSP(Integer pageNo, Integer pageSize, String sortBy, String sortOrder) {
+        Pageable paging;
+        if (sortOrder.equalsIgnoreCase("asc")) {
+            paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).ascending());
+        } else if (sortOrder.equalsIgnoreCase("desc")) {
+            paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
+        } else {
+            paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        }
+
+        Page<SanPham> pagedResult = sanPhamRepository.findAll(paging);
+        if(pagedResult.hasContent()) {
+            return pagedResult.getContent();
+        } else {
+            return new ArrayList<SanPham>();
+        }
     }
 }

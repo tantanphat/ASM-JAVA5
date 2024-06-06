@@ -46,12 +46,11 @@ $(document).ready(function() {
         });
     }
 
-    // Event listener for the search button click
-    $('#search-button_DT').click(function() {
-        // Get the month from the input field
+    $('#month-search_DT').on('input', function(e) {
         var month = $('#month-search_DT').val();
         TableDoanhThu(month);
-    });
+    })
+
 });$(document).ready(function() {
     // Function to fetch data from the API and populate the table
     function TableDoanhThu(month) {
