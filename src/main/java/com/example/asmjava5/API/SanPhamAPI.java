@@ -98,4 +98,9 @@ public class SanPhamAPI {
     public void deleteSP(@RequestParam("mssp") String masp) {
         sanPhamService.deleteSP(masp);
     }
+
+    @GetMapping("/timkiems")
+    public SanPham layTenSP(@RequestParam("mssp") String mssp) {
+        return sanPhamService.getSanPhamById(mssp);
+    }
 }

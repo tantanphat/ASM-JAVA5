@@ -106,4 +106,9 @@ public class KhachHangServiceImpl implements KhachHangService {
         return khachHangRepository.searchKH(key);
     }
 
+    @Override
+    public KhachHang findBySDY(String sdt) {
+        return khachHangRepository.findBySDT(sdt);
+    }
+
 }

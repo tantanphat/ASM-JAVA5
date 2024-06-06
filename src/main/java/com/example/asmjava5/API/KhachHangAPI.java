@@ -119,4 +119,9 @@ public class KhachHangAPI {
     public KhachHang timKiemKH(@RequestParam("key") String  key) {
         return khachHangServiceImpl.timKiemKH(key);
     }
+
+    @GetMapping("/findBySDT")
+    public KhachHang findBySDT(@RequestParam("sdt") String  sdt) {
+        return khachHangServiceImpl.findBySDY(sdt);
+    }
 }

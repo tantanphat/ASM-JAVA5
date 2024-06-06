@@ -17,6 +17,7 @@ public class HoaDonServiceImpl implements HoaDonService {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+
     @Override
     public List<HoaDon> getAllHoaDon() {
         return hoaDonRepository.findAll();
@@ -66,6 +67,15 @@ public class HoaDonServiceImpl implements HoaDonService {
         hoaDon.setHd_MaNV(maNV);
         hoaDon.setHd_MaKH(maKH);
         hoaDonRepository.save(hoaDon);
+    }
+
+    @Override
+    public void updateHD(HoaDon hd) {
+        HoaDon update = hoaDonRepository.getById(hd.getHd_MaHDBan());
+        update.setHd_MaKH(hd.getHd_MaKH());
+        update.setHd_MaNV(hd.getHd_MaNV());
+        update.setHd_NgayBan(hd.getHd_NgayBan());
+        hoaDonRepository.save(update);
     }
 
 

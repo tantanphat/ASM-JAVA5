@@ -51,7 +51,8 @@ $(document).ready(function() {
         TableDoanhThu(month);
     })
 
-});$(document).ready(function() {
+});
+$(document).ready(function() {
     // Function to fetch data from the API and populate the table
     function TableDoanhThu(month) {
         $.ajax({

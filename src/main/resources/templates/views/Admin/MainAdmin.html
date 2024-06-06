@@ -15,6 +15,8 @@
     <link th:href="@{/assets/admin/dist/css/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/assets/admin/css/sidebars.css}" rel="stylesheet">
     <link th:href="@{/assets/admin/css/bill.css}" rel="stylesheet">
+    <link th:href="@{/assets/admin/css/dassboard.css}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -177,10 +179,7 @@
 <main class="d-flex flex-nowrap">
     <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px;">
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-            <svg class="bi pe-none me-2" width="40" height="32">
-                <use xlink:href="#bootstrap" />
-            </svg>
-            <span class="fs-4">Hello world</span>
+            <span class="fs-4">Ico Shop</span>
         </a>
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
@@ -245,12 +244,70 @@
     <div class="b-example-divider b-example-vr"></div>
 
     <article layout:fragment="content" class="w-100" style="overflow-y: auto;overflow-x: hidden; padding: 10px; box-sizing: border-box; ">
-       Hello
+        <section class="statistics mt-4">
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-3 border border-black rounded shadow">
+                    <div class="box d-flex rounded-2 align-items-center p-3">
+                        <i class="uil-users-alt fs-2 text-center bg-success rounded-circle"></i>
+                        <div class="ms-3">
+                            <div class="d-flex align-items-center">
+                                <h3 class="mb-0" th:text="${countSP}"></h3> <span class="d-block ms-2">Sản phẩm</span>
+                            </div>
+                            <p class="fs-normal mb-0">Số lượng sản phẩm</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 border border-black mx-3 rounded shadow">
+                    <div class="box d-flex rounded-2 align-items-center mb-4 mb-lg-0 p-3">
+                        <i class="uil-file fs-2 text-center bg-danger rounded-circle"></i>
+                        <div class="ms-3">
+                            <div class="d-flex align-items-center">
+                                <h3 class="mb-0" th:text="${countKH}"></h3> <span class="d-block ms-2">Khách hàng</span>
+                            </div>
+                            <p class="fs-normal mb-0">Số lượng khách hàng</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 border border-black rounded shadow">
+                    <div class="box d-flex rounded-2 align-items-center mb-4 mb-lg-0 p-3">
+                        <i class="uil-envelope-shield fs-2 text-center bg-primary rounded-circle"></i>
+                        <div class="ms-3">
+                            <div class="d-flex align-items-center" >
+                                <h3 class="mb-0" th:text="${countNV}"></h3> <span class="d-block ms-2">Nhân viên</span>
+                            </div>
+                            <p class="fs-normal mb-0">Số lượng nhân viên</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Doanh thu tháng</h1>
+<!--            <div class="btn-toolbar mb-2 mb-md-0">-->
+<!--                <div class="btn-group me-2">-->
+<!--                    <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>-->
+<!--                    <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>-->
+<!--                </div>-->
+<!--                <button type="button"-->
+<!--                        class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1">-->
+<!--                    <svg class="bi">-->
+<!--                        <use xlink:href="#calendar3" />-->
+<!--                    </svg>-->
+<!--                    This week-->
+<!--                </button>-->
+            </div>
+        </div>
+        <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+        <canvas class="border my-4 w-100" id="dashDoanhThu" width="900" height="380"></canvas>
     </article>
 
 
 
 </main>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js"
+        integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp"
+        crossorigin="anonymous"></script>
 <script th:src="@{/assets/admin/dist/js/bootstrap.bundle.min.js}"></script>
 
 <script th:src="@{/assets/admin/js/sidebars.js}"></script>
@@ -264,6 +321,7 @@
 <script th:src="@{/assets/admin/js/admin-sanpham.js}"></script>
 <script th:src="@{/assets/admin/js/DanhMucSanPham.js}"></script>
 <script th:src="@{/assets/admin/js/billTab.js}"></script>
+<script th:src="@{/assets/admin/dist/js/dashboard.js}"></script>
 <script>
     $("#tabs").tabs({
         active: 2,
@@ -273,6 +331,7 @@
 
         }
     });
+
 </script>
 </body>
 </html>

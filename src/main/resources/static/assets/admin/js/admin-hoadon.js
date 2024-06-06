@@ -1,6 +1,17 @@
 $(document).ready(function() {
     let check = false;
 
+    function  clear() {
+        $('#MaHD').val(null);
+        $('#TenKH_HD').val(null);
+        $('#Date').val(null);
+        $('#MaKH_HD').val(null);
+        $('#Address_HD').val(null);
+        $('#TenNV_HD').val(null);
+        $('#Phone_HD').val(null);
+        $('#Mail_KH').val(null);
+        $('#MaNV_HD').val("");
+    }
     //Đổ thông tin từ table hd lên form
     function doThonTinHoaDonLenForm(data) {
         $.ajax({
@@ -163,10 +174,11 @@ $(document).ready(function() {
                 $.ajax({
                     url: "/api/san-pham/timkiems",
                     type: "GET",
-                    data: { maSP: timSP },
+                    data: { mssp: timSP },
                     success: function(response) {
                         $('#TenSP').val(response.tenSP);
-                        $('#DonGia').val(response.donGia*100+"đ");
+                        $('#DonGia').val(response.giaBan*100);
+                        var hangTonKho = response.soLuong;
                     }
                 });
             } else {
@@ -174,6 +186,18 @@ $(document).ready(function() {
             }
         });
     }
+
+    $('#MaNV_HD').change(function() {
+        var manv = $(this).val();
+        $.ajax({
+            url: "/api/nhan-vien/" + manv,
+            type: "GET",
+            success: function (data) {
+                $('#TenNV_HD').val(data.tenNV);
+
+            }
+        })
+    })
 
     $('#hdct_add').click(function(e) {
         var maHDBan = $("#MaHD").val()
@@ -235,6 +259,7 @@ $(document).ready(function() {
                 contentType: "application/json",
                 dataType: "json",
                 success: function (response) {
+                    var maHDBan = $("#MaHD").val()
                     doLaiHDCTTable(maHDBan)
                     alert("Updated")
 
@@ -280,20 +305,18 @@ $(document).ready(function() {
 
     })
     $("#deleteHD").click(function () {
+
         var mahd = $('#MaHD').val();
+        if(mahd == undefined || mahd == "") {
+            alert("Mã hóa đơn không được để trống");
+            return;
+        }
         $.ajax({
             url: "/api/hoa-don/delete",
             type: "delete",
             data: { mahd: mahd },
             success: function (response) {
-                alert(response);
-                $('#MaHD').val(null);
-                $('#TenKH_HD').val(null);
-                $('#Date').val(null);
-                $('#MaKH_HD').val(null);
-                $('#Address_HD').val(null);
-                $('#TenNV_HD').val(null);
-                $('#Phone_HD').val(null);
+                clear()
                 doHoaDonLenTable();
             },
             error: function (xhr, status, error) {
@@ -303,6 +326,10 @@ $(document).ready(function() {
         });
     });
     $("#createHD").click(function () {
+        if($("#MaHD").val().length > 0) {
+            alert("Mã hóa đơn phải để trống");
+            return;
+        }
         var data = {
             maNV: $('#MaNV_HD').val(),
             maKH: $('#MaKH_HD').val(),
@@ -328,22 +355,42 @@ $(document).ready(function() {
             }
         });
     });
-    $("#clearHD").click(function () {
 
-        $('#MaHD').val(null);
-        $('#TenKH_HD').val(null);
-        $('#Date').val(null);
-        $('#MaKH_HD').val(null);
-        $('#Address_HD').val(null);
-        $('#TenNV_HD').val(null);
-        $('#Phone_HD').val(null);
-        $('#Mail_KH').val(null);
+    $("#updateHD").click(function () {
+        if($("#MaHD").val() == undefined || $("#MaHD").val() == "") {
+            alert("Mã hóa đơn không được để trống");
+            return;
+        }
+        var data = {
+            hd_MaHDBan: $('#MaHD').val(),
+            hd_MaNV: $('#MaNV_HD').val(),
+            hd_MaKH: $('#MaKH_HD').val(),
+            hd_NgayBan: $('#Date').val(),
+        };
+        $.ajax({
+            url: "/api/hoa-don/updateHD",
+            type: "put",
+            data: JSON.stringify(data),
+            dataType: "json",
+            contentType: "application/json",
+            success: function (response) {
+                alert(response);
+                doHoaDonLenTable();
+            },
+            error: function (xhr, status, error) {
+                console.error("Lỗi:", error);
+                alert("Lỗi");
+            }
+        });
+    });
+    $("#clearHD").click(function () {
+        clear();
     });
     $("#editHD").click(function () {
         check = !check;
 
         if (check) {
-            // Enable input fields when check is true
+            $('#Date').removeAttr('disabled');
             $('#TenKH_HD').removeAttr('disabled');
             $('#MaKH_HD').removeAttr('disabled');
             $('#Address_HD').removeAttr('disabled');
@@ -359,6 +406,22 @@ $(document).ready(function() {
         }
     });
 
+    $('#Phone_HD').change(function(e) {
+        var sdt = $(this).val();
+        $.ajax({
+            url: "/api/khach-hang/findBySDT",
+            type: "GET",
+            data: { sdt: sdt },
+            success: function (data) {
+                $('#TenKH_HD').val(data.tenKH);
+                $('#MaKH_HD').val(data.maKH);
+                $('#Address_HD').val(data.diaChi);
+                $('#Phone_HD').val(data.sdt);
+                $('#Mail_KH').val(data.email)
+            }
+        })
+    })
+
     doThonTinHoaDonLenForm();
 
     // doHDCTLenTableTheoMaHDBan("HD00001");
@@ -366,5 +429,5 @@ $(document).ready(function() {
     listMaNV();
     doHoaDonLenTable();
 
-
+    tinhTongTien()
 });

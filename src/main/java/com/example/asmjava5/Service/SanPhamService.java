@@ -21,4 +21,5 @@ public interface SanPhamService {
     String AUTO_MASP();
 
     List<SanPham> getAllSP(Integer pageNo, Integer pageSize, String sortBy, String sortOrder);
+
 }

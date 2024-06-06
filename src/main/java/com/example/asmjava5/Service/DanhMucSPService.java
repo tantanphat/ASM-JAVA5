@@ -9,4 +9,10 @@ public interface DanhMucSPService {
     List<DanhMucSP> findAllDMSP();
 
     DanhMucSP findDMSPByID(int id);
+
+    void createDMSP(DanhMucSP dmuc);
+
+    void updateDMSP(DanhMucSP dmuc);
+
+    void deleteSMSP(int madm);
 }

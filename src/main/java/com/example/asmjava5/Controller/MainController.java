@@ -7,6 +7,7 @@ import com.example.asmjava5.Entity.SanPham;
 
 import com.example.asmjava5.Service.KhachHangService;
 import com.example.asmjava5.Service.MailService;
+import com.example.asmjava5.Service.NhanVienService;
 import com.example.asmjava5.Service.ServiceImpl.DanhMucSPServceImpl;
 import com.example.asmjava5.Service.ServiceImpl.KhachHangServiceImpl;
 import com.example.asmjava5.Service.ServiceImpl.SanPhamServiceImpl;
@@ -40,6 +41,8 @@ public class MainController {
     private SanPhamServiceImpl sanPhamServiceImpl;
     @Autowired
     private DanhMucSPServceImpl danhMucSPServceImpl;
+    @Autowired
+    private NhanVienService nhanVienService;
     @Autowired
     private MailService mailService;
     @Autowired

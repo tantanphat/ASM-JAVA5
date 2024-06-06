@@ -126,7 +126,8 @@ public class HoaDonAPI {
                     kha.setThanhVien(false);
                     khachHangService.dangKyKhachHangMoi(kha);
                     hoaDonService.creatHD(hoaDon.getMaNV(),makh);
-                } else {
+                }
+                else {
                     hoaDonService.creatHD(hoaDon.getMaNV(),hoaDon.getMaKH());
                 }
 
@@ -135,5 +136,11 @@ public class HoaDonAPI {
                 e.printStackTrace();
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Đã xảy ra lỗi khi Thêm hóa đơn");
             }
+        }
+
+        @PutMapping("/updateHD")
+    public ResponseEntity<?> updateHoaDon(@RequestBody HoaDon hoaDon) {
+        hoaDonService.updateHD(hoaDon);
+        return ResponseEntity.ok(HttpStatus.OK);
         }
 }

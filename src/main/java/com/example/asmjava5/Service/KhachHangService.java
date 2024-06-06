@@ -26,4 +26,6 @@ public interface KhachHangService {
     String AUTO_MAKH();
 
     KhachHang timKiemKH(String key);
+
+    KhachHang findBySDY(String sdt);
 }

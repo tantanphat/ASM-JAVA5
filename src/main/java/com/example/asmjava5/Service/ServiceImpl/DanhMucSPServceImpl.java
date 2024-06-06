@@ -12,6 +12,8 @@ import java.util.List;
 public class DanhMucSPServceImpl implements DanhMucSPService {
     @Autowired
     private DanhMucSPRepository dmDao;
+    @Autowired
+    private DanhMucSPRepository danhMucSPRepository;
 
     @Override
     public List<DanhMucSP> findAllDMSP() {
@@ -21,5 +23,22 @@ public class DanhMucSPServceImpl implements DanhMucSPService {
     @Override
     public DanhMucSP findDMSPByID(int id) {
         return dmDao.getAllDanhMucSP(id);
+    }
+
+    @Override
+    public void createDMSP(DanhMucSP dmuc) {
+        danhMucSPRepository.save(dmuc);
+    }
+
+    @Override
+    public void updateDMSP(DanhMucSP dmuc) {
+        DanhMucSP dm = danhMucSPRepository.getAllDanhMucSP(dmuc.getMaDM());
+        dm.setTenDanhMuc(dmuc.getTenDanhMuc());
+        danhMucSPRepository.save(dm);
+    }
+
+    @Override
+    public void deleteSMSP(int madm) {
+//        danhMucSPRepository.deleteById(madm);
     }
 }

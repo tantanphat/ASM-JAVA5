@@ -20,4 +20,6 @@ public interface HoaDonService {
     void deleteHoaDon(String mahd);
 
     void creatHD(String maNV, String maKH);
+
+    void updateHD(HoaDon hd);
 }

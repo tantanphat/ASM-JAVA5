@@ -1,7 +1,10 @@
 package com.example.asmjava5.Controller;
 
 import com.example.asmjava5.Entity.NhanVien;
+import com.example.asmjava5.Entity.SanPham;
+import com.example.asmjava5.Service.KhachHangService;
 import com.example.asmjava5.Service.NhanVienService;
+import com.example.asmjava5.Service.SanPhamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,14 +26,28 @@ import java.util.List;
 
 public class AdminController {
     @Autowired
+    private KhachHangService khachHangService;
+    @Autowired
     private NhanVienService nhanVienService;
+    @Autowired
+    private SanPhamService sanPhamService;
 
     @GetMapping("")
     @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
-    public String doGetAdminController() {
+    public String doGetAdminController(Model model) {
+
 //        SecurityContext context = SecurityContextHolder.getContext();
 //        Authentication authentication = context.getAuthentication();
 //        String auth = authentication.getAuthorities().toString();
+
+        int nhanVienList = nhanVienService.getALlNhanVien().size();
+        int khachHangList = khachHangService.getAllKhachHang().size();
+        int sanPhamList = sanPhamService.getAllSanPham().size();
+
+        model.addAttribute("countNV",nhanVienList);
+        model.addAttribute("countKH",khachHangList);
+        model.addAttribute("countSP",sanPhamList);
+
         return "views/Admin/MainAdmin";
     }
 
