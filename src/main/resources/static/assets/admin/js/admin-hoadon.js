@@ -429,5 +429,9 @@ $(document).ready(function() {
     listMaNV();
     doHoaDonLenTable();
 
-    tinhTongTien()
+    $('#clearHDCT').click(function(e) {
+        clearHDCT()
+    })
+
+
 });

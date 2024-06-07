@@ -67,7 +67,7 @@
             var matkhau = $('#Password').val();
             var vaiTro = $('#RoleQL').prop('checked'); // true nếu là quản lý
 
-            if (maNV.empty() || tenNV.empty() || diaChi.empty()|| dienThoai.empty()|| ngaySinh.empty()|| matkhau.empty() ) {
+            if (tenNV =="" || diaChi==""|| dienThoai==""|| ngaySinh==""|| matkhau=="") {
                 alert("Vui lòng điền đầy đủ thông tin!");
                 return;
             }
@@ -116,7 +116,7 @@
             var matkhau = $('#Password').val();
             var vaiTro = $('#RoleQL').prop('checked'); // true nếu là quản lý
 
-            if (maNV.empty() || tenNV.empty() || diaChi.empty()|| dienThoai.empty()|| ngaySinh.empty()|| matkhau.empty() ) {
+            if ( maNV =="" ||tenNV =="" || diaChi==""|| dienThoai==""|| ngaySinh==""|| matkhau=="") {
                 alert("Vui lòng điền đầy đủ thông tin!");
                 return;
             }
@@ -150,7 +150,7 @@
         $('#btnDelete').click(function(e) {
             // Lấy mã nhân viên từ form
             var maNV = $('#MANV').val();
-            if (maNV.empty() ) {
+            if (maNV =="" ) {
                 alert("Vui lòng điền đầy đủ thông tin!");
                 return;
             }

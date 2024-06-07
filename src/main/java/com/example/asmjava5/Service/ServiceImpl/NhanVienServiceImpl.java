@@ -31,12 +31,12 @@ public class NhanVienServiceImpl implements NhanVienService {
     }
 
     public String generateNewMaNV() {
-        return jdbcTemplate.queryForObject("SELECT "+ FuncAttr.AUTO_MA_NV, String.class);
+        return jdbcTemplate.queryForObject("SELECT dbo.AUTO_MaNV()", String.class);
     }
 
     @Override
     public NhanVien addNhanVien(NhanVien nhanVien) {
-        String newMaNV = generateNewMaNV();
+        String newMaNV = nhanVienRepository.AUTO_MaNV();
         nhanVien.setMaNV(newMaNV);
         nhanVien.setMatkhau(encoder.encode(nhanVien.getMatkhau()));
         return nhanVienRepository.save(nhanVien);

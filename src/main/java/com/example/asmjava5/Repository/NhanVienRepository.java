@@ -10,4 +10,7 @@ public interface NhanVienRepository extends JpaRepository<NhanVien, String> {
 
         @Query("SELECT k FROM NhanVien k WHERE k.MaNV = ?1")
         NhanVien findByMaNV(String MaNV);
+
+        @Query(value = "SELECT dbo.AUTO_MaNV() AS newId")
+        String AUTO_MaNV();
 }
