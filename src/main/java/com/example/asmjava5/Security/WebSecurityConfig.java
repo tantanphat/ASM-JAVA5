@@ -66,7 +66,7 @@ public class WebSecurityConfig {
 
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
-        InMemoryTokenRepositoryImpl memory = new InMemoryTokenRepositoryImpl(); // Ta lưu tạm remember me trong memory (RAM). Nếu cần mình có thể lưu trong database
+        InMemoryTokenRepositoryImpl memory = new InMemoryTokenRepositoryImpl();
         return memory;
     }
 
