@@ -5,10 +5,7 @@ import com.example.asmjava5.Entity.HoaDonChiTiet;
 import com.example.asmjava5.Entity.SanPham;
 import com.example.asmjava5.Service.ThongKeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -47,5 +44,10 @@ public class ThongKeAPI {
     @GetMapping("san-pham-khong-ban/{thang}")
     public List<SanPham> thongKeSanPhamKBanDuoc(@PathVariable int thang) {
         return thongKeService.thongKeSanPhamKBanDuoc(thang);
+    }
+
+    @GetMapping("/doanh-thu-thang-theo-nam")
+    public List<HoaDonChiTiet> thongKeSanPhamKBanDuoc(@RequestParam("month") int month , @RequestParam(name = "year",defaultValue = "2021") int year) {
+        return thongKeService.thongKeDoanhThuThangTheoNam(month, year);
     }
 }

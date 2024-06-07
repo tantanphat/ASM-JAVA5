@@ -78,5 +78,17 @@ public class ThongKeServiceImpl implements ThongKeService {
         return storedProcedure.getResultList();
     }
 
+    @Override
+    public List<HoaDonChiTiet> thongKeDoanhThuThangTheoNam(int thang, int year) {
+        StoredProcedureQuery storedProcedure = entityManager
+                .createStoredProcedureQuery("sp_ThongKeDoanhThuDaBanTrongThangByNam")
+                .registerStoredProcedureParameter("thang", Integer.class, ParameterMode.IN)
+                .registerStoredProcedureParameter("year", Integer.class, ParameterMode.IN)
+                .setParameter("thang", thang)
+                .setParameter("year", year);
+
+        return storedProcedure.getResultList();
+    }
+
 
 }

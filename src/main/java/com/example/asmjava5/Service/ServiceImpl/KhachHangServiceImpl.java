@@ -1,6 +1,7 @@
 package com.example.asmjava5.Service.ServiceImpl;
 
 import com.example.asmjava5.Entity.KhachHang;
+import com.example.asmjava5.Model.request.ChangePassword;
 import com.example.asmjava5.Model.request.DangKyKhachHang;
 import com.example.asmjava5.Model.request.KhachHangThongTin;
 import com.example.asmjava5.Repository.KhachHangRepository;
@@ -109,6 +110,13 @@ public class KhachHangServiceImpl implements KhachHangService {
     @Override
     public KhachHang findBySDY(String sdt) {
         return khachHangRepository.findBySDT(sdt);
+    }
+
+    @Override
+    public KhachHang changePassword(ChangePassword changePassword) {
+        KhachHang kh = findBymaKH(changePassword.getMaKH());
+        kh.setMatKhau(encoder.encode(changePassword.getMatKhauMoi()));
+        return khachHangRepository.save(kh);
     }
 
 }

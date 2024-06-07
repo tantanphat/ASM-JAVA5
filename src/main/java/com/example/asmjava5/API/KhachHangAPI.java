@@ -2,6 +2,7 @@ package com.example.asmjava5.API;
 
 import com.example.asmjava5.Entity.KhachHang;
 import com.example.asmjava5.Model.mapper.KhachHangMapper;
+import com.example.asmjava5.Model.request.ChangePassword;
 import com.example.asmjava5.Model.request.DangKyKhachHang;
 import com.example.asmjava5.Model.request.KhachHangThongTin;
 import com.example.asmjava5.Repository.KhachHangRepository;
@@ -13,6 +14,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -31,6 +33,7 @@ public class KhachHangAPI {
     private KhachHangService khachHangServiceImpl;
     @Autowired
     private KhachHangRepository khachHangRepository;
+    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     //Lấy thông tin khách hàng qua email
     @GetMapping("/user")
@@ -124,4 +127,21 @@ public class KhachHangAPI {
     public KhachHang findBySDT(@RequestParam("sdt") String  sdt) {
         return khachHangServiceImpl.findBySDY(sdt);
     }
+
+    @PutMapping("/change-password")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePassword changePassword, Principal principal) {
+        String userName = principal.getName();
+        KhachHang kh = khachHangServiceImpl.getLoginByEmail(userName);
+
+        changePassword.setMaKH(kh.getMaKH());
+
+        // So sánh mật khẩu cũ của người dùng với mật khẩu đã được mã hóa trong cơ sở dữ liệu
+        if (!encoder.matches(changePassword.getMatKhauCu(), kh.getMatKhau())) {
+            return ResponseEntity.badRequest().body("Mật khẩu cũ không đúng.");
+        } else {
+            khachHangServiceImpl.changePassword(changePassword);
+            return ResponseEntity.ok(HttpStatus.OK);
+        }
+    }
+
 }

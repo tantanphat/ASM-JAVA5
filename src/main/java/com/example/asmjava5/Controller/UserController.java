@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -19,6 +21,12 @@ public class UserController {
     @GetMapping("/myaccount")
     public String hienThiTrangAccountKhachHang() {
         return "/views/myaccount";
+    }
+
+    @GetMapping("/Doi-mat-khau")
+    public String hienThiTrangchangePassword() {
+
+        return "/views/changePassword";
     }
 
 

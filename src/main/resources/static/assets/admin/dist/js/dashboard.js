@@ -1,3 +1,4 @@
+$(document).ready(function () {
 //Hoá đơn thấp nhất và cao nhất
 function dashboardDoanhThuMinMax(callback) {
     var data = [];
@@ -28,7 +29,6 @@ function dashboardDoanhThuMinMax(callback) {
     }
     doanhThuDash(1);
 }
-
 //Doanh thu
 function dashboardDoanhThu(callback) {
     var data = [];
@@ -52,8 +52,6 @@ function dashboardDoanhThu(callback) {
     }
     doanhThuDash(1);
 }
-dashboardDoanhThuMinMax(updateChart);
-dashboardDoanhThu(updateChartDoanhThu)
 
 function updateChart(formData) {
     const ctx = document.getElementById("myChart").getContext("2d");
@@ -97,7 +95,6 @@ function updateChart(formData) {
         },
     });
 }
-
 function updateChartDoanhThu(data) {
     const ctx = document.getElementById("dashDoanhThu").getContext("2d");
     const myChart = new Chart(ctx, {
@@ -133,3 +130,106 @@ function updateChartDoanhThu(data) {
         },
     });
 }
+
+dashboardDoanhThuMinMax(updateChart);
+// dashboardDoanhThu(updateChartDoanhThu);
+
+    let doanThuByNam;
+    function updateChartDoanhThuByNam(dataNam) {
+        const ctx = document.getElementById("dashDoanhThu").getContext("2d");
+
+        if(doanThuByNam) {
+            removeData(doanThuByNam);
+            addData(doanThuByNam, dataNam);
+        } else {
+            doanThuByNam = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [
+                        "January", "February", "March", "April", "May", "June",
+                        "July", "August", "September", "October", "November", "December"
+                    ],
+                    datasets: [{
+                        label: 'Doanh thu',
+                        data: dataNam,
+                        lineTension: 0,
+                        backgroundColor: 'red',//Các dấu chấm
+                        borderWidth: 1,
+                        borderColor: 'black',
+                        pointStyle:'circle',
+                        pointRadius: 5,
+                        pointHoverBackgroundColor: 'pink',
+
+                    }
+                    ]
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            display: true,
+                        },
+                        tooltip: {
+                            boxPadding: 3,
+                        },
+                    },
+                },
+            });
+        }
+
+
+
+
+    }
+    //Xóa dữ liệu chart
+    function removeData(chart) {
+        chart.data.labels.length = 0;
+        chart.data.datasets.forEach((dataset) => {
+            dataset.data.length = 0;
+        });
+        chart.update();
+    }
+
+    //Update lại data sau khi xóa
+    function addData(chart, newData) {
+        chart.data.labels = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+        chart.data.datasets.forEach((dataset) => {
+            dataset.data = newData;
+        });
+        chart.update();
+    }
+
+//Doanh thu tháng theo năm
+function dashboardDoanhThuByNam(year,callback) {
+    const dataNam = [];
+    function doanhThuThangTheoNam(month) {
+        $.ajax({
+            url: '/api/thong-ke/doanh-thu-thang-theo-nam?month='+month+'&year='+year,
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                response.forEach(function(item) {
+                    dataNam.push(item[2] * 1000);
+                });
+                if (month === 12) {
+                    callback(dataNam);
+                } else {
+                    doanhThuThangTheoNam(month + 1);
+                }
+            }
+        });
+    }
+    doanhThuThangTheoNam(1);
+}
+    dashboardDoanhThuByNam($('#dashBoardDTByNam').val(), updateChartDoanhThuByNam);
+    $('#dashBoardDTByNam').change(function () {
+        var year = $(this).val();
+        dashboardDoanhThuByNam(year, updateChartDoanhThuByNam);
+    });
+})
+
+
+
+

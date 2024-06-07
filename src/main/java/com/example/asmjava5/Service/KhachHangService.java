@@ -1,6 +1,7 @@
 package com.example.asmjava5.Service;
 
 import com.example.asmjava5.Entity.KhachHang;
+import com.example.asmjava5.Model.request.ChangePassword;
 import com.example.asmjava5.Model.request.DangKyKhachHang;
 import com.example.asmjava5.Model.request.KhachHangThongTin;
 
@@ -28,4 +29,6 @@ public interface KhachHangService {
     KhachHang timKiemKH(String key);
 
     KhachHang findBySDY(String sdt);
+
+    KhachHang changePassword(ChangePassword changePassword);
 }
