@@ -29,7 +29,6 @@ public class UpLoadAPI {
         StringBuilder fileNames = new StringBuilder();
         String fileName = file.getOriginalFilename();
         Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, fileName);
-
         fileNames.append(file.getOriginalFilename());
         Files.write(fileNameAndPath, file.getBytes());
        System.out.println("Đã upload thành công");

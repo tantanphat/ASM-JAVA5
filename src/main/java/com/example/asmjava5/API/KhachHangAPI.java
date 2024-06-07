@@ -1,5 +1,6 @@
 package com.example.asmjava5.API;
 
+import com.example.asmjava5.Constant.MailConstant;
 import com.example.asmjava5.Entity.KhachHang;
 import com.example.asmjava5.Model.mapper.KhachHangMapper;
 import com.example.asmjava5.Model.request.ChangePassword;
@@ -7,7 +8,9 @@ import com.example.asmjava5.Model.request.DangKyKhachHang;
 import com.example.asmjava5.Model.request.KhachHangThongTin;
 import com.example.asmjava5.Repository.KhachHangRepository;
 import com.example.asmjava5.Service.KhachHangService;
+import com.example.asmjava5.Service.MailService;
 import com.example.asmjava5.Utils.ExcelKhachHangUtils;
+import com.example.asmjava5.Utils.SendMa;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -33,6 +36,8 @@ public class KhachHangAPI {
     private KhachHangService khachHangServiceImpl;
     @Autowired
     private KhachHangRepository khachHangRepository;
+    @Autowired
+            private MailService emailService;
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     //Lấy thông tin khách hàng qua email
@@ -144,4 +149,34 @@ public class KhachHangAPI {
         }
     }
 
+    @GetMapping("/mail-for-forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestParam("email") String email) {
+        KhachHang kh = khachHangServiceImpl.getLoginByEmail(email);
+        if (kh!= null) {
+            String ma = SendMa.MaXacNhan();
+            session.setAttribute("MaXacNhan",ma);
+            System.out.println(ma);
+            emailService.sendMailCode(MailConstant.CODE_FORGOT_PASSWORD,email,ma);
+            return ResponseEntity.ok(HttpStatus.OK);
+        } else {
+            return ResponseEntity.badRequest().body("Email không tồn tại.");
+        }
+    }
+
+    @GetMapping("/conform-code-password")
+    public ResponseEntity<?> conformCodePassword() {
+        String maXN = (String)session.getAttribute("MaXacNhan");
+        return ResponseEntity.ok(maXN);
+    }
+
+    @PutMapping("/forgor-password-new-password")
+    public ResponseEntity<?> forgorPasswordNewPassword(@RequestParam("email")String email,@RequestParam("pass") String pass) {
+        try {
+            khachHangServiceImpl.forgotPassword(email, pass);
+            return ResponseEntity.ok("Đổi mật khẩu thành công");
+        } catch(Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Đã có lỗi xảy ra");
+        }
+    }
 }

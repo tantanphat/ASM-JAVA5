@@ -95,6 +95,11 @@ public class LoginController {
         return "/views/Admin/adminLogin";
     }
 
+    @GetMapping("/Quen-mat-khau")
+    public String getQuenMatKhau() {
+        return "/views/Quen-Mat-Khau";
+    }
+
 
 
 

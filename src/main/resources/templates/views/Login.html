@@ -6,7 +6,6 @@
     <title>Estore</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="manifest" th:href="@{/site.webmanifest}">
     <link rel="shortcut icon" type="image/x-icon" th:href="@{/assets/img/favicon.ico}">
     <th:block th:include="~{/common/head :: head}"></th:block>
     <link rel="stylesheet" type="text/css" th:href="@{/assets/user/css/login.css}">
@@ -43,7 +42,7 @@
 
                 <input type="password" id="password" placeholder="Password"/>
 
-                <a href="#">Forgot your password?</a>
+                <a th:href="@{/Quen-mat-khau}">Forgot your password?</a>
                 <button type="submit">Sign In</button>
             </form>
         </div>

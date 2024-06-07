@@ -37,6 +37,7 @@
                 type: "GET",
                 success: function (response) {
                     var tbody = $('#employeeTable tbody');
+                    tbody.empty(); // Clear the table body before adding new rows
                     response.forEach(function (item) {
                         var row = $('<tr></tr>');
                         row.append('<td><a href="/admin/nhan-vien/' + item.maNV + '">' + item.maNV + '</a></td>');
@@ -65,6 +66,11 @@
             var ngaySinh = $('#Brithday').val();
             var matkhau = $('#Password').val();
             var vaiTro = $('#RoleQL').prop('checked'); // true nếu là quản lý
+
+            if (maNV.empty() || tenNV.empty() || diaChi.empty()|| dienThoai.empty()|| ngaySinh.empty()|| matkhau.empty() ) {
+                alert("Vui lòng điền đầy đủ thông tin!");
+                return;
+            }
 
             // Tạo đối tượng nhân viên mới (không bao gồm maNV)
             var newNhanVien = {
@@ -102,14 +108,18 @@
         $('#btnUpdate').click(function(e) {
             // Lấy mã nhân viên từ form
             var maNV = $('#MANV').val();
-            // Lấy thông tin mới từ form
             var tenNV = $('#FullName').val();
             var gioiTinh = $('#Gender').val() === "1"; // "1" là Nam, "2" là Nữ
             var diaChi = $('#Address').val();
             var dienThoai = $('#Phone').val();
             var ngaySinh = $('#Brithday').val();
             var matkhau = $('#Password').val();
-            var vaiTro = $('#RoleNV').prop('checked'); // true nếu là quản lý
+            var vaiTro = $('#RoleQL').prop('checked'); // true nếu là quản lý
+
+            if (maNV.empty() || tenNV.empty() || diaChi.empty()|| dienThoai.empty()|| ngaySinh.empty()|| matkhau.empty() ) {
+                alert("Vui lòng điền đầy đủ thông tin!");
+                return;
+            }
 
             // Tạo đối tượng nhân viên cần cập nhật
             var updatedNhanVien = {
@@ -129,8 +139,6 @@
                 contentType: "application/json",
                 data: JSON.stringify(updatedNhanVien),
                 success: function (data) {
-                    // Cập nhật thông tin nhân viên trong bảng hiển thị
-                    $('#employeeTable tbody').empty(); // Xóa hết dữ liệu cũ trong bảng
                     fetchEmployeeData(); // Gọi lại hàm fetchEmployeeData() để lấy dữ liệu mới
                     alert("Thông tin nhân viên đã được cập nhật!");
                 },
@@ -142,7 +150,10 @@
         $('#btnDelete').click(function(e) {
             // Lấy mã nhân viên từ form
             var maNV = $('#MANV').val();
-
+            if (maNV.empty() ) {
+                alert("Vui lòng điền đầy đủ thông tin!");
+                return;
+            }
             // Gửi yêu cầu DELETE để xóa nhân viên
             $.ajax({
                 url: "/api/nhan-vien/" + maNV,

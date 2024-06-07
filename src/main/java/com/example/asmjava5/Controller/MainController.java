@@ -8,6 +8,7 @@ import com.example.asmjava5.Entity.SanPham;
 import com.example.asmjava5.Service.KhachHangService;
 import com.example.asmjava5.Service.MailService;
 import com.example.asmjava5.Service.NhanVienService;
+import com.example.asmjava5.Service.SanPhamService;
 import com.example.asmjava5.Service.ServiceImpl.DanhMucSPServceImpl;
 import com.example.asmjava5.Service.ServiceImpl.KhachHangServiceImpl;
 import com.example.asmjava5.Service.ServiceImpl.SanPhamServiceImpl;
@@ -38,15 +39,9 @@ public class MainController {
 
     SessionUtils sessionUtils;
     @Autowired
-    private SanPhamServiceImpl sanPhamServiceImpl;
+    private SanPhamService sanPhamServiceImpl;
     @Autowired
     private DanhMucSPServceImpl danhMucSPServceImpl;
-    @Autowired
-    private NhanVienService nhanVienService;
-    @Autowired
-    private MailService mailService;
-    @Autowired
-    private KhachHangService khachHangService;
 
     @GetMapping("/Trang-chu")
     public String hienThiAllSP(Model model) {
@@ -56,6 +51,8 @@ public class MainController {
         List<DanhMucSP> dmsp = danhMucSPServceImpl.findAllDMSP();
         model.addAttribute("danhMucSP", dmsp);
 
+//        List<SanPham> ao = sanPhamServiceImpl.listSPByMaDM(1);
+//        model.addAttribute("ao", ao);
 
 //        // Kiểm tra xem người dùng đã đăng nhập thành công chưa
 //        if (principal == null) {

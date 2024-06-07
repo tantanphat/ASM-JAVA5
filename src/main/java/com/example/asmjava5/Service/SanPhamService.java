@@ -22,4 +22,5 @@ public interface SanPhamService {
 
     List<SanPham> getAllSP(Integer pageNo, Integer pageSize, String sortBy, String sortOrder);
 
+    List<SanPham> listSPByMaDM(int madm);
 }

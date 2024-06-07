@@ -31,4 +31,6 @@ public interface KhachHangService {
     KhachHang findBySDY(String sdt);
 
     KhachHang changePassword(ChangePassword changePassword);
+
+    void forgotPassword(String email, String password);
 }

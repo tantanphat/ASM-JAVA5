@@ -119,4 +119,11 @@ public class KhachHangServiceImpl implements KhachHangService {
         return khachHangRepository.save(kh);
     }
 
+    @Override
+    public void forgotPassword(String email, String password) {
+        KhachHang kh = khachHangRepository.findByEmail(email);
+        kh.setMatKhau(encoder.encode(password));
+        khachHangRepository.save(kh);
+    }
+
 }

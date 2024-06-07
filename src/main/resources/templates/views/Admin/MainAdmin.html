@@ -17,6 +17,7 @@
     <link th:href="@{/assets/admin/css/bill.css}" rel="stylesheet">
     <link th:href="@{/assets/admin/css/dassboard.css}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+    <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -209,13 +210,19 @@
                     Sản phẩm
                 </a>
             </li>
-            <li>
-                <a th:href="@{/admin/hoa-don}" class="nav-link text-white">
+            <li >
+                <a  th:href="@{/admin/hoa-don}" class="nav-link text-white">
                     <i class="fa-solid fa-users me-2" width="16" height="16"></i>
                     Hoá đơn
                 </a>
             </li>
-            <li>
+            <li sec:authorize="!hasRole('ADMIN')">
+                <span  class="nav-link text-white roleAdminNot"  >
+                    <i class="fa-solid fa-file-invoice-dollar me-2" width="16" height="16"></i>
+                    Báo cáo - Thống kêê
+                </span>
+            </li>
+            <li sec:authorize="hasRole('ADMIN')">
                 <a th:href="@{/admin/report/nhan-vien}" class="nav-link text-white">
                     <i class="fa-solid fa-file-invoice-dollar me-2" width="16" height="16"></i>
                     Báo cáo - Thống kê
@@ -230,9 +237,6 @@
                 <strong th:text="${#authentication.name}"></strong>
             </a>
             <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                <li><a class="dropdown-item" href="#">New project...</a></li>
-                <li><a class="dropdown-item" href="#">Settings</a></li>
-                <li><a class="dropdown-item" href="#">Profile</a></li>
                 <li>
                     <hr class="dropdown-divider">
                 </li>
@@ -333,9 +337,9 @@
         activate: function (event, ui) {
             var active = $('#tabs').tabs('option', 'active');
             $("#tabid").html('the tab id is ' + $("#tabs ul>li a").eq(active).attr("href"));
-
         }
     });
+
 
 </script>
 </body>

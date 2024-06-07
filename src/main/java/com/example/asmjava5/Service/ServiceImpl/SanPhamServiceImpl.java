@@ -103,4 +103,9 @@ public class SanPhamServiceImpl implements SanPhamService {
             return new ArrayList<SanPham>();
         }
     }
+
+    @Override
+    public List<SanPham> listSPByMaDM(int madm) {
+        return sanPhamRepository.listSPByMaDMSP(madm);
+    }
 }

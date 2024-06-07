@@ -4,7 +4,13 @@ $(document).ready(function() {
     // Tách URL để lấy mã khách hàng (makh)
     var segments = currentURL.split('/');
     var makh = segments[segments.length - 1];
-    console.log(makh); // In ra mã khách hàng để kiểm tra
+    function clear() {
+        $('#MAKH').val("");
+        $('#FullNameKH').val("");
+        $('#AddressKH').val("");
+        $('#PhoneKH').val("");
+        $('#Email').val("");
+    }
 
     // Gửi yêu cầu GET để lấy thông tin khách hàng
     $.ajax({
@@ -72,6 +78,12 @@ $(document).ready(function() {
 
     $("#searchKH").on('input', function(e) {
         var key = $(this).val();
+        var tbody = $('#khach-hang-table tbody');
+
+        if (key==='') {
+            tbody.empty()
+        }
+
         $.ajax({
             url: "/api/khach-hang/tim-kiem",
             type: "GET",
@@ -83,7 +95,7 @@ $(document).ready(function() {
                 $('#AddressKH').val(data.diaChi);
                 $('#PhoneKH').val(data.sdt);
                 $('#Email').val(data.email);
-                var tbody = $('#khach-hang-table tbody');
+
                 tbody.empty(); // Xóa nội dung cũ của bảng
                 var row = $('<tr></tr>');
                 row.append('<td><a href="/admin/khach-hang/' + data.maKH + '">' + data.maKH+ '</td>'); // Mã khách hàng
@@ -99,7 +111,9 @@ $(document).ready(function() {
             }
         });
     })
-
+    $('#btnClearKH_click').click(function () {
+        clear()
+    })
 });
 
 function btnCreatKH_click() {
@@ -145,9 +159,7 @@ function btnCreatKH_click() {
     });
 }
 
-function btnClearKH_click() {
-    window.location.href = "http://localhost:8080/admin/khach-hang?action=Clear";
-}
+
 
 function btnUpdateKH_click() {
     // Lấy mã khách hàng từ form

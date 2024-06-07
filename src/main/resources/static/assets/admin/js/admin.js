@@ -16,6 +16,10 @@ $(document).ready(function(){
     } else {
         $("#linkSP").removeClass("active");
     }
+
+    $('.roleAdminNot').click(function () {
+        alert("Chỉ có admin mới được quyền vào mục này")
+    })
 });
 
 

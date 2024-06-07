@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{views/Admin/MainAdmin.html}" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{views/Admin/MainAdmin.html}" >
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -126,10 +126,14 @@
                             </div>
                         </div>
                         <div class="button-container">
-                            <button type="button" class="btn btn-outline-success"  id="btnCreate">Creat</button>
+                            <button type="button" class="btn btn-outline-success roleAdminNot" sec:authorize="!hasRole('ADMIN')" >Creat</button>
+                            <button type="button" class="btn btn-outline-success" sec:authorize="hasRole('ADMIN')" id="btnCreate">Creat</button>
                             <button type="button" class="btn btn-outline-success"  id="btnClear">Clear</button>
-                            <button type="button" class="btn btn-outline-success"   id="btnUpdate">Update</button>
-                            <button type="button" class="btn btn-outline-success"  id="btnDelete">Delete</button>
+                            <button type="button" class="btn btn-outline-success roleAdminNot" sec:authorize="!hasRole('ADMIN')"  >Update</button>
+                            <button type="button" class="btn btn-outline-success roleAdminNot" sec:authorize="!hasRole('ADMIN')" >Delete</button>
+
+                            <button type="button" class="btn btn-outline-success" sec:authorize="hasRole('ADMIN')"  id="btnUpdate">Update</button>
+                            <button type="button" class="btn btn-outline-success" sec:authorize="hasRole('ADMIN')" id="btnDelete">Delete</button>
                         </div>
                         <br>
                         <h2 class="h3 mb-3 mt-4 text-black d-flex justify-content-center align-items-center">Danh sách</h2>

@@ -23,6 +23,8 @@ public interface SanPhamRepository extends JpaRepository<SanPham, Object> {
         @Query(value = "SELECT dbo.AUTO_MaSP() AS newId")
         String AUTO_MA_SP();
 
+        @Query("SELECT s FROM SanPham s WHERE s.danhMucSP = ?1")
+        List<SanPham> listSPByMaDMSP(@Param("maDMSP") int maDMSP);
 
 }
 
