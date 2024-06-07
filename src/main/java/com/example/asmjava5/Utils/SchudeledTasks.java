@@ -10,12 +10,12 @@ public class SchudeledTasks {
     private static final Logger logger = LoggerFactory.getLogger(SchudeledTasks.class);
 
 
-    @Scheduled(fixedRate = 1000,initialDelay = 5000)//Sau khi khởi động 5 giây sau thì hàm mới chạy
+    @Scheduled(fixedRate = 1000,initialDelay = 3000)//Sau khi khởi động 3 giây sau thì hàm mới chạy và 1 giây sẽ in ra
     public void schediledFixedRateDelay() {
         logger.info("scheduledFixedRateDelay");
     }
 
-//    @Scheduled(fixedDelay = 10000)
+//    @Scheduled(fixedDelay = 6000)
 //    public void scheduleTaskWithFixedDelay() {
 //        try {
 //            Thread.sleep(1000);
@@ -25,7 +25,7 @@ public class SchudeledTasks {
 //        logger.info("scheduleTaskWithFixedDelay");
 //    }
 
-//@Scheduled(cron = "15 * * * * ?")
+//@Scheduled(cron = "7 * * * * ?")
 //public void scheduleTaskWithCronExpression() {
 //    logger.info("Đúng giây thứ 15 mới chạy");
 //}
