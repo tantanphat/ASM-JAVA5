@@ -39,7 +39,7 @@ public class NhanVienAPI {
         return ResponseEntity.ok(newNhanVien);
     }
 
-    @PutMapping("/{maNV}")
+    @PutMapping("/update/{maNV}")
     public ResponseEntity<NhanVien> updateNhanVien(@PathVariable("maNV") String maNV, @RequestBody NhanVien nhanVien) {
         NhanVien updatedNhanVien = nvService.updateNhanVien(maNV, nhanVien);
         if (updatedNhanVien != null) {
@@ -49,7 +49,7 @@ public class NhanVienAPI {
         }
     }
 
-    @DeleteMapping("/{maNV}")
+    @DeleteMapping("/delele/{maNV}")
     public ResponseEntity<Void> deleteNhanVien(@PathVariable("maNV") String maNV) {
         nvService.deleteNhanVien(maNV);
         return ResponseEntity.noContent().build();

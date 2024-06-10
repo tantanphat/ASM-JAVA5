@@ -21,9 +21,23 @@ public class NhanVienController {
         return "views/Admin/employeeManager";
     }
 
-    @GetMapping("/{manv}")
-    public String hienThiTrangQLNVl(@PathVariable("manv") String manv) {
+    @GetMapping("/add")
+    public String hienThiTrangQLNVADD() {
         return "views/Admin/employeeManager";
     }
 
+    @GetMapping("/{manv}")
+    public String hienThiTrangQLNVMaNV(@PathVariable String manv) {
+        return "views/Admin/employeeManager";
+    }
+
+    @GetMapping("/update/{manv}")
+    public String hienThiTrangQLNVlUD(@PathVariable("manv") String manv) {
+        return "views/Admin/employeeManager";
+    }
+
+    @GetMapping("/delete/{manv}")
+    public String hienThiTrangQLNVlDE(@PathVariable("manv") String manv) {
+        return "views/Admin/employeeManager";
+    }
 }

@@ -115,7 +115,7 @@ public class KhachHangAPI {
     @GetMapping("/xuat-ra-excel")
     public void xuatListKhachHangRaExcel() {
         List<KhachHang> kh = khachHangServiceImpl.getAllKhachHang();
-        String excelFilePath = "E:/Khachhang.xlsx";
+        String excelFilePath = "D:/Khachhang.xlsx";
         try {
             ExcelKhachHangUtils.writeExcel(kh,excelFilePath);
         } catch (Exception e) {

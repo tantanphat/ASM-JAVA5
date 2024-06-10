@@ -24,7 +24,7 @@ public class ExcelKhachHangUtils {
         font.setFontName("Times New Roman");
         font.setBold(true);
         font.setFontHeightInPoints((short) 14); // font size
-        font.setColor(IndexedColors.BLACK.getIndex()); // text color
+        font.setColor(IndexedColors.WHITE.getIndex()); // text color
 
         // Create CellStyle
         CellStyle cellStyle = sheet.getWorkbook().createCellStyle();
@@ -96,10 +96,6 @@ public class ExcelKhachHangUtils {
 
         cell = row.createCell(5);
         cell.setCellStyle(cellStyle);
-        cell.setCellValue("Password");
-
-        cell = row.createCell(6);
-        cell.setCellStyle(cellStyle);
         cell.setCellValue("Thành viên");
     }
 
@@ -121,9 +117,6 @@ public class ExcelKhachHangUtils {
         cell.setCellValue(kh.getEmail());
 
         cell = row.createCell(5);
-        cell.setCellValue(kh.getMatKhau());
-
-        cell = row.createCell(6);
         cell.setCellValue(kh.isThanhVien());
 
     }

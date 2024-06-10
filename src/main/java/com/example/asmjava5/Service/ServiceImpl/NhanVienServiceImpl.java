@@ -52,7 +52,6 @@ public class NhanVienServiceImpl implements NhanVienService {
             nv.setDiaChi(nhanVien.getDiaChi());
             nv.setDienThoai(nhanVien.getDienThoai());
             nv.setNgaySinh(nhanVien.getNgaySinh());
-            nv.setMatkhau(encoder.encode(nhanVien.getMatkhau()));
             nv.setVaiTro(nhanVien.getVaiTro());
             // Lưu và trả về nhân viên đã được cập nhật
             return nhanVienRepository.saveAndFlush(nv);

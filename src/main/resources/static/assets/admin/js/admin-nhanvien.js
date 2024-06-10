@@ -16,7 +16,7 @@
                 $('#Address').val(data.diaChi);
                 $('#Phone').val(data.dienThoai);
                 $('#Brithday').val(data.ngaySinh);
-                $('#Password').val(data.matkhau);
+                // $('#Password').val(data.matkhau);
                 var roleValue = data.vaiTro;
                 if (roleValue == false) {
                     $('#RoleNV').prop('checked', true);
@@ -116,7 +116,7 @@
             var matkhau = $('#Password').val();
             var vaiTro = $('#RoleQL').prop('checked'); // true nếu là quản lý
 
-            if ( maNV =="" ||tenNV =="" || diaChi==""|| dienThoai==""|| ngaySinh==""|| matkhau=="") {
+            if ( maNV =="" ||tenNV =="" || diaChi==""|| dienThoai==""|| ngaySinh=="") {
                 alert("Vui lòng điền đầy đủ thông tin!");
                 return;
             }
@@ -128,13 +128,12 @@
                 diaChi: diaChi,
                 dienThoai: dienThoai,
                 ngaySinh: ngaySinh,
-                matkhau: matkhau,
                 vaiTro: vaiTro
             };
 
             // Gửi yêu cầu PUT để cập nhật thông tin nhân viên
             $.ajax({
-                url: "/api/nhan-vien/" + maNV,
+                url: "/api/nhan-vien/update/" + maNV,
                 type: "PUT",
                 contentType: "application/json",
                 data: JSON.stringify(updatedNhanVien),
@@ -156,7 +155,7 @@
             }
             // Gửi yêu cầu DELETE để xóa nhân viên
             $.ajax({
-                url: "/api/nhan-vien/" + maNV,
+                url: "/api/nhan-vien/delete/" + maNV,
                 type: "DELETE",
                 success: function () {
                     $('#employeeTable tbody').empty(); // Xóa hết dữ liệu cũ trong bảng
