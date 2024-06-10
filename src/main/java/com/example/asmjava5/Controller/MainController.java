@@ -24,6 +24,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.security.Principal;
 import java.util.List;
@@ -51,8 +52,14 @@ public class MainController {
         List<DanhMucSP> dmsp = danhMucSPServceImpl.findAllDMSP();
         model.addAttribute("danhMucSP", dmsp);
 
-//        List<SanPham> ao = sanPhamServiceImpl.listSPByMaDM(1);
-//        model.addAttribute("ao", ao);
+        List<SanPham> ao = sanPhamServiceImpl.findByMaDM(4);
+        model.addAttribute("ao", ao);
+
+        List<SanPham> quan = sanPhamServiceImpl.findByMaDM(3);
+        model.addAttribute("quan", quan );
+
+        List<SanPham>non = sanPhamServiceImpl.findByMaDM(6);
+        model.addAttribute("non", non);
 
 //        // Kiểm tra xem người dùng đã đăng nhập thành công chưa
 //        if (principal == null) {
@@ -70,12 +77,17 @@ public class MainController {
 //            model.addAttribute("CURRENT_USER",username);
 //        }
 //        System.out.println("Hello "+sessionUtils.laySession(SessionAttr.CURRENT_USER));
-
-
-
-
         return "views/index";
     }
+    @GetMapping("/Danh-muc-san-pham")
+    public String hienThiSanPham (Model model) {
+        List<SanPham> danhSachSanPham = sanPhamServiceImpl.getAllSanPham();
+        model.addAttribute("danhSachSanPham", danhSachSanPham);
+        List<DanhMucSP> dmsp = danhMucSPServceImpl.findAllDMSP();
+        model.addAttribute("danhMucSP", dmsp);
+        return "views/listCategory";
+    }
+
 
     @GetMapping("/Gioi-thieu")
     public String hienThiGioiThieu () {
@@ -86,6 +98,7 @@ public class MainController {
     public String productDel() {
         return "views/productDeltails";
     }
+
 
 
     @GetMapping("/error")

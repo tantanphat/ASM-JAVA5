@@ -105,7 +105,16 @@ public class SanPhamServiceImpl implements SanPhamService {
     }
 
     @Override
-    public List<SanPham> listSPByMaDM(int madm) {
-        return sanPhamRepository.listSPByMaDMSP(madm);
+    public List<SanPham> findByMaDM(int maDM) {
+        return sanPhamRepository.findByMaDM(maDM);
+    }
+
+
+    public List<SanPham> findAllByDanhMuc(int maDM) {
+        return sanPhamRepository.findByMaDM(maDM);
+    }
+
+    public List<SanPham> findAll() {
+        return sanPhamRepository.findAll();
     }
 }

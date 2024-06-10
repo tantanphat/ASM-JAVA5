@@ -2,13 +2,10 @@ package com.example.asmjava5.API;
 
 import com.example.asmjava5.Entity.DanhMucSP;
 import com.example.asmjava5.Entity.SanPham;
-import com.example.asmjava5.Repository.SanPhamDemoRepository;
 import com.example.asmjava5.Service.DanhMucSPService;
-import com.example.asmjava5.Service.DemoService;
 import com.example.asmjava5.Service.SanPhamService;
 import jakarta.servlet.annotation.MultipartConfig;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -103,4 +100,35 @@ public class SanPhamAPI {
     public SanPham layTenSP(@RequestParam("mssp") String mssp) {
         return sanPhamService.getSanPhamById(mssp);
     }
+
+    @GetMapping("/danh-muc-sp/{maDM}")
+    public ResponseEntity<List<SanPham>> getSanPhamByDanhMuc(@PathVariable int maDM) {
+        List<SanPham> sanPhams;
+        switch (maDM) {
+            case 1:
+                sanPhams = sanPhamService.findByMaDM(1);
+                break;
+            case 2:
+                sanPhams = sanPhamService.findByMaDM(2);
+                break;
+            case 3:
+                sanPhams = sanPhamService.findByMaDM(3);
+                break;
+            case 4:
+                sanPhams = sanPhamService.findByMaDM(4);
+                break;
+            case 5:
+                sanPhams = sanPhamService.findByMaDM(5);
+                break;
+            case 6:
+                sanPhams = sanPhamService.findByMaDM(6);
+                break;
+            default:
+                sanPhams = sanPhamService.getAllSanPham(); // Tìm kiếm tất cả sản phẩm
+                break;
+        }
+        return new ResponseEntity<>(sanPhams, HttpStatus.OK);
+    }
 }
+
+

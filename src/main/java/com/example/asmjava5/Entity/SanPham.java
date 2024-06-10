@@ -43,7 +43,7 @@ public class SanPham {
     @JoinColumn(name="MaDM", referencedColumnName = "MaDM", insertable = false, updatable = false)
     @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
     private DanhMucSP danhMucSP;
-//
+
 //    @OneToMany(fetch = FetchType.LAZY)
 //    @JoinColumn(name="MaSP", referencedColumnName = "MaSP" , updatable = false)
 //    @JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
