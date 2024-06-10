@@ -26,6 +26,15 @@ public interface SanPhamRepository extends JpaRepository<SanPham, Object> {
         @Query("SELECT s FROM SanPham s WHERE s.danhMucSP = ?1")
         List<SanPham> listSPByMaDMSP(@Param("maDMSP") int maDMSP);
 
+        // Tìm kiếm sản phẩm theo mã danh mục
+        @Query("SELECT s FROM SanPham s WHERE s.maDM = ?1")
+        List<SanPham> findByMaDM(@Param("maDM") int maDM);
+
+
+
 }
+
+
+
 
 

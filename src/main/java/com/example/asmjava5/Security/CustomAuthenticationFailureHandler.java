@@ -60,15 +60,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
                 }
                 response.getWriter().write("{\"error\": \"" + errorMessage + "\"}");
                 break;
-
         }
-
-
-
-
-
-
-
     }
 
 }
