@@ -97,7 +97,7 @@ public class SanPhamServiceImpl implements SanPhamService {
         }
 
         Page<SanPham> pagedResult = sanPhamRepository.findAll(paging);
-        if(pagedResult.hasContent()) {
+        if (pagedResult.hasContent()) {
             return pagedResult.getContent();
         } else {
             return new ArrayList<SanPham>();
@@ -108,7 +108,6 @@ public class SanPhamServiceImpl implements SanPhamService {
     public List<SanPham> findByMaDM(int maDM) {
         return sanPhamRepository.findByMaDM(maDM);
     }
-
 
     public List<SanPham> findAllByDanhMuc(int maDM) {
         return sanPhamRepository.findByMaDM(maDM);

@@ -51,62 +51,15 @@ $(document).ready(function() {
     }
     hienThiListDanhMucSanPham();
 
-    function hienThiListSP(pageNo,pageSize,sortBy,sortOrder) {
-
-        $('#pageSize').change(function () {
-            var pageSize = $(this).val();
-            hienThiListSP(pageNo,pageSize,sortBy,sortOrder);
-        })
-        $('.ad_masp').click(function () {
-            hienThiListSP(pageNo,pageSize,"maSP",sortOrder);
-        })
-        $('.ad_tenSP').click(function () {
-            hienThiListSP(pageNo,pageSize,"tenSP",sortOrder);
-        })
-        $('.ad_soLuong').click(function () {
-            hienThiListSP(pageNo,pageSize,"soLuong",sortOrder);
-        })
-        $('.ad_giaBan').click(function () {
-            hienThiListSP(pageNo,pageSize,"giaBan",sortOrder);
-        })
-        $('.ad_ghiChu').click(function () {
-            hienThiListSP(pageNo,pageSize,"ghiChu",sortOrder);
-        })
-        $('.ad_maDM').click(function () {
-            hienThiListSP(pageNo,pageSize,"maDM",sortOrder);
-        })
-        $('.ad_Size').click(function () {
-            hienThiListSP(pageNo,pageSize,"size",sortOrder);
-        })
-
-
-        //Lấy tống số lượng sp rồi tạo pagi
+    function hienThiListSP(pageNo, pageSize, sortBy, sortOrder) {
+        // Fetch data from the server and update the UI
         $.ajax({
-            url: "/api/san-pham/lengthSP",
+            url: `/api/san-pham?pageNo=${pageNo}&pageSize=${pageSize}&sortBy=${sortBy}&sortOrder=${sortOrder}`,
             type: "GET",
-            success: function (totalItems) {
-                var pagi = $('#paginationSP');
-                pagi.empty()
-                var itemsPage  = 5;//Số lượng item trong 1 trang
-                var totalPages = Math.ceil(totalItems/itemsPage);//Tống số trang
-                for (var i = 1; i <= totalPages-1; i++) {
-                    pagi.append('<span class="page">' + i + '</span>');
-                }
-                $('.page').on('click', function(e) {
-                    var pageNo = $(this).text();
-                    $(this).attr('class', 'active')
-                    hienThiListSP(pageNo,itemsPage,sortBy,sortOrder);
-                })
-            }
-        })
-        $.ajax({
-            url: "/api/san-pham",
-            type: "GET",
-            data:{pageNo:pageNo,pageSize:pageSize,sortBy:sortBy,sortOrder:sortOrder},
-            success: function (response) {
+            success: function (data) {
                 var tbody = $('#SanPham_Table tbody');
-                tbody.empty()
-                response.forEach(function (item) {
+                tbody.empty(); // Clear existing data
+                data.forEach(function (item) {
                     var row = $('<tr></tr>');
                     row.append('<td class="ad_prodct">' + item.maSP + '</td>');
                     row.append('<td>' + item.tenSP + '</td>');
@@ -117,28 +70,99 @@ $(document).ready(function() {
                     row.append('<td>' + item.size + '</td>');
                     tbody.append(row);
                 });
+                // Attach click event to product ID for displaying details
                 $('.ad_prodct').on('click', function(e){
                     var masp = $(this).text();
-                    hienThiSPLenForm(masp)
+                    hienThiSPLenForm(masp);
                     $('#admin_product').get(0).scrollIntoView({ behavior: 'smooth' });
-                })
+                });
             },
             error: function (xhr, status, error) {
                 console.error("Error fetching product data:", error);
             }
         });
+
+        // Update pagination
+        $.ajax({
+            url: "/api/san-pham/lengthSP",
+            type: "GET",
+            success: function (totalItems) {
+                var pagi = $('#paginationSP');
+                pagi.empty();
+                var totalPages = Math.ceil(totalItems / pageSize);
+                for (var i = 0; i < totalPages; i++) {
+                    pagi.append('<span class="page">' + (i + 1) + '</span>');
+                }
+                $('.page').on('click', function (e) {
+                    var newPageNo = $(this).text() - 1;
+                    $(this).siblings().removeClass('active');
+                    $(this).addClass('active');
+                    hienThiListSP(newPageNo, pageSize, sortBy, sortOrder);
+                });
+            }
+        });
     }
+
+    // Initial setup when the document is ready
+    var pageNo = 0;
+    var pageSize = 5;
+    var sortBy = "maSP";
+    var sortOrder = ""; // Ascending or descending
+    hienThiListDanhMucSanPham(function () {
+        hienThiListSP(pageNo, pageSize, sortBy, sortOrder);
+    });
+
+    // Change event for page size
+    $('#pageSize').change(function () {
+        pageSize = $(this).val();
+        hienThiListSP(pageNo, pageSize, sortBy, sortOrder);
+    });
+
+    // Click events for sorting
+    $('.ad_masp').click(function () {
+        sortBy = "maSP";
+        hienThiListSP(pageNo, pageSize, sortBy, sortOrder);
+    });
+    $('.ad_tenSP').click(function () {
+        sortBy = "tenSP";
+        hienThiListSP(pageNo, pageSize, sortBy, sortOrder);
+    });
+    $('.ad_soLuong').click(function () {
+        sortBy = "soLuong";
+        hienThiListSP(pageNo, pageSize, sortBy, sortOrder);
+    });
+    $('.ad_giaBan').click(function () {
+        sortBy = "giaBan";
+        hienThiListSP(pageNo, pageSize, sortBy, sortOrder);
+    });
+    $('.ad_ghiChu').click(function () {
+        sortBy = "ghiChu";
+        hienThiListSP(pageNo, pageSize, sortBy, sortOrder);
+    });
+    $('.ad_maDM').click(function () {
+        sortBy = "maDM";
+        hienThiListSP(pageNo, pageSize, sortBy, sortOrder);
+    });
+    $('.ad_Size').click(function () {
+        sortBy = "size";
+        hienThiListSP(pageNo, pageSize, sortBy, sortOrder);
+    });
+
+    // Click event for sorting order
     $('#order').click(function () {
-        var order = $(this).html();
-        if (order.indexOf('<i class="fa-solid fa-arrow-down-a-z"></i>') !== -1) {
+        if (sortOrder === '') {
             $(this).html('<i class="fa-solid fa-arrow-up-a-z"></i>');
             sortOrder = 'asc';
-        } else if (order.indexOf('<i class="fa-solid fa-arrow-up-a-z"></i>') !== -1) {
+        } else if (sortOrder === 'asc') {
             $(this).html('<i class="fa-solid fa-arrow-down-a-z"></i>');
             sortOrder = 'desc';
+        } else {
+            $(this).html('<i class="fa-solid fa-arrow-up-a-z"></i>');
+            sortOrder = 'asc';
         }
-        hienThiListSP(pageNo,pageSize,sortBy,sortOrder)
-    })
+        hienThiListSP(pageNo,pageSize,sortBy,sortOrder);
+    });
+
     hienThiListSP();
     $('#anhSP').click(function () {
         $('#fileInput').click();
@@ -153,7 +177,8 @@ $(document).ready(function() {
             reader.readAsDataURL(file);
         }
     });
-    $('#updateSP').click(function () {
+    $('#updateSP').click(function (e) {
+        e.preventDefault();
 
         var file = $('#fileInput')[0].files[0];
         var formData = new FormData();
@@ -261,7 +286,7 @@ $(document).ready(function() {
     $('#createSP').click(function () {
         var file = $('#fileInput')[0].files[0];
         var formData = new FormData();
-        var anh ;
+        var anh;
         if (file) {
             anh = file.name;
             formData.append('file', file)
@@ -271,10 +296,10 @@ $(document).ready(function() {
                 data: formData,
                 processData: false,
                 contentType: false,
-                success: function(response) {
+                success: function (response) {
                     alert("Thành công");
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     alert("Error uploading file: " + error);
                 }
             });
@@ -283,7 +308,7 @@ $(document).ready(function() {
         }
         var data = {
             tenSP: $('#tenSanPham').val(),
-            maDM:  $('#danhMucSanPham').val(),
+            maDM: $('#danhMucSanPham').val(),
             soLuong: $('#Sl_SP').val(),
             giaBan: $('#donGiaBan').val(),
             size: $('#size').val(),
@@ -298,9 +323,9 @@ $(document).ready(function() {
             dataType: "json",
             contentType: "application/json",
             success: function (response) {
-                $('#admin_product').get(0).scrollIntoView({ behavior: 'smooth' });
+                $('#admin_product').get(0).scrollIntoView({behavior: 'smooth'});
                 alert("Thêm thành công");
-                hienThiListSP();
+                hienThiListDanhMucSanPham();
             },
             error: function (xhr, status, error) {
                 console.error("Lỗi:", error);
@@ -310,8 +335,6 @@ $(document).ready(function() {
             }
         })
 
+
     })
-
-
 });
-

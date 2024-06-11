@@ -31,7 +31,7 @@ public class SanPhamAPI {
     @GetMapping("")
     public List<SanPham> getAllSanPham(@RequestParam(defaultValue = "0") Integer pageNo,
                                        @RequestParam(defaultValue = "5") Integer pageSize,
-                                       @RequestParam(defaultValue = "giaBan") String sortBy,
+                                       @RequestParam(defaultValue = "maSP") String sortBy,
                                        @RequestParam(defaultValue = "") String sortOrder) {
         return sanPhamService.getAllSP(pageNo, pageSize, sortBy, sortOrder);
     }
@@ -129,6 +129,7 @@ public class SanPhamAPI {
         }
         return new ResponseEntity<>(sanPhams, HttpStatus.OK);
     }
+
 }
 
 

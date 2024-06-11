@@ -9,11 +9,11 @@ import org.springframework.stereotype.Controller;
 public class SchudeledTasks {
     private static final Logger logger = LoggerFactory.getLogger(SchudeledTasks.class);
 
-
-    @Scheduled(fixedRate = 1000,initialDelay = 3000)//Sau khi khởi động 3 giây sau thì hàm mới chạy và 1 giây sẽ in ra
-    public void schediledFixedRateDelay() {
-        logger.info("scheduledFixedRateDelay");
-    }
+//
+//    @Scheduled(fixedRate = 1000,initialDelay = 3000)//Sau khi khởi động 3 giây sau thì hàm mới chạy và 1 giây sẽ in ra
+//    public void schediledFixedRateDelay() {
+//        logger.info("scheduledFixedRateDelay");
+//    }
 
 //    @Scheduled(fixedDelay = 6000)
 //    public void scheduleTaskWithFixedDelay() {
