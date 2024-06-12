@@ -26,7 +26,9 @@ $(document).ready(function() {
                 $('#donGiaBan').val(data.giaBan);
                 $('#size').val(data.size);
                 $('#ghiChu').val(data.ghiChu);
-                $('#anhSP').attr('src',"/assets/sanpham/"+data.anh);
+                var timestamp = new Date().getTime();
+                var imgSrc = (data.anh && !data.anh.startsWith("http")) ? "/assets/sanpham/" + data.anh + "?t=" + timestamp : "/assets/sanpham/noImage.png";
+                $('#anhSP').attr('src', imgSrc);
                 $('#danhMucSanPham').val(data.maDM);
             }
         });
@@ -148,7 +150,6 @@ $(document).ready(function() {
         hienThiListSP(pageNo, pageSize, sortBy, sortOrder);
     });
 
-    // Click event for sorting order
     $('#order').click(function () {
         if (sortOrder === '') {
             $(this).html('<i class="fa-solid fa-arrow-up-a-z"></i>');
@@ -178,8 +179,7 @@ $(document).ready(function() {
         }
     });
     $('#updateSP').click(function (e) {
-        e.preventDefault();
-
+        e.preventDefault(); // Ngăn chặn hành động mặc định của form
         var file = $('#fileInput')[0].files[0];
         var formData = new FormData();
 
@@ -190,13 +190,13 @@ $(document).ready(function() {
         var donGiaBan = $('#donGiaBan').val();
         var size = $('#size').val();
         var ghiChu = $('#ghiChu').val();
-        var anh ;
+        var anh;
 
         if (!masp || !tenSP || !Sl_SP || !donGiaBan || !size || !ghiChu) {
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: "Something went wrong!",
+                text: "Vui lòng điền đầy đủ thông tin!",
             });
             return;
         }
@@ -206,7 +206,7 @@ $(document).ready(function() {
         } else {
             anh = $('#anhSP').attr('src').split('/').pop();
         }
-        alert(anh)
+
         var data = {
             maSP: masp,
             tenSP: tenSP,
@@ -228,10 +228,10 @@ $(document).ready(function() {
                 alert(response);
                 hienThiListSP();
             }
-        })
+        });
 
         if (file) {
-            formData.append('file', file)
+            formData.append('file', file);
             $.ajax({
                 url: '/api/san-pham/upload-anh-sp',
                 type: 'POST',
@@ -239,19 +239,22 @@ $(document).ready(function() {
                 processData: false,
                 contentType: false,
                 success: function(response) {
-                    alert("Thành công");
+                    alert("Tải ảnh lên thành công");
+                    // Cập nhật src của thẻ img với đường dẫn mới từ phản hồi
+                    $('#anhSP').attr('src', response);
                 },
                 error: function(xhr, status, error) {
-                    alert("Error uploading file: " + error);
+                    alert("Lỗi khi tải lên file: " + error);
                 }
             });
+
         }
-        e.preventDefault();
-        window.location.reload();
-        clearSP()
+
+        clearSP();
         hienThiListSP();
         $('#admin_product').get(0).scrollIntoView({ behavior: 'smooth' });
     });
+
     $('#clearSP').click(function () {
         clearSP()
         $('#admin_product').get(0).scrollIntoView({ behavior: 'smooth' });
@@ -267,20 +270,6 @@ $(document).ready(function() {
             // Người dùng chưa chọn file nào
             alert("File chưa chọn: "+$('#anhSP').attr('src').split('/').pop());
         }
-        // $.ajax({
-        //     url: '/api/san-pham/upload-anh-sp',
-        //     type: 'post',
-        //     data: data,
-        //     processData: false,
-        //     contentType: false,
-        //     // contentType: 'multipart/form-data',
-        //     success: function(response) {
-        //         alert("Thành công")
-        //     },
-        //     error: function(xhr, status, error) {
-        //         alert("Error fetching product data:")
-        //     }
-        // });
 
     })
     $('#createSP').click(function () {
@@ -337,4 +326,8 @@ $(document).ready(function() {
 
 
     })
+
+    // $('img').on('error', function() {
+    //     $(this).attr('src', '/assets/sanpham/noImage.png');
+    // });
 });

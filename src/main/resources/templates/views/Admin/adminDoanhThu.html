@@ -82,17 +82,9 @@
 <body>
 <main>
 
-    <div class="main-content  p-4" layout:fragment="report">
-        <div class="header">
-            <h1>THỐNG KÊ BÁO CÁO</h1>
-        </div>
+    <div class="main-content  p-4" >
         <div class="report">
-            <div class="search">
-                <label for="month-search_DT">Tìm kiếm theo tháng:</label>
-                <input type="text" id="month-search_DT" placeholder="Nhập tháng">
-                <button type="button" id="search-button_DT" class="btn btn-dark">Tìm kiếm</button>
-            </div>
-            <div class="report-content">
+            <div class="report-content" layout:fragment="report">
                 <h3>DOANH THU</h3>
                 <table class="table" id="DoanhThu_Table">
                     <thead>

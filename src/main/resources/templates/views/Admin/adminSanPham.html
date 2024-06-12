@@ -81,17 +81,12 @@
 </head>
 <body>
 <main>
-    <div class="main-content p-4" layout:fragment="report">
+    <div class="main-content p-4" >
         <div class="header">
             <h1>THỐNG KÊ BÁO CÁO</h1>
         </div>
         <div class="report">
-            <div class="search">
-                <label for="month-search_SP">Tìm kiếm theo tháng:</label>
-                <input type="text" id="month-search_SP" placeholder="Nhập tháng">
-                <button type="button" id="search-button_SP" class="btn btn-dark">Tìm kiếm</button>
-            </div>
-            <div class="report-content">
+            <div class="report-content" layout:fragment="report">
                 <h3>TOP 5 SẢN PHẨM BÁN CHẠY</h3>
                 <table class="table" id="SanPhamBanDuoc_Table">
                     <thead>

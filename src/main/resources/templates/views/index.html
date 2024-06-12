@@ -795,7 +795,7 @@
                     <div class="best-left-img mb-30 d-none d-sm-block">
                         <img
                                 th:src="@{assets/user/img/collection/collection1.png}"
-                                alt="">
+                                alt="" onerror="this.src='/assets/sanpham/noImage.png'">
                     </div>
                 </div>
                 <!-- Mid Img -->
@@ -972,6 +972,12 @@
         error: function(xhr, status, error) {
             console.error("Lỗi" + status); // Xử lý lỗi nếu có
         }
+    });
+    $(document).ready(function() {
+
+        $('img').on('error', function() {
+            $(this).attr('src', '/assets/sanpham/noImage.png');
+        });
     });
 
 </script>

@@ -80,17 +80,6 @@
 </head>
 <body>
 <article layout:fragment="content">
-<!--        <div class="sidebar">-->
-<!--            <h2>ESTORE STORE</h2>-->
-<!--            <section class="row">-->
-
-<!--                <div class="user-info">-->
-<!--                    <p>User : <strong th:text="${#authentication.name}"></strong></p>-->
-<!--                    <p>Vai trò : Quản lí</p>-->
-<!--                    <button type="button" class="btn btn-dark">Đăng xuất</button>-->
-<!--                </div>-->
-<!--            </section>-->
-<!--        </div>-->
         <div class="tabs">
             <ul class="nav nav-underline">
                 <li class="nav-item">
@@ -106,7 +95,7 @@
             </ul>
         </div>
 
-        <div class="main-content  p-4" layout:fragment="report">
+        <div class="main-content  p-4" >
             <div class="header">
                 <h1>THỐNG KÊ BÁO CÁO</h1>
             </div>
@@ -116,7 +105,7 @@
                         <input type="text" id="month-search" placeholder="Nhập tháng">
                         <button type="button" id="search-button" class="btn btn-dark">Tìm kiếm</button>
                     </div>
-                <div class="report-content">
+                <div class="report-content" layout:fragment="report">
                     <h3>Nhân viên có đơn</h3>
                     <table class="table" id="NhanVienThang_Table">
                         <thead>

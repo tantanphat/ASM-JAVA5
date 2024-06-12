@@ -6,16 +6,21 @@ import com.example.asmjava5.Service.DanhMucSPService;
 import com.example.asmjava5.Service.SanPhamService;
 import jakarta.servlet.annotation.MultipartConfig;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.beans.factory.annotation.Value;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @MultipartConfig
@@ -62,14 +67,23 @@ public class SanPhamAPI {
         return danhMucSPService.findAllDMSP();
     }
 
+
     @PostMapping(value = "/upload-anh-sp", consumes = "multipart/form-data")
-    public void uploadAnhSanPham(@RequestParam("file") MultipartFile file) throws IOException {
-        StringBuilder fileNames = new StringBuilder();
-        String nameImg = file.getOriginalFilename();
-        Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, nameImg);
-        fileNames.append(file.getOriginalFilename());
-        Files.write(fileNameAndPath, file.getBytes());
-        System.out.println("Đã upload thành công");
+    public ResponseEntity<String> uploadAnhSanPham(@RequestParam("file") MultipartFile file) {
+        try {
+            // Lưu ảnh vào thư mục UPLOAD_DIRECTORY
+            File newImg = new File(UPLOAD_DIRECTORY, file.getOriginalFilename());
+            file.transferTo(newImg);
+
+            // Tạo query parameter ngẫu nhiên
+            String randomParam = UUID.randomUUID().toString().replaceAll("-", "");
+            String imageURL = "/assets/sanpham/" + file.getOriginalFilename() + "?v=" + randomParam;
+
+            return ResponseEntity.ok(imageURL);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload file: " + e.getMessage());
+        }
     }
 
     @PutMapping("/updateSP")
