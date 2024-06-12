@@ -4,6 +4,7 @@ import com.example.asmjava5.Entity.DanhMucSP;
 import com.example.asmjava5.Entity.SanPham;
 import com.example.asmjava5.Service.DanhMucSPService;
 import com.example.asmjava5.Service.SanPhamService;
+import com.example.asmjava5.Utils.ImageUploadUtils;
 import jakarta.servlet.annotation.MultipartConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
@@ -20,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -27,7 +29,6 @@ import java.util.UUID;
 @RequestMapping("/api/san-pham")
 public class SanPhamAPI {
     public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/src/main/resources/static/assets/sanpham";
-
     @Autowired
     private SanPhamService sanPhamService;
     @Autowired
@@ -72,14 +73,12 @@ public class SanPhamAPI {
     public ResponseEntity<String> uploadAnhSanPham(@RequestParam("file") MultipartFile file) {
         try {
             // Lưu ảnh vào thư mục UPLOAD_DIRECTORY
-            File newImg = new File(UPLOAD_DIRECTORY, file.getOriginalFilename());
-            file.transferTo(newImg);
+//            File newImg = new File(UPLOAD_DIRECTORY, file.getOriginalFilename());
+//            file.transferTo(newImg);
 
-            // Tạo query parameter ngẫu nhiên
-            String randomParam = UUID.randomUUID().toString().replaceAll("-", "");
-            String imageURL = "/assets/sanpham/" + file.getOriginalFilename() + "?v=" + randomParam;
-
-            return ResponseEntity.ok(imageURL);
+            ImageUploadUtils imageUploadUtils = new ImageUploadUtils();
+            imageUploadUtils.uploadImage(file);
+            return ResponseEntity.status(HttpStatus.OK).build();
         } catch (IOException e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload file: " + e.getMessage());

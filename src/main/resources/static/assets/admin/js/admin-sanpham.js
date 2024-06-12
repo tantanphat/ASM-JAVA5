@@ -27,7 +27,7 @@ $(document).ready(function() {
                 $('#size').val(data.size);
                 $('#ghiChu').val(data.ghiChu);
                 var timestamp = new Date().getTime();
-                var imgSrc = (data.anh && !data.anh.startsWith("http")) ? "/assets/sanpham/" + data.anh + "?t=" + timestamp : "/assets/sanpham/noImage.png";
+                var imgSrc = "https://res.cloudinary.com/dtnf47wll/image/upload/" + data.anh;
                 $('#anhSP').attr('src', imgSrc);
                 $('#danhMucSanPham').val(data.maDM);
             }
@@ -51,8 +51,6 @@ $(document).ready(function() {
             }
         })
     }
-    hienThiListDanhMucSanPham();
-
     function hienThiListSP(pageNo, pageSize, sortBy, sortOrder) {
         // Fetch data from the server and update the UI
         $.ajax({
@@ -105,7 +103,6 @@ $(document).ready(function() {
         });
     }
 
-    // Initial setup when the document is ready
     var pageNo = 0;
     var pageSize = 5;
     var sortBy = "maSP";
@@ -179,7 +176,7 @@ $(document).ready(function() {
         }
     });
     $('#updateSP').click(function (e) {
-        e.preventDefault(); // Ngăn chặn hành động mặc định của form
+
         var file = $('#fileInput')[0].files[0];
         var formData = new FormData();
 
@@ -227,6 +224,7 @@ $(document).ready(function() {
             success: function (response) {
                 alert(response);
                 hienThiListSP();
+                e.preventDefault();
             }
         });
 
@@ -240,8 +238,7 @@ $(document).ready(function() {
                 contentType: false,
                 success: function(response) {
                     alert("Tải ảnh lên thành công");
-                    // Cập nhật src của thẻ img với đường dẫn mới từ phản hồi
-                    $('#anhSP').attr('src', response);
+                    e.preventDefault();
                 },
                 error: function(xhr, status, error) {
                     alert("Lỗi khi tải lên file: " + error);
@@ -250,7 +247,7 @@ $(document).ready(function() {
 
         }
 
-        clearSP();
+        // clearSP();
         hienThiListSP();
         $('#admin_product').get(0).scrollIntoView({ behavior: 'smooth' });
     });
@@ -314,7 +311,7 @@ $(document).ready(function() {
             success: function (response) {
                 $('#admin_product').get(0).scrollIntoView({behavior: 'smooth'});
                 alert("Thêm thành công");
-                hienThiListDanhMucSanPham();
+                // hienThiListDanhMucSanPham();
             },
             error: function (xhr, status, error) {
                 console.error("Lỗi:", error);
