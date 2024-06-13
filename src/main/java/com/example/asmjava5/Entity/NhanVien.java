@@ -39,8 +39,13 @@ public class NhanVien {
     @Column(name = "Matkhau")
     private String Matkhau;
 
+    @Column(name = "isActive")
+    private Boolean isActive = true;
+
     @Column(name = "VaiTro")
     private Boolean VaiTro;
+
+
 
 
 }

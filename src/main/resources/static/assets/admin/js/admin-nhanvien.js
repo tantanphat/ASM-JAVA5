@@ -1,46 +1,65 @@
-    $(document).ready(function() {
-        var currentURL = window.location.href;
-        var segments = currentURL.split('/');
-        var manv = segments[segments.length - 1];
-        console.log(manv);
+$(document).ready(function() {
+        function getMaNV(callback) {
+            var currentURL = window.location.href;
+            var url = new URL(currentURL);
+            var manv = url.searchParams.get("maNV");
+            callback(manv); // Gọi callback và truyền giá trị manv vào
+        }
 
-        $.ajax({
-            url: "/api/nhan-vien/" + manv,
-            type: "GET",
-            success: function (data) {
-                console.log('Hello', data);
-                $('#MANV').val(data.maNV);
-                $('#FullName').val(data.tenNV);
-                var genderValue = data.gioiTinh ? "1" : "2"; // true là Nam, false là Nữ
-                $('#Gender').val(genderValue);
-                $('#Address').val(data.diaChi);
-                $('#Phone').val(data.dienThoai);
-                $('#Brithday').val(data.ngaySinh);
-                // $('#Password').val(data.matkhau);
-                var roleValue = data.vaiTro;
-                if (roleValue == false) {
-                    $('#RoleNV').prop('checked', true);
-                    $('#RoleQL').prop('checked', false);
-                } else {
-                    $('#RoleNV').prop('checked', false);
-                    $('#RoleQL').prop('checked', true);
+        function getNVByMANV() {
+            getMaNV(function(manv) {
+                if (manv) {
+                    $.ajax({
+                        url: "/api/nhan-vien/" + manv,
+                        type: "GET",
+                        success: function(data) {
+                            $('#MANV').val(data.maNV);
+                            $('#FullName').val(data.tenNV);
+                            var genderValue = data.gioiTinh ? "1" : "2"; // true là Nam, false là Nữ
+                            $('#Gender').val(genderValue);
+                            $('#Address').val(data.diaChi);
+                            $('#Phone').val(data.dienThoai);
+                            $('#Birthday').val(data.ngaySinh);
+
+                            // Xử lý checkbox vai trò (Role)
+                            if (data.vaiTro == false) {
+                                $('#RoleNV').prop('checked', true);
+                                $('#RoleQL').prop('checked', false);
+                            } else {
+                                $('#RoleNV').prop('checked', false);
+                                $('#RoleQL').prop('checked', true);
+                            }
+
+                            // Kiểm tra trường hợp nhân viên không còn hoạt động (isActive = false)
+                            if (data.isActive == false) {
+                                alert("Nhân viên không còn hoạt động!");
+                                window.location.href = "/admin/nhan-vien"; // Chuyển hướng về trang danh sách nhân viên
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            if (xhr.status == 404) {
+                                alert("Không tìm thấy nhân viên có mã " + manv);
+                                window.location.href = "/admin/nhan-vien";
+                            }
+                        }
+                    });
                 }
+            });
+        }
 
-                var formContainer = document.getElementById('formUpdate');
-                formContainer.scrollIntoView({ behavior: 'smooth' });
-            }
-        });
+        getNVByMANV();
+
 
         function fetchEmployeeData() {
             $.ajax({
-                url: "/api/nhan-vien",
+                url: "/api/nhan-vien/isActive",
                 type: "GET",
                 success: function (response) {
                     var tbody = $('#employeeTable tbody');
                     tbody.empty(); // Clear the table body before adding new rows
                     response.forEach(function (item) {
                         var row = $('<tr></tr>');
-                        row.append('<td><a href="/admin/nhan-vien/' + item.maNV + '">' + item.maNV + '</a></td>');
+                        row.append('<td><a href="/admin/nhan-vien?maNV=' + item.maNV + '">' + item.maNV + '</a></td>');
                         row.append('<td>' + item.tenNV + '</td>');
                         row.append('<td>' + (item.gioiTinh ? 'Nam' : 'Nữ') + '</td>');
                         row.append('<td>' + item.diaChi + '</td>');
@@ -56,6 +75,15 @@
             });
         }
         fetchEmployeeData();
+        function clearNhanVien() {
+           $('#MANV').val("");
+            $('#FullName').val("");
+              $('#Gender').val() === "1";
+            $('#Address').val("");
+            $('#Phone').val("");
+          $('#Brithday').val("");
+          $('#Password').val("");
+        }
 
         $('#btnCreate').click(function(e) {
             // Lấy thông tin từ form
@@ -102,8 +130,7 @@
         })
 
         $('#btnClear').click(function(e) {
-            e.preventDefault();
-            window.location.href = "http://localhost:8080/admin/nhan-vien?action=Clear";
+            clearNhanVien()
         })
         $('#btnUpdate').click(function(e) {
             // Lấy mã nhân viên từ form
@@ -140,6 +167,9 @@
                 success: function (data) {
                     fetchEmployeeData(); // Gọi lại hàm fetchEmployeeData() để lấy dữ liệu mới
                     alert("Thông tin nhân viên đã được cập nhật!");
+                    clearNhanVien()
+                    e.preventDefault()
+                    window.location = "/admin/nhan-vien"
                 },
                 error: function (xhr, status, error) {
                     console.error("Error updating employee:", error);
@@ -147,27 +177,46 @@
             });
         })
         $('#btnDelete').click(function(e) {
+            e.preventDefault(); // Prevent the default action (e.g., form submission)
+
             // Lấy mã nhân viên từ form
             var maNV = $('#MANV').val();
-            if (maNV =="" ) {
+            if (maNV === "") {
                 alert("Vui lòng điền đầy đủ thông tin!");
                 return;
             }
-            // Gửi yêu cầu DELETE để xóa nhân viên
+
+            // Swal.fire({
+            //     title: "Bạn có chắc chắn muốn xóa nhân viên"+maNV,
+            //     showDenyButton: true,
+            //     showCancelButton: true,
+            //     confirmButtonText: "Có",
+            //     denyButtonText: `Không`
+            // }).then((result) => {
+            //     /* Read more about isConfirmed, isDenied below */
+            //     if (result.isConfirmed) {
+            //
+            //     } else if (result.isDenied) {
+            //         window.location.reload()
+            //     }
+            // });
             $.ajax({
                 url: "/api/nhan-vien/delete/" + maNV,
-                type: "DELETE",
-                success: function () {
-                    $('#employeeTable tbody').empty(); // Xóa hết dữ liệu cũ trong bảng
-                    fetchEmployeeData(); // Gọi lại hàm fetchEmployeeData() để lấy dữ liệu mới
-                    alert("Nhân viên đã được xóa thành công!");
-                    $('#formUpdate')[0].reset();
+                type: "PUT",
+                success: function (response) {
+                    alert(response);
+                    fetchEmployeeData();
+                    clearNhanVien()
+                    e.preventDefault()
+                    window.location = "/admin/nhan-vien"
                 },
                 error: function (xhr, status, error) {
+                    alert(status + ": " + error);
                     console.error("Error deleting employee:", error);
                 }
             });
-        })
+
+        });
 });
 
 

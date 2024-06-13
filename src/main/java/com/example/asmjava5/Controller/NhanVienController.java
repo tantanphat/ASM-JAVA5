@@ -2,6 +2,7 @@ package com.example.asmjava5.Controller;
 
 import com.example.asmjava5.Entity.KhachHang;
 import com.example.asmjava5.Entity.NhanVien;
+import com.example.asmjava5.Service.NhanVienService;
 import com.example.asmjava5.Service.ServiceImpl.NhanVienServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,10 +15,11 @@ import java.util.List;
 @RequestMapping("/admin/nhan-vien")
 public class NhanVienController {
     @Autowired
-    private NhanVienServiceImpl nvServiceImpl;
+    private NhanVienService nvService;
 
     @GetMapping("")
-    public String hienThiTrangQLNV() {
+    public String hienThiTrangQLNV(@RequestParam(value = "maNV",required = false) String maNV,Model model) {
+
         return "views/Admin/employeeManager";
     }
 
@@ -26,10 +28,11 @@ public class NhanVienController {
         return "views/Admin/employeeManager";
     }
 
-    @GetMapping("/{manv}")
-    public String hienThiTrangQLNVMaNV(@PathVariable String manv) {
-        return "views/Admin/employeeManager";
-    }
+//    @GetMapping("/{manv}")
+//    public String hienThiTrangQLNVMaNV(@PathVariable String manv) {
+//
+//        return "views/Admin/employeeManager";
+//    }
 
     @GetMapping("/update/{manv}")
     public String hienThiTrangQLNVlUD(@PathVariable("manv") String manv) {

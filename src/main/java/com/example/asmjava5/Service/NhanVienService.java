@@ -17,4 +17,6 @@ public interface NhanVienService {
 
     void deleteNhanVien(String maNV);
 
+    List<NhanVien> getALlNhanVienIsActive();
+
 }

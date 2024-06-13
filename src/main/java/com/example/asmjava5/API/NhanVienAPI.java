@@ -9,10 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @RestController
@@ -29,14 +26,16 @@ public class NhanVienAPI {
     }
 
     @GetMapping("/{manv}")
-    public NhanVien getOneNhanVien(@PathVariable("manv") String manv) {
-        return nvService.findByMaNV(manv);
+    public ResponseEntity<NhanVien> getOneNhanVien(@PathVariable("manv") String manv) {
+        return Optional.ofNullable(nvService.findByMaNV(manv))
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping("/add")
     public ResponseEntity<NhanVien> addNhanVien(@RequestBody NhanVien nhanVien) {
-        NhanVien newNhanVien = nvService.addNhanVien(nhanVien);
-        return ResponseEntity.ok(newNhanVien);
+        nvService.addNhanVien(nhanVien);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/update/{maNV}")
@@ -49,10 +48,16 @@ public class NhanVienAPI {
         }
     }
 
-    @DeleteMapping("/delele/{maNV}")
-    public ResponseEntity<Void> deleteNhanVien(@PathVariable("maNV") String maNV) {
-        nvService.deleteNhanVien(maNV);
-        return ResponseEntity.noContent().build();
+    @PutMapping("/delete/{maNV}")
+    public ResponseEntity<?> deleteNhanVien(@PathVariable("maNV") String maNV) {
+        try {
+            nvService.deleteNhanVien(maNV);
+            System.out.println("Delete Nhan Vien:"+maNV);
+            return ResponseEntity.ok("Xóa thành công");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Đã xảy ra lỗi khi xóa nhân viên");
+        }
     }
 
     @GetMapping("/listMaNV")
@@ -63,5 +68,10 @@ public class NhanVienAPI {
             manv.add(v.getMaNV());
         }
         return manv;
+    }
+
+    @GetMapping("/isActive")
+    public List<NhanVien> getAllNhanVienIsActive() {
+        return nvService.getALlNhanVienIsActive();
     }
 }

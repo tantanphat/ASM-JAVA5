@@ -38,6 +38,7 @@ public class NhanVienServiceImpl implements NhanVienService {
     public NhanVien addNhanVien(NhanVien nhanVien) {
         String newMaNV = nhanVienRepository.AUTO_MaNV();
         nhanVien.setMaNV(newMaNV);
+        nhanVien.setIsActive(true);
         nhanVien.setMatkhau(encoder.encode(nhanVien.getMatkhau()));
         return nhanVienRepository.save(nhanVien);
     }
@@ -53,6 +54,7 @@ public class NhanVienServiceImpl implements NhanVienService {
             nv.setDienThoai(nhanVien.getDienThoai());
             nv.setNgaySinh(nhanVien.getNgaySinh());
             nv.setVaiTro(nhanVien.getVaiTro());
+            nv.setIsActive(true);
             // Lưu và trả về nhân viên đã được cập nhật
             return nhanVienRepository.saveAndFlush(nv);
         }
@@ -62,8 +64,13 @@ public class NhanVienServiceImpl implements NhanVienService {
     @Override
     public void deleteNhanVien(String maNV) {
         NhanVien nv = findByMaNV(maNV);
-        if (nv != null) {
-            nhanVienRepository.delete(nv);
-        }
+        nv.setIsActive(false);
+        nhanVienRepository.saveAndFlush(nv);
+    }
+
+    @Override
+    public List<NhanVien> getALlNhanVienIsActive() {
+
+        return nhanVienRepository.getALlNhanVienIsActive();
     }
 }
