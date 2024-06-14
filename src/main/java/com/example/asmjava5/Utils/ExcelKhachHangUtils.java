@@ -1,12 +1,10 @@
 package com.example.asmjava5.Utils;
 
 import com.example.asmjava5.Entity.KhachHang;
-import com.example.asmjava5.Repository.KhachHangRepository;
-import com.example.asmjava5.Service.KhachHangService;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -29,9 +27,29 @@ public class ExcelKhachHangUtils {
         // Create CellStyle
         CellStyle cellStyle = sheet.getWorkbook().createCellStyle();
         cellStyle.setFont(font);
-//        cellStyle.setFillForegroundColor(IndexedColors.BLUE.getIndex());
+        cellStyle.setFillForegroundColor(IndexedColors.BLUE.getIndex());
         cellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         cellStyle.setBorderBottom(BorderStyle.THIN);
+        cellStyle.setBorderLeft(BorderStyle.THIN);
+        cellStyle.setBorderRight(BorderStyle.THIN);
+        cellStyle.setBorderTop(BorderStyle.THIN);
+        cellStyle.setAlignment(HorizontalAlignment.CENTER);
+        return cellStyle;
+    }
+
+    // Create CellStyle for title
+    private static CellStyle createStyleForTitle(Sheet sheet) {
+        // Create font
+        Font font = sheet.getWorkbook().createFont();
+        font.setFontName("Times New Roman");
+        font.setBold(true);
+        font.setFontHeightInPoints((short) 16); // font size
+        font.setColor(IndexedColors.BLACK.getIndex()); // text color
+
+        // Create CellStyle
+        CellStyle cellStyle = sheet.getWorkbook().createCellStyle();
+        cellStyle.setFont(font);
+        cellStyle.setAlignment(HorizontalAlignment.CENTER);
         return cellStyle;
     }
 
@@ -51,6 +69,7 @@ public class ExcelKhachHangUtils {
             System.err.println("Failed to create output file: " + e.getMessage());
         }
     }
+
     // Auto resize column width
     private static void autosizeColumn(Sheet sheet, int lastColumn) {
         for (int columnIndex = 0; columnIndex < lastColumn; columnIndex++) {
@@ -58,13 +77,21 @@ public class ExcelKhachHangUtils {
         }
     }
 
-    // Write footer
-//    private static void writeFooter(Sheet sheet, int rowIndex) {
-//        // Create row
-//        Row row = sheet.createRow(rowIndex);
-//        Cell cell = row.createCell(7, CellType.FORMULA);
-//        cell.setCellFormula("SUM(E2:E6)");
-//    }
+    private static void writeTitle(Sheet sheet, int rowIndex) {
+        // Create CellStyle for title
+        CellStyle cellStyle = createStyleForTitle(sheet);
+
+        // Create row for title
+        Row row = sheet.createRow(rowIndex);
+
+        // Create cell for title
+        Cell cell = row.createCell(0);
+        cell.setCellStyle(cellStyle);
+        cell.setCellValue("Danh sách khách hàng");
+
+        // Merge cells from A1 to F1
+        sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 5));
+    }
 
     private static void writeHeader(Sheet sheet, int rowIndex) {
         // create CellStyle
@@ -118,19 +145,18 @@ public class ExcelKhachHangUtils {
 
         cell = row.createCell(5);
         cell.setCellValue(kh.isThanhVien());
-
     }
 
     // Create workbook
     private static Workbook getWorkbook(String excelFilePath) throws IOException {
-        Workbook workbook = null;
+        Workbook workbook;
 
         if (excelFilePath.endsWith("xlsx")) {
             workbook = new XSSFWorkbook();
         } else if (excelFilePath.endsWith("xls")) {
             workbook = new HSSFWorkbook();
         } else {
-            throw new IllegalArgumentException("The specified file is not Excel file");
+            throw new IllegalArgumentException("The specified file is not an Excel file");
         }
 
         return workbook;
@@ -145,7 +171,11 @@ public class ExcelKhachHangUtils {
 
         int rowIndex = 0;
 
+        // Write title
+        writeTitle(sheet, rowIndex);
+
         // Write header
+        rowIndex++;
         writeHeader(sheet, rowIndex);
 
         // Write data
@@ -158,17 +188,12 @@ public class ExcelKhachHangUtils {
             rowIndex++;
         }
 
-        // Write footer
-//        writeFooter(sheet, rowIndex);
-
-        // Auto resize column witdth
-        int numberOfColumn = sheet.getRow(0).getPhysicalNumberOfCells();
+        // Auto resize column width
+        int numberOfColumn = sheet.getRow(1).getPhysicalNumberOfCells();
         autosizeColumn(sheet, numberOfColumn);
 
         // Create file excel
         createOutputFile(workbook, excelFilePath);
         System.out.println("Done!!!");
     }
-
-
 }

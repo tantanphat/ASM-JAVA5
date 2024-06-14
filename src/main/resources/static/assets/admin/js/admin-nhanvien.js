@@ -19,7 +19,7 @@ $(document).ready(function() {
                             $('#Gender').val(genderValue);
                             $('#Address').val(data.diaChi);
                             $('#Phone').val(data.dienThoai);
-                            $('#Birthday').val(data.ngaySinh);
+                            $('#Brithday').val(data.ngaySinh);
 
                             // Xử lý checkbox vai trò (Role)
                             if (data.vaiTro == false) {
@@ -131,6 +131,7 @@ $(document).ready(function() {
 
         $('#btnClear').click(function(e) {
             clearNhanVien()
+            window.location.href = "http://localhost:8080/admin/nhan-vien";
         })
         $('#btnUpdate').click(function(e) {
             // Lấy mã nhân viên từ form
