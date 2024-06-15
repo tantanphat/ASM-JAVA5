@@ -9,6 +9,7 @@
     <!-- Include common head -->
     <th:block th:include="/common/head :: head"></th:block>
 
+
     <style>
         .form-check-inline {
             display: flex;
@@ -91,6 +92,31 @@
             outline: none;
             box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
         }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .pagination li {
+            display: inline-block;
+            margin: 0 5px;
+        }
+
+        .pagination a {
+            display: block;
+            padding: 5px 10px;
+            text-decoration: none;
+            color: #333;
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+        }
+
+        .pagination a:hover {
+            background-color: #ddd;
+        }
     </style>
 </head>
 <body>
@@ -153,15 +179,13 @@
                             <button type="button" class="btn btn-outline-success" id="btnClearKH_click">Clear</button>
                             <button type="button" class="btn btn-outline-success" onclick="btnUpdateKH_click()">Update</button>
                             <button type="button" class="btn btn-outline-success" onclick="btnDeleteKH_click()">Delete</button>
+                            <button class="btn btn-outline-success" id="XuatListKH">Excel</button>
                         </div>
                         <br>
                         <h2 class="h3 mb-3 mt-4 text-black d-flex justify-content-center align-items-center">Danh sách</h2>
                     </div>
                 </form>
                 <table id="khach-hang-table" class="col-md-12" border="1">
-                    <caption>
-                        <button class="text-black" id="XuatListKH">Excel</button>
-                    </caption>
                     <thead>
                     <tr>
                         <th>MKH</th>
@@ -174,7 +198,13 @@
                     </thead>
                     <tbody>
                     </tbody>
+                    <caption>
+                        <div class="pagination"  id="pagination-container-kh">
+                            <span class="page" ></span>
+                        </div>
+                    </caption>
                 </table>
+
             </div>
         </div>
     </div>

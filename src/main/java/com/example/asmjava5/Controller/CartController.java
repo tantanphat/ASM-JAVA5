@@ -32,6 +32,10 @@ public class CartController {
     @SuppressWarnings("unchecked")
     public String showCart(Model model) {
         List<CartItemsDTO> cartItems = (List<CartItemsDTO>) sessionUtils.laySession(SessionAttr.SESSION_KEY_CART);
+        if (cartItems.size()==0) {
+            System.out.println("Giỏ hàng đang trống");
+            return "redirect:/Trang-chu";
+        }
         for (CartItemsDTO cartItem : cartItems) {
             System.out.println(cartItem);
         }
@@ -64,8 +68,5 @@ public class CartController {
         model.addAttribute("maHD", maHD);
         return  "user/ThanhToan";
     }
-
-
-
 }
 

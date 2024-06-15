@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -68,7 +69,7 @@ public class SanPhamAPI {
         return danhMucSPService.findAllDMSP();
     }
 
-
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @PostMapping(value = "/upload-anh-sp", consumes = "multipart/form-data")
     public ResponseEntity<String> uploadAnhSanPham(@RequestParam("file") MultipartFile file) {
         try {
@@ -85,6 +86,7 @@ public class SanPhamAPI {
         }
     }
 
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @PutMapping("/updateSP")
     public ResponseEntity<?> updateSP(@RequestBody SanPham sp){
         SanPham up = sanPhamService.getSanPhamById(sp.getMaSP());
@@ -98,12 +100,14 @@ public class SanPhamAPI {
         return ResponseEntity.ok("Cập nhập thành công");
     }
 
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @PostMapping("/adSP")
     public ResponseEntity<?> adSP(@RequestBody SanPham sp){
         sanPhamService.addSP(sp);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @DeleteMapping("/deleteSP")
     public void deleteSP(@RequestParam("mssp") String masp) {
         sanPhamService.deleteSP(masp);
@@ -113,6 +117,7 @@ public class SanPhamAPI {
     public SanPham layTenSP(@RequestParam("mssp") String mssp) {
         return sanPhamService.getSanPhamById(mssp);
     }
+
 
     @GetMapping("/danh-muc-sp/{maDM}")
     public ResponseEntity<List<SanPham>> getSanPhamByDanhMuc(@PathVariable int maDM) {

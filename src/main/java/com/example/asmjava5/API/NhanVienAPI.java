@@ -6,6 +6,7 @@ import com.example.asmjava5.Service.NhanVienService;
 import com.example.asmjava5.Service.ServiceImpl.NhanVienServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,11 +21,13 @@ public class NhanVienAPI {
     private NhanVienService nvService;
 
 
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @GetMapping("")
     public List<NhanVien> getAllNhanVien() {
         return nvService.getALlNhanVien();
     }
 
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @GetMapping("/{manv}")
     public ResponseEntity<NhanVien> getOneNhanVien(@PathVariable("manv") String manv) {
         return Optional.ofNullable(nvService.findByMaNV(manv))
@@ -32,12 +35,14 @@ public class NhanVienAPI {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @PostMapping("/add")
     public ResponseEntity<NhanVien> addNhanVien(@RequestBody NhanVien nhanVien) {
         nvService.addNhanVien(nhanVien);
         return ResponseEntity.ok().build();
     }
 
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @PutMapping("/update/{maNV}")
     public ResponseEntity<NhanVien> updateNhanVien(@PathVariable("maNV") String maNV, @RequestBody NhanVien nhanVien) {
         NhanVien updatedNhanVien = nvService.updateNhanVien(maNV, nhanVien);
@@ -48,6 +53,7 @@ public class NhanVienAPI {
         }
     }
 
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @PutMapping("/delete/{maNV}")
     public ResponseEntity<?> deleteNhanVien(@PathVariable("maNV") String maNV) {
         try {
@@ -60,6 +66,7 @@ public class NhanVienAPI {
         }
     }
 
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @GetMapping("/listMaNV")
     public List<String> listMaNV() {
         List<NhanVien> nv = nvService.getALlNhanVien();
@@ -69,7 +76,7 @@ public class NhanVienAPI {
         }
         return manv;
     }
-
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @GetMapping("/isActive")
     public List<NhanVien> getAllNhanVienIsActive() {
         return nvService.getALlNhanVienIsActive();

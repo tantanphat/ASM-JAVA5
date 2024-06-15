@@ -17,7 +17,6 @@ $(document).ready(function() {
         url: "/api/khach-hang/" + makh,
         type: "GET",
         success: function (data) {
-            console.log('Hello', data);
             // Đổ dữ liệu lên form
             $('#MAKH').val(data.maKH);
             $('#FullNameKH').val(data.tenKH);
@@ -39,17 +38,28 @@ $(document).ready(function() {
         }
     });
 
-    $.ajax({
-        url: "/api/khach-hang",
-        type: "GET",
-        headers: {
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBWZXIiOiIwLjAuMCIsImV4cCI6NDcyNjM4OTEyMiwibG9jYWxlIjoiIiwibWFzdGVyVmVyIjoiIiwicGxhdGZvcm0iOiIiLCJwbGF0Zm9ybVZlciI6IiIsInVzZXJJZCI6IiJ9.QIZbmB5_9Xlap_gDhjETfMI6EAmR15yBtIQkWFWJkrg',
+    $('#pagination-container-kh ').pagination({
+        dataSource: function(done){
+            $.ajax({
+                url: "/api/khach-hang",
+                type: "GET",
+                success: function(response) {
+                    done(response)
+                }
+            });
         },
-        success: function(response) {
-            // Xử lý thành công, đổ dữ liệu vào bảng
+        pageSize: 5,
+        autoHidePrevious: true,
+        autoHideNext: true,
+        prevText: '&laquo; Trước',
+        nextText: 'Sau &raquo;',
+        ellipseText: '...',
+        className: 'paginationjs-theme-blue paginationjs-small',
+        callback: function(data, pagination) {
+
             var tbody = $('#khach-hang-table tbody');
             tbody.empty(); // Xóa nội dung cũ của bảng
-            response.forEach(function(item) {
+            data.forEach(function(item) {
                 var row = $('<tr></tr>');
                 row.append('<td><a href="/admin/khach-hang/' + item.maKH + '">' + item.maKH+ '</td>'); // Mã khách hàng
                 row.append('<td>' + item.tenKH + '</td>'); // Tên khách hàng
@@ -60,12 +70,8 @@ $(document).ready(function() {
                 row.append('<td>' + item.thanhVien + '</td>'); // Thành viên
                 tbody.append(row); // Thêm hàng vào bảng
             });
-        },
-        error: function(xhr, status, error) {
-            // Xử lý lỗi khi lấy dữ liệu
-            console.error("Lỗi khi lấy dữ liệu khách hàng:", error);
         }
-    });
+    })
 
     $('#XuatListKH').click(function(e) {
         $.ajax({

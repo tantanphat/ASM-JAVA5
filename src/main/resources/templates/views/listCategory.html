@@ -16,58 +16,8 @@
     <!-- insert common head -->
     <th:block th:insert="/common/head :: head"></th:block>
     <style>
-        /* CSS cho hình ảnh trong phần tựa đề của offcanvas */
-        .offcanvas-title img {
-            width: 8rem;
-            height: 8rem;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-
-        /* CSS cho liên kết */
-         a {
+        a {
             color: black!important;
-            text-decoration: none; /* loại bỏ gạch chân dưới của liên kết */
-            transition: color 0.3s ease; /* hiệu ứng màu chữ khi hover */
-        }
-
-        .com a:hover {
-            color: black;
-        }
-
-        /* CSS cho phần footer */
-        /* định dạng phần footer */
-        .com footer {
-            background-color: #f8f9fa;
-            padding: 20px 0;
-            text-align: center;
-            margin-top: 50px; /* tạo khoảng cách giữa phần main và footer */
-        }
-
-        /* định dạng văn bản trong footer */
-        .com footer p {
-            color: #6c757d;
-            font-size: 14px;
-            margin-bottom: 0;
-        }
-
-        /* định dạng văn bản trong introduce */
-        .com #introduce p {
-            font-size: 16px;
-            color: #333;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-        .com h1 {
-            font-size: 2.5rem; /* Adjust font size for h1 */
-            font-weight: bold; /* Apply bold font weight */
-            color: #333; /* Set text color */
-            margin-bottom: 20px; /* Add spacing below h1 */
-            line-height: 1.2; /* Set line height for improved readability */
-        }
-
-        h4{
-            color: #0a53be;
         }
     </style>
 </head>
@@ -82,6 +32,7 @@
              role="tabpanel" aria-labelledby="nav-home-tab">
             <div class="row" id="product-container">
                 <!-- Sản phẩm sẽ được hiển thị ở đây -->
+
             </div>
         </div>
     </div>
@@ -91,6 +42,7 @@
 </body>
 <script>
     $(document).ready(function() {
+
         // Lấy tham số maDM từ URL
         var urlParams = new URLSearchParams(window.location.search);
         var categoryID = urlParams.get('maDM');
@@ -126,21 +78,18 @@
                         <div class="col-xl-4 col-lg-4 col-md-6">
                             <div class="single-product mb-60">
                                 <div class="product-img">
-                                    <img src="/assets/sanpham/${product.anh}" alt="${product.tenSP}">
-                                    <div class="new-product">
-                                        <span>New</span>
-                                    </div>
+                                    <img src="https://res.cloudinary.com/dtnf47wll/image/upload/${product.anh}" alt="${product.tenSP}" width="500px" height="500px">
+
                                 </div>
                                 <div class="product-caption">
                                     <div class="product-ratting">
-                                        <i class="far fa-star"></i> <i class="far fa-star"></i> <i class="far fa-star"></i> <i class="far fa-star low-star"></i>
-                                        <i class="far fa-star low-star"></i>
+
                                     </div>
                                     <h4><a href="/product?maSP=${product.maSP}">${product.tenSP}</a></h4>
                                     <div class="price">
                                         <ul>
                                             <li>${product.giaBan}</li>
-                                            <li class="discount">$60.00</li>
+
                                         </ul>
                                     </div>
                                 </div>
@@ -152,6 +101,10 @@
                 productsContainer.append(productHTML);
             });
         }
+
+        $('img').on('error', function() {
+            $(this).attr('src', 'https://res.cloudinary.com/dtnf47wll/image/upload/noImage.png');
+        });
     });
 </script>
 </html>

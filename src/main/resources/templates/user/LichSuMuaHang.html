@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{views/index.html}" >
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estore</title>
+  <link rel="shortcut icon" type="image/x-icon" th:href="@{/assets/img/favicon.ico}">
+  <link rel="stylesheet" th:href="@{/assets/khachhang/css/history.css}" />
+</head>
+<body>
+<main layout:fragment="index" class="w-100 ">
+
+  <h1 class="history-page__title mx-5">History</h1>
+  <hr/>
+<!--  <div class="search">-->
+<!--    <div class="search__icon-background">-->
+<!--          <span-->
+<!--                  class="iconify search__icon"-->
+<!--                  data-inline="false"-->
+<!--                  data-icon="ant-design:search-outlined"-->
+<!--          ></span>-->
+<!--    </div>-->
+<!--    <input class="search__input-box" type="search" />-->
+<!--  </div>-->
+  <div class="history-page__purchases">
+    <div class="purchase__icon-background" th:each="history : ${history}">
+      <div class="purchase__info">
+        <p class="purchase__date" th:text="'Ngày thanh toán: '+${history[1]}"></p>
+        <a th:href="@{/user/San-pham-hoa-don?MaDH=__${history[0]}__}" class="purchase__details-btn" th:text="${history[0]}"></a>
+      </div>
+      <p class="purchase__price mr-3" th:text="'Tống tiền: '+${history[2]}"></p>
+    </div>
+  </div>
+
+</main>
+<script src="https://code.iconify.design/1/1.0.3/iconify.min.js"></script>
+<script src="index.js"></script>
+</body>
+</html>

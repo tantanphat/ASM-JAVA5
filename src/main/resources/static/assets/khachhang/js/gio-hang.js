@@ -2,7 +2,7 @@ $(document).ready(function() {
     function updateCountCart() {
         $.ajax({
             type: "GET",
-            url: "/api/countListCart", // Endpoint để lấy dữ liệu giỏ hàng từ máy chủ
+            url: "/api/countListCart",
             success: function(response) {
                 var totalCartItems = response; // Số lượng trong cart
                 // Hiển thị trong scss .shoppingcart phần content
@@ -119,7 +119,7 @@ $(document).ready(function() {
             $("#maSP").val(sanPham.maSP);
             $("#tenSP").text(sanPham.tenSP);
             $("#giaBan").text(sanPham.giaBan);
-            $("#anh").attr("src", "/assets/sanpham/" + sanPham.anh); // Sửa lại cú pháp
+            $("#anh").attr("src", "https://res.cloudinary.com/dtnf47wll/image/upload/" + sanPham.anh); // Sửa lại cú pháp
             $('#ghiChu').text(sanPham.ghiChu);
         },
         error: function(xhr, status, error) {

@@ -77,7 +77,8 @@ public class WebSecurityConfig {
                 .securityMatcher("/admin","/admin/**")
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/admin","/admin/**").authenticated()
-                        .requestMatchers("/admin/**","/admin").hasAnyRole("ADMIN","STAFF")
+                        .requestMatchers("/admin/**","/admin"
+                        ).hasAnyRole("ADMIN","STAFF")
                 )
                 .formLogin(login -> login
                         .loginPage("/admin/Login")
@@ -93,10 +94,13 @@ public class WebSecurityConfig {
                 .deleteCookies("JSESSIONID")
                 .permitAll()
                 )
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .accessDeniedPage("/error")
+                )
                 .rememberMe(rememberMe ->
                         rememberMe
                                 .tokenRepository(persistentTokenRepository()) // Sử dụng persistentTokenRepository để lưu trữ token
-                                .tokenValiditySeconds(1 * 24 * 60 * 60) // Thời gian tồn tại của token là 24 giờ
+                                .tokenValiditySeconds( 60 * 60) // Thời gian tồn tại của token là 24 giờ
                 )
                 .sessionManagement(sessionManagement ->
                         sessionManagement
@@ -146,7 +150,7 @@ public class WebSecurityConfig {
                 .rememberMe(rememberMe ->
                         rememberMe
                                 .tokenRepository(persistentTokenRepository()) // Sử dụng persistentTokenRepository để lưu trữ token
-                                .tokenValiditySeconds(1 * 24 * 60 * 60) // Thời gian tồn tại của token là 24 giờ
+                                .tokenValiditySeconds(60 * 60) // Thời gian tồn tại của token là 24 giờ
                 )
                 .sessionManagement(sessionManagement ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)

@@ -14,9 +14,9 @@ public interface ThongKeService {
 
     List<HoaDonChiTiet> thongKeSanPhamBan(int thang);
 
-    List<SanPham> thongKeSanPhamBanDuoc(int thang);
+    List<Object[]> thongKeSanPhamBanDuoc(int thang);
 
-    List<SanPham> thongKeSanPhamKBanDuoc(int thang);
+    List<Object[]> thongKeSanPhamKBanDuoc(int thang);
 
-    List<HoaDonChiTiet> thongKeDoanhThuThangTheoNam(int thang , int year);
+    List<Object[]> thongKeDoanhThuThangTheoNam(int thang , int year);
 }

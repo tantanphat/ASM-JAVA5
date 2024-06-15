@@ -24,16 +24,16 @@
                                     </div>
                                 </div>
 
-                                <div class="header-info-right col align-self-end">
-                                    <ul class="text-right">
-                                        <li sec:authorize="hasRole('ROLE_USER')"><a th:href="@{/user/myaccount}">My
-                                            Account </a></li>
-                                        <li><a href="product_list.html">Wish List </a></li>
-                                        <li><a href="">Shopping</a></li>
-                                        <li><a href="">Cart</a></li>
-                                        <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
-                                    </ul>
-                                </div>
+<!--                                <div class="header-info-right col align-self-end">-->
+<!--                                    <ul class="text-right">-->
+<!--                                        <li sec:authorize="hasRole('ROLE_USER')"><a th:href="@{/user/myaccount}">My-->
+<!--                                            Account </a></li>-->
+<!--                                        <li><a href="product_list.html">Wish List </a></li>-->
+<!--                                        <li><a href="">Shopping</a></li>-->
+<!--                                        <li><a href="">Cart</a></li>-->
+<!--                                        <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>-->
+<!--                                    </ul>-->
+<!--                                </div>-->
                             </div>
                         </div>
                     </div>
@@ -56,12 +56,12 @@
                                             <li><a th:href="@{/Trang-chu}">Home</a></li>
                                             <li><a>Catagori</a>
                                                 <ul class="submenu">
-                                                    <li><a class="dropdown-item" th:href="@{Danh-muc-san-pham?maDM=1}">Áo</a></li>
-                                                    <li><a class="dropdown-item" th:href="@{Danh-muc-san-pham?maDM=2}">Quần</a></li>
-                                                    <li><a class="dropdown-item" th:href="@{Danh-muc-san-pham?maDM=3}">Mũ nón</a></li>
-                                                    <li><a class="dropdown-item" th:href="@{Danh-muc-san-pham?maDM=4}">Giày dép</a></li>
-                                                    <li><a class="dropdown-item" th:href="@{Danh-muc-san-pham?maDM=5}">Phụ kiện</a></li>
-                                                    <li><a class="dropdown-item" th:href="@{Danh-muc-san-pham?maDM=6}">Khác</a></li>
+                                                    <li><a class="dropdown-item" th:href="@{/Danh-muc-san-pham?maDM=1}">Áo</a></li>
+                                                    <li><a class="dropdown-item" th:href="@{/Danh-muc-san-pham?maDM=2}">Quần</a></li>
+                                                    <li><a class="dropdown-item" th:href="@{/Danh-muc-san-pham?maDM=3}">Mũ nón</a></li>
+                                                    <li><a class="dropdown-item" th:href="@{/Danh-muc-san-pham?maDM=4}">Giày dép</a></li>
+                                                    <li><a class="dropdown-item" th:href="@{/Danh-muc-san-pham?maDM=5}">Phụ kiện</a></li>
+                                                    <li><a class="dropdown-item" th:href="@{/Danh-muc-san-pham?maDM=6}">Khác</a></li>
                                                 </ul>
                                             </li>
 <!--                                            <li class="hot"><a href="#">Latest</a>-->
@@ -81,9 +81,9 @@
                                 <ul class="header-right f-right d-none d-lg-block d-flex justify-content-between">
                                     <li class="d-none d-xl-block">
                                         <div class="form-box f-right ">
-                                            <input type="text" name="Search" placeholder="Search products">
-                                            <div class="search-icon">
-                                                <i class="fas fa-search special-tag"></i>
+                                            <input type="text" id="SearchSP" name="Search" class="search" placeholder="Search products">
+                                            <div class="search-icon" >
+                                                    <i id="btnSearchSP" class="fas fa-search special-tag"></i>
                                             </div>
                                         </div>
                                     </li>
@@ -133,6 +133,9 @@
                                                         </li>
                                                         <li class="nav-item">
                                                             <a class="nav-link" th:href="@{/user/Doi-mat-khau}">Change Password</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" th:href="@{/user/Lich-su-mua-hang}">History</a>
                                                         </li>
                                                         <li>
                                                             <hr class="dropdown-divider">

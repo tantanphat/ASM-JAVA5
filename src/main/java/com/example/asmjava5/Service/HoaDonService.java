@@ -22,4 +22,6 @@ public interface HoaDonService {
     void creatHD(String maNV, String maKH);
 
     void updateHD(HoaDon hd);
+
+    List<HoaDon> getHistoryHoaDonKhachHang(String maKH);
 }

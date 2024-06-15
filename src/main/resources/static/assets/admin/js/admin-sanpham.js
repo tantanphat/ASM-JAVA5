@@ -51,6 +51,7 @@ $(document).ready(function() {
             }
         })
     }
+
     function hienThiListSP(pageNo, pageSize, sortBy, sortOrder) {
         // Fetch data from the server and update the UI
         $.ajax({
@@ -60,6 +61,7 @@ $(document).ready(function() {
                 var tbody = $('#SanPham_Table tbody');
                 tbody.empty(); // Clear existing data
                 data.forEach(function (item) {
+
                     var row = $('<tr></tr>');
                     row.append('<td class="ad_prodct">' + item.maSP + '</td>');
                     row.append('<td>' + item.tenSP + '</td>');
@@ -69,6 +71,7 @@ $(document).ready(function() {
                     row.append('<td>' + item.maDM + '</td>');
                     row.append('<td>' + item.size + '</td>');
                     tbody.append(row);
+
                 });
                 // Attach click event to product ID for displaying details
                 $('.ad_prodct').on('click', function(e){

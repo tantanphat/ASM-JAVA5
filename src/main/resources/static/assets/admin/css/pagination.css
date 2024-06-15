@@ -1,0 +1,32 @@
+.paginationjs {
+    display: flex!important;
+    justify-content: center!important;
+    list-style-type: none;
+    padding: 0;
+}
+
+.pagination li {
+    display: inline-block;
+    margin: 0 5px;
+}
+
+.pagination a {
+    display: block;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: #333;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+}
+
+.pagination a:hover {
+    background-color: #ddd;
+}
+
+.paginationjs-size-changer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5px;
+
+}

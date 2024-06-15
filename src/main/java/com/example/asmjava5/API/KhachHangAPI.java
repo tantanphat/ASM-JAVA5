@@ -1,13 +1,16 @@
 package com.example.asmjava5.API;
 
 import com.example.asmjava5.Constant.MailConstant;
+import com.example.asmjava5.Entity.HoaDon;
 import com.example.asmjava5.Entity.KhachHang;
 import com.example.asmjava5.Model.mapper.KhachHangMapper;
 import com.example.asmjava5.Model.request.ChangePassword;
 import com.example.asmjava5.Model.request.DangKyKhachHang;
 import com.example.asmjava5.Model.request.KhachHangThongTin;
 import com.example.asmjava5.Repository.KhachHangRepository;
+import com.example.asmjava5.Service.HoaDonService;
 import com.example.asmjava5.Service.KhachHangService;
+import com.example.asmjava5.Service.LichSuMuaHangService;
 import com.example.asmjava5.Service.MailService;
 import com.example.asmjava5.Utils.ExcelKhachHangUtils;
 import com.example.asmjava5.Utils.SendMa;
@@ -17,11 +20,15 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/khach-hang")
@@ -35,7 +42,7 @@ public class KhachHangAPI {
     @Autowired
     private KhachHangService khachHangServiceImpl;
     @Autowired
-    private KhachHangRepository khachHangRepository;
+    private LichSuMuaHangService muaHangService;
     @Autowired
             private MailService emailService;
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -61,8 +68,10 @@ public class KhachHangAPI {
     }
 
     @GetMapping("")
-    public List<KhachHang> getAllKhachHang(){
-        return khachHangServiceImpl.getAllKhachHang();
+    public ResponseEntity<?> getAllKhachHang(){
+//        HashMap<String,Object> map = new HashMap<String,Object>();
+//        map.put("data",khachHangServiceImpl.getAllKhachHang());
+        return ResponseEntity.ok(khachHangServiceImpl.getAllKhachHang());
     }
 
     @GetMapping("/demoKH")
@@ -178,5 +187,14 @@ public class KhachHangAPI {
             e.printStackTrace();
             return ResponseEntity.badRequest().body("Đã có lỗi xảy ra");
         }
+    }
+    @GetMapping("/San-pham-hoa-don")
+    public ResponseEntity<?> hienThiLichSuMuaHang(@RequestParam("MaDH") String MaDH) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+
+        return Optional.ofNullable(muaHangService.getAllItemsSP(MaDH,email))
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }

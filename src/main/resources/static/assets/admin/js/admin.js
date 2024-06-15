@@ -20,6 +20,22 @@ $(document).ready(function(){
     $('.roleAdminNot').click(function () {
         alert("Chỉ có admin mới được quyền vào mục này")
     })
+
+    $('#btnExportMain').click(function () {
+        var year = $("#dashBoardDTByNam").val();
+        $.ajax({
+            url: '/api/thong-ke/excel-thong-ke?year=' + year,
+            type: 'GET',
+            success: function(response) {
+                alert("Xuất ra thành công");
+            },
+            error: function(xhr, status, error) {
+                alert("Failed to export doanh thu data: " + error);
+            }
+        });
+    });
+
+
 });
 
 

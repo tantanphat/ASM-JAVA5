@@ -81,37 +81,70 @@ $(document).ready(function() {
 
     //Đổ data hd vào table
     function doHoaDonLenTable() {
-        $.ajax({
-            url: "/api/hoa-don",
-            type: "GET",
-            // headers: {
-            //     'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBWZXIiOiIwLjAuMCIsImV4cCI6NDcyNjM4OTEyMiwibG9jYWxlIjoiIiwibWFzdGVyVmVyIjoiIiwicGxhdGZvcm0iOiIiLCJwbGF0Zm9ybVZlciI6IiIsInVzZXJJZCI6IiJ9.QIZbmB5_9Xlap_gDhjETfMI6EAmR15yBtIQkWFWJkrg',
-            // },
-            success: function(response) {
+        // $.ajax({
+        //     url: "/api/hoa-don",
+        //     type: "GET",
+        //     // headers: {
+        //     //     'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBWZXIiOiIwLjAuMCIsImV4cCI6NDcyNjM4OTEyMiwibG9jYWxlIjoiIiwibWFzdGVyVmVyIjoiIiwicGxhdGZvcm0iOiIiLCJwbGF0Zm9ybVZlciI6IiIsInVzZXJJZCI6IiJ9.QIZbmB5_9Xlap_gDhjETfMI6EAmR15yBtIQkWFWJkrg',
+        //     // },
+        //     success: function(response) {
+        //         var tbody = $('#HoaDon-Table tbody');
+        //         tbody.empty();
+        //         response.forEach(function(item) {
+        //             var row = $('<tr></tr>');
+        //             row.append('<td class="hdMaHD">' + item.hd_MaHDBan + '</td>');
+        //             row.append('<td>' + item.hd_MaNV + '</td>');
+        //             row.append('<td>' + item.hd_NgayBan + '</td>');
+        //             row.append('<td>' + item.hd_MaKH + '</td>');
+        //             tbody.append(row);
+        //
+        //         });
+        //         $('.hdMaHD').click(function(e) {
+        //             var hd_MaHDBan = $(this).text();
+        //             doThonTinHoaDonLenForm(hd_MaHDBan)
+        //             doHDCTLenTableTheoMaHDBan(hd_MaHDBan)
+        //         });
+        //
+        //     },
+        //     error: function(xhr, status, error) {
+        //         // Xử lý lỗi
+        //         console.error("Error fetching employee data:", error);
+        //     }
+        // });
+
+        $('#pagination-container-hd').pagination({
+            dataSource: function(done){
+                $.ajax({
+                    url: "/api/hoa-don",
+                    type: "GET",
+                    success: function(response) {
+                        done(response)
+                    }
+                });
+            },
+            pageSize: 5,
+            autoHidePrevious: true,
+            autoHideNext: true,
+            prevText: '<i class="fa-solid fa-backward"></i>',
+            nextText: '<i class="fa-solid fa-forward"></i>',
+            ellipseText: '...',
+            showSizeChanger: true,
+            callback: function(data, pagination) {
                 var tbody = $('#HoaDon-Table tbody');
                 tbody.empty();
-                response.forEach(function(item) {
+                data.forEach(function(item) {
                     var row = $('<tr></tr>');
                     row.append('<td class="hdMaHD">' + item.hd_MaHDBan + '</td>');
                     row.append('<td>' + item.hd_MaNV + '</td>');
                     row.append('<td>' + item.hd_NgayBan + '</td>');
                     row.append('<td>' + item.hd_MaKH + '</td>');
                     tbody.append(row);
-
                 });
-                $('.hdMaHD').click(function(e) {
-                    var hd_MaHDBan = $(this).text();
-                    doThonTinHoaDonLenForm(hd_MaHDBan)
-                    doHDCTLenTableTheoMaHDBan(hd_MaHDBan)
-                });
-
-            },
-            error: function(xhr, status, error) {
-                // Xử lý lỗi
-                console.error("Error fetching employee data:", error);
             }
-        });
+        })
     }
+
+
 
     //Lấy danh sách mã nhân viên
     function listMaNV() {
@@ -272,8 +305,6 @@ $(document).ready(function() {
             clearHDCT()
             doLaiHDCTTable(maHDBan);
         }
-
-
     })
     $('#deleteHDCT').click(function(e) {
         var MHDCT = $("#MHDCT").val()

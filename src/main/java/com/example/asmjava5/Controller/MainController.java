@@ -25,6 +25,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 import java.util.List;
@@ -77,8 +78,11 @@ public class MainController {
 //            model.addAttribute("CURRENT_USER",username);
 //        }
 //        System.out.println("Hello "+sessionUtils.laySession(SessionAttr.CURRENT_USER));
+
+
         return "views/index";
     }
+
     @GetMapping("/Danh-muc-san-pham")
     public String hienThiSanPham (Model model) {
         List<SanPham> danhSachSanPham = sanPhamServiceImpl.getAllSanPham();
@@ -100,7 +104,6 @@ public class MainController {
     }
 
 
-
     @GetMapping("/error")
     String error() {
         return "views/demo/error";
@@ -109,6 +112,11 @@ public class MainController {
     @GetMapping("/Lien-he")
     public String hienThiLienHe() {
         return "views/contact";
+    }
+
+    @GetMapping("/Search")
+    public String hienThiTrangTimKiemSP(@RequestParam(value = "key",required = false) String key) {
+        return "views/TimKiemSP";
     }
 
 }

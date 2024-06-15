@@ -6,11 +6,12 @@ import com.example.asmjava5.Entity.KhachHang;
 import com.example.asmjava5.Entity.SanPham;
 import com.example.asmjava5.Model.DTO.CartItemsDTO;
 import com.example.asmjava5.Model.request.DangKyKhachHang;
+import com.example.asmjava5.Model.request.LichSuMuaHang;
 import com.example.asmjava5.Model.request.TaoHoaDon;
 import com.example.asmjava5.Service.HoaDonChiTietService;
 import com.example.asmjava5.Service.HoaDonService;
 import com.example.asmjava5.Service.KhachHangService;
-import com.example.asmjava5.Service.ServiceImpl.SanPhamServiceImpl;
+import com.example.asmjava5.Service.LichSuMuaHangService;
 import com.example.asmjava5.Utils.SessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,9 +20,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/hoa-don")
@@ -143,4 +143,5 @@ public class HoaDonAPI {
         hoaDonService.updateHD(hoaDon);
         return ResponseEntity.ok(HttpStatus.OK);
         }
+
 }

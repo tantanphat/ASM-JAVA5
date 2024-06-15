@@ -78,5 +78,11 @@ public class HoaDonServiceImpl implements HoaDonService {
         hoaDonRepository.save(update);
     }
 
+    @Override
+    public List<HoaDon> getHistoryHoaDonKhachHang(String maKH) {
+
+        return hoaDonRepository.getAllHoaDonByMaKH(maKH);
+    }
+
 
 }

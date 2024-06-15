@@ -59,7 +59,7 @@ public class ThongKeServiceImpl implements ThongKeService {
     }
 
     @Override
-    public List<SanPham> thongKeSanPhamBanDuoc(int thang) {
+    public List<Object[]> thongKeSanPhamBanDuoc(int thang) {
         StoredProcedureQuery storedProcedure = entityManager
                 .createStoredProcedureQuery("sp_Top5SanPhamTheoThang")
                 .registerStoredProcedureParameter("thang", Integer.class, ParameterMode.IN)
@@ -69,7 +69,7 @@ public class ThongKeServiceImpl implements ThongKeService {
     }
 
     @Override
-    public List<SanPham> thongKeSanPhamKBanDuoc(int thang) {
+    public List<Object[]> thongKeSanPhamKBanDuoc(int thang) {
         StoredProcedureQuery storedProcedure = entityManager
                 .createStoredProcedureQuery("sp_KhBanDuocThang")
                 .registerStoredProcedureParameter("thang", Integer.class, ParameterMode.IN)
@@ -79,7 +79,7 @@ public class ThongKeServiceImpl implements ThongKeService {
     }
 
     @Override
-    public List<HoaDonChiTiet> thongKeDoanhThuThangTheoNam(int thang, int year) {
+    public List<Object[]> thongKeDoanhThuThangTheoNam(int thang, int year) {
         StoredProcedureQuery storedProcedure = entityManager
                 .createStoredProcedureQuery("sp_ThongKeDoanhThuDaBanTrongThangByNam")
                 .registerStoredProcedureParameter("thang", Integer.class, ParameterMode.IN)
@@ -89,6 +89,4 @@ public class ThongKeServiceImpl implements ThongKeService {
 
         return storedProcedure.getResultList();
     }
-
-
 }

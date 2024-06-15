@@ -160,6 +160,7 @@
                     })
                     $('#khung').attr("hidden",true)
                     html2pdf().set(options).from(element).save();
+                    window.location = "/user/Lich-su-mua-hang"
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     if (jqXHR.status === 401) {

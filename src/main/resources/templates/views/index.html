@@ -21,8 +21,9 @@
             height: 8rem;
             border-radius: 50%;
             margin-right: 10px;
-
         }
+
+
     </style>
 </head>
 <body>
@@ -425,6 +426,7 @@
 <script th:src="@{/assets/khachhang/js/cartjs.js}"></script>
 <script th:src="@{/assets/khachhang/js/account.js}"></script>
 <script th:src="@{/assets/khachhang/js/change.js}"></script>
+<script th:src="@{/assets/khachhang/js/ItemsHoaDonHistory.js}"></script>
 <script>
 
     $.ajax({
@@ -442,9 +444,15 @@
         }
     });
     $(document).ready(function() {
-
         $('img').on('error', function() {
-            $(this).attr('src', '/assets/sanpham/noImage.png');
+            $(this).attr('src', 'https://res.cloudinary.com/dtnf47wll/image/upload/noImage.png');
+        });
+
+        $('#btnSearchSP').click(function() {
+            var key = $('#SearchSP').val();
+            if (key) { // Đảm bảo rằng có giá trị để tìm kiếm
+                window.location = "/Search?key=" + encodeURIComponent(key);
+            }
         });
     });
 
