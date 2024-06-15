@@ -65,7 +65,7 @@ $(document).ready(function() {
                                 $('#MaSP_CT').val(data.sanPham.maSP);
                                 $('#Sale').val(data.hdct_giamGia);
                                 $('#ThanhTien').val((data.hdct_soLuong * data.sanPham.giaBan) * (100-(data.hdct_giamGia)) + 'đ');
-                                var formContainer = document.getElementById('formUpdate');
+                                var formContainer = document.getElementById('HoaDonChiTietContainer');
                                 formContainer.scrollIntoView({ behavior: 'smooth' });
                             }
                         });
@@ -139,6 +139,12 @@ $(document).ready(function() {
                     row.append('<td>' + item.hd_NgayBan + '</td>');
                     row.append('<td>' + item.hd_MaKH + '</td>');
                     tbody.append(row);
+
+                });
+                $('.hdMaHD').click(function(e) {
+                    var hd_MaHDBan = $(this).text();
+                    doThonTinHoaDonLenForm(hd_MaHDBan)
+                    doHDCTLenTableTheoMaHDBan(hd_MaHDBan)
                 });
             }
         })

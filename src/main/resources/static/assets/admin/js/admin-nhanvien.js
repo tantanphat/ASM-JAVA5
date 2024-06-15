@@ -59,7 +59,7 @@ $(document).ready(function() {
                     tbody.empty(); // Clear the table body before adding new rows
                     response.forEach(function (item) {
                         var row = $('<tr></tr>');
-                        row.append('<td><a href="/admin/nhan-vien?maNV=' + item.maNV + '">' + item.maNV + '</a></td>');
+                        row.append('<td><a class="nvClick" href="/admin/nhan-vien?maNV=' + item.maNV + '">' + item.maNV + '</a></td>');
                         row.append('<td>' + item.tenNV + '</td>');
                         row.append('<td>' + (item.gioiTinh ? 'Nam' : 'Nữ') + '</td>');
                         row.append('<td>' + item.diaChi + '</td>');
@@ -74,6 +74,7 @@ $(document).ready(function() {
                 }
             });
         }
+
         fetchEmployeeData();
         function clearNhanVien() {
            $('#MANV').val("");
