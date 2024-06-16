@@ -277,61 +277,109 @@ $(document).ready(function() {
 
     })
     $('#createSP').click(function () {
+        // Gather input values
+        var tenSP = $('#tenSanPham').val().trim();
+        var maDM = $('#danhMucSanPham').val().trim();
+        var soLuong = $('#Sl_SP').val().trim();
+        var giaBan = $('#donGiaBan').val().trim();
+        var size = $('#size').val().trim();
+        var ghiChu = $('#ghiChu').val().trim();
         var file = $('#fileInput')[0].files[0];
         var formData = new FormData();
         var anh;
+
+        // Validation flag
+        var isValid = true;
+
+        // Reset previous error messages
+        $('.error').remove();
+
+        // Validate each field and add error messages if necessary
+        if (tenSP === "") {
+            isValid = false;
+            $('#tenSanPham').after('<span class="error">Tên sản phẩm không được để trống</span>');
+        }
+
+        if (maDM === "") {
+            isValid = false;
+            $('#danhMucSanPham').after('<span class="error">Danh mục sản phẩm không được để trống</span>');
+        }
+
+        var numberPattern = /^[0-9]+$/;
+        if (!numberPattern.test(soLuong) || soLuong <= 0) {
+            isValid = false;
+            $('#Sl_SP').after('<span class="error">Số lượng phải là số dương</span>');
+        }
+
+        if (!numberPattern.test(giaBan) || giaBan <= 0) {
+            isValid = false;
+            $('#donGiaBan').after('<span class="error">Giá bán phải là số dương</span>');
+        }
+
+        if (size === "") {
+            isValid = false;
+            $('#size').after('<span class="error">Size không được để trống</span>');
+        }
+
         if (file) {
             anh = file.name;
             formData.append('file', file)
-            $.ajax({
-                url: '/api/san-pham/upload-anh-sp',
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (response) {
-                    alert("Thành công");
-                },
-                error: function (xhr, status, error) {
-                    alert("Error uploading file: " + error);
-                }
-            });
         } else {
             anh = "noImage.png";
         }
-        var data = {
-            tenSP: $('#tenSanPham').val(),
-            maDM: $('#danhMucSanPham').val(),
-            soLuong: $('#Sl_SP').val(),
-            giaBan: $('#donGiaBan').val(),
-            size: $('#size').val(),
-            ghiChu: $('#ghiChu').val(),
-            anh: anh
-        };
 
-        $.ajax({
-            url: "/api/san-pham/adSP",
-            type: "POST",
-            data: JSON.stringify(data),
-            dataType: "json",
-            contentType: "application/json",
-            success: function (response) {
-                $('#admin_product').get(0).scrollIntoView({behavior: 'smooth'});
-                alert("Thêm thành công");
-                hienThiListDanhMucSanPham(function (){
-                    hienThiListSP(pageNo, pageSize, sortBy, sortOrder);
+        // If all inputs are valid, proceed with the AJAX requests
+        if (isValid) {
+            if (file) {
+                $.ajax({
+                    url: '/api/san-pham/upload-anh-sp',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        alert("Upload thành công");
+                    },
+                    error: function (xhr, status, error) {
+                        alert("Error uploading file: " + error);
+                    }
                 });
-            },
-            error: function (xhr, status, error) {
-                console.error("Lỗi:", error);
-                console.error("status:", status);
-                console.error("xhr:", xhr);
-                alert("Lỗi");
             }
-        })
 
+            var data = {
+                tenSP: tenSP,
+                maDM: maDM,
+                soLuong: soLuong,
+                giaBan: giaBan,
+                size: size,
+                ghiChu: ghiChu,
+                anh: anh
+            };
 
-    })
+            $.ajax({
+                url: "/api/san-pham/adSP",
+                type: "POST",
+                data: JSON.stringify(data),
+                dataType: "json",
+                contentType: "application/json",
+                success: function (response) {
+                    $('#admin_product').get(0).scrollIntoView({behavior: 'smooth'});
+                    alert("Thêm thành công");
+                    hienThiListDanhMucSanPham(function (){
+                        hienThiListSP(pageNo, pageSize, sortBy, sortOrder);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error("Lỗi:", error);
+                    console.error("status:", status);
+                    console.error("xhr:", xhr);
+                    alert("Lỗi");
+                }
+            });
+        } else {
+            alert("Vui lòng điền đầy đủ thông tin hợp lệ");
+        }
+    });
 
     $('img').on('error', function() {
         $(this).attr('src', '/assets/sanpham/noImage.png');

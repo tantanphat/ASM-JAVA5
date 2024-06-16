@@ -131,49 +131,85 @@ $(document).ready(function() {
 });
 
 function btnCreatKH_click() {
-    if (!validateInput()) {
-        return;
-    }
     // Lấy thông tin từ form
-    var tenKH = $('#FullNameKH').val();
-    var diaChi = $('#AddressKH').val();
-    var sdt = $('#PhoneKH').val();
-    var email = $('#Email').val();
-    var thanhVien = $('#Roletrue').prop('checked'); // true nếu là thành viên
+    var tenKH = $('#FullNameKH').val().trim();
+    var diaChi = $('#AddressKH').val().trim();
+    var sdt = $('#PhoneKH').val().trim();
+    var email = $('#Email').val().trim();
+    var thanhVien = $('input[name="role_radio"]:checked').val();// true nếu là thành viên
 
-    // Tạo đối tượng khách hàng mới (không bao gồm maKH)
-    var newKhachHang = {
-        tenKH: tenKH,
-        diaChi: diaChi,
-        sdt: sdt,
-        email: email,
-        thanhVien: thanhVien
-    };
+// Biến để theo dõi trạng thái hợp lệ của form
+    var isValid = true;
 
-    // Gửi yêu cầu POST để thêm khách hàng mới
-    $.ajax({
-        url: "/api/khach-hang/add",
-        type: "POST",
-        contentType: "application/json",
-        data: JSON.stringify(newKhachHang),
-        success: function (data) {
-            // Cập nhật bảng hiển thị khách hàng
-            var tbody = $('#khach-hang-table tbody');
-            var row = $('<tr></tr>');
-            row.append('<td><a href="/admin/khach-hang/' + data.maKH + '">' + data.maKH + '</td>'); // Mã khách hàng
-            row.append('<td>' + data.tenKH + '</td>'); // Tên khách hàng
-            row.append('<td>' + data.diaChi + '</td>'); // Địa chỉ
-            row.append('<td>' + data.sdt + '</td>'); // Số điện thoại
-            row.append('<td>' + data.email + '</td>'); // Email
-            row.append('<td>' + (data.thanhVien ? 'true' : 'false') + '</td>'); // Thành viên
-            tbody.append(row);
-            // Reset form sau khi thêm
-            $('#formUpdate')[0].reset();
-        },
-        error: function (xhr, status, error) {
-            console.error("Error adding customer:", error);
+    var namePattern = /^[a-zA-Z\s]+$/;
+
+// Reset lỗi
+    $('.error').remove();
+
+// Kiểm tra từng trường và thêm thông báo lỗi nếu cần
+    if (tenKH === "") {
+        isValid = false;
+        $('#FullNameKH').after('<span class="error">Họ tên không được để trống</span>');
+    } else if (!namePattern.test(tenKH)) {
+        isValid = false;
+        $('#FullNameKH').after('<span class="error">Họ tên chỉ được chứa chữ cái và khoảng trắng</span>');
+    }
+
+    if (diaChi === "") {
+        isValid = false;
+        $('#AddressKH').after('<span class="error">Địa chỉ không được để trống</span>');
+    }
+
+    var phonePattern = /^[0-9]{10,11}$/;
+    if (!phonePattern.test(sdt)) {
+        isValid = false;
+        $('#PhoneKH').after('<span class="error">Số điện thoại không hợp lệ</span>');
+    }
+
+    var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    if (email === "") {
+        isValid = false;
+        $('#Email').after('<span class="error">Email không được để trống</span>');
+    } else if (!emailPattern.test(email)) {
+        isValid = false;
+        $('#Email').after('<span class="error">Email không hợp lệ</span>');
+    }
+
+    if (isValid) {
+        // Tạo đối tượng khách hàng mới (không bao gồm maKH)
+        var newKhachHang = {
+            tenKH: tenKH,
+            diaChi: diaChi,
+            sdt: sdt,
+            email: email,
+            thanhVien: thanhVien
+        };
+
+            // Gửi yêu cầu POST để thêm khách hàng mới
+            $.ajax({
+                url: "/api/khach-hang/add",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(newKhachHang),
+                success: function (data) {
+                    // Cập nhật bảng hiển thị khách hàng
+                    var tbody = $('#khach-hang-table tbody');
+                    var row = $('<tr></tr>');
+                    row.append('<td><a href="/admin/khach-hang/' + data.maKH + '">' + data.maKH + '</td>'); // Mã khách hàng
+                    row.append('<td>' + data.tenKH + '</td>'); // Tên khách hàng
+                    row.append('<td>' + data.diaChi + '</td>'); // Địa chỉ
+                    row.append('<td>' + data.sdt + '</td>'); // Số điện thoại
+                    row.append('<td>' + data.email + '</td>'); // Email
+                    row.append('<td>' + (data.thanhVien ? 'true' : 'false') + '</td>'); // Thành viên
+                    tbody.append(row);
+                    // Reset form sau khi thêm
+                    $('#formUpdate')[0].reset();
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error adding customer:", error);
+                }
+            });
         }
-    });
 }
 
 
@@ -263,43 +299,4 @@ function btnDeleteKH_click() {
             console.error("Error deleting employee:", error);
         }
     });
-}
-
-function validateInput() {
-    var isValid = true;
-    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    var phonePattern = /^[0-9]{10,11}$/;
-    var namePattern = /^[a-zA-Z\s]+$/;
-
-    // Check required fields
-    if ($('#FullNameKH').val().trim() === '') {
-        isValid = false;
-        alert("Tên khách hàng không được để trống");
-    } else if (!namePattern.test($('#FullNameKH').val().trim())) {
-        isValid = false;
-        alert("Tên khách hàng chỉ được chứa chữ cái và khoảng trắng");
-    }
-
-    if ($('#AddressKH').val().trim() === '') {
-        isValid = false;
-        alert("Địa chỉ không được để trống");
-    }
-
-    if ($('#PhoneKH').val().trim() === '') {
-        isValid = false;
-        alert("Số điện thoại không được để trống");
-    } else if (!phonePattern.test($('#PhoneKH').val())) {
-        isValid = false;
-        alert("Số điện thoại không hợp lệ");
-    }
-
-    if ($('#Email').val().trim() === '') {
-        isValid = false;
-        alert("Email không được để trống");
-    } else if (!emailPattern.test($('#Email').val())) {
-        isValid = false;
-        alert("Email không hợp lệ");
-    }
-
-    return isValid;
 }

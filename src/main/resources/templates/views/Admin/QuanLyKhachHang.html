@@ -117,6 +117,11 @@
         .pagination a:hover {
             background-color: #ddd;
         }
+
+        .error {
+            color: red;
+            font-size: 12px;
+        }
     </style>
 </head>
 <body>
@@ -153,11 +158,11 @@
                                 <label class="text-black">Thành viên <span class="text-danger">*</span></label>
                                 <div class="form-check-inline">
                                     <div class="form-check">
-                                        <input type="radio" class="form-check-input" id="Roletrue" name="role_radio">
+                                        <input type="radio" class="form-check-input" id="Roletrue" name="role_radio" value="true">
                                         <label class="form-check-label" for="Roletrue">Có</label>
                                     </div>
                                     <div class="form-check">
-                                        <input type="radio" class="form-check-input" id="Rolefalse" name="role_radio">
+                                        <input type="radio" class="form-check-input" id="Rolefalse" name="role_radio" value="false" checked>
                                         <label class="form-check-label" for="Rolefalse">Không</label>
                                     </div>
                                 </div>
