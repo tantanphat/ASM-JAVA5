@@ -119,7 +119,8 @@ $(document).ready(function() {
             $("#maSP").val(sanPham.maSP);
             $("#tenSP").text(sanPham.tenSP);
             $("#giaBan").text(sanPham.giaBan);
-            $("#anh").attr("src", "https://res.cloudinary.com/dtnf47wll/image/upload/" + sanPham.anh); // Sửa lại cú pháp
+            // $("#anh").attr("src", "https://res.cloudinary.com/dtnf47wll/image/upload/" + sanPham.anh);
+            $("#anh").attr("src", "/assets/sanpham/" + sanPham.anh);
             $('#ghiChu').text(sanPham.ghiChu);
         },
         error: function(xhr, status, error) {

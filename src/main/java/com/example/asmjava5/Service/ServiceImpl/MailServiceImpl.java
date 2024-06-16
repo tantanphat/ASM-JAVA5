@@ -8,9 +8,13 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
+
+import java.io.File;
 
 @Component
 public class MailServiceImpl implements MailService {
@@ -86,6 +90,36 @@ public class MailServiceImpl implements MailService {
             helper.setText(content,true);
 
 
+            javaMailSender.send(message);
+        } catch (MessagingException e) {
+            throw new RuntimeException("Could not send email");
+        }
+    }
+
+    @Override
+    public void sendMailFile(String type, String to, byte[] fileBytes) {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        String ma = SendMa.MaXacNhan();
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            helper.setFrom(username);
+            helper.setTo(to);
+
+            String title = null;
+            String content = null;
+            title = "Thanh toán thành công";
+            content = "<div style=' background-color: #d4edda;\n" +
+                    "    color: #155724;\n" +
+                    "    border: 1px solid #c3e6cb;\n" +
+                    "    border-radius: 5px;\n" +
+                    "    padding: 20px;\n" +
+                    "    margin-bottom: 20px;'>"
+                    + "<h1> <strong>Cảm ơn " + to + " đã mua hàng</strong></h1>"
+                    + "</div>";
+
+            helper.addAttachment("hoa-don.pdf", new ByteArrayResource(fileBytes));
+            helper.setSubject(title);
+            helper.setText(content, true);
             javaMailSender.send(message);
         } catch (MessagingException e) {
             throw new RuntimeException("Could not send email");

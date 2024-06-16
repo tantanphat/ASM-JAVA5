@@ -1,5 +1,6 @@
 package com.example.asmjava5.API;
 
+import com.example.asmjava5.Constant.MailConstant;
 import com.example.asmjava5.Constant.SessionAttr;
 import com.example.asmjava5.Entity.HoaDon;
 import com.example.asmjava5.Entity.KhachHang;
@@ -8,17 +9,17 @@ import com.example.asmjava5.Model.DTO.CartItemsDTO;
 import com.example.asmjava5.Model.request.DangKyKhachHang;
 import com.example.asmjava5.Model.request.LichSuMuaHang;
 import com.example.asmjava5.Model.request.TaoHoaDon;
-import com.example.asmjava5.Service.HoaDonChiTietService;
-import com.example.asmjava5.Service.HoaDonService;
-import com.example.asmjava5.Service.KhachHangService;
-import com.example.asmjava5.Service.LichSuMuaHangService;
+import com.example.asmjava5.Service.*;
 import com.example.asmjava5.Utils.SessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -32,6 +33,8 @@ public class HoaDonAPI {
     private KhachHangService khachHangService;
     @Autowired
     private HoaDonChiTietService hoaDonChiTietService;
+    @Autowired
+    private MailService mailService;
     @Autowired
     private SessionUtils session;
     @Autowired
@@ -150,6 +153,11 @@ public class HoaDonAPI {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-
-
+    @PostMapping("/Gui-hoa-don-mail")
+    public ResponseEntity<?> guiHoaDonMail(@RequestBody byte[] fileBytes, Principal principal) {
+        String email = principal.getName();
+        System.out.println(email);
+        mailService.sendMailFile(MailConstant.FILE_MAIL_HOA_DON, "nguyen04tan04phat03@gmail.com", fileBytes);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
 }

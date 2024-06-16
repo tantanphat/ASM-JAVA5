@@ -80,8 +80,8 @@ public class SanPhamAPI {
     public ResponseEntity<String> uploadAnhSanPham(@RequestParam("file") MultipartFile file) {
         try {
 //            Lưu ảnh vào thư mục /assets/sanpham
-//            File newImg = new File(UPLOAD_DIRECTORY, file.getOriginalFilename());
-//            file.transferTo(newImg);
+            File newImg = new File(UPLOAD_DIRECTORY, file.getOriginalFilename());
+            file.transferTo(newImg);
 
             // Lưu ảnh vào Cloudinary
             ImageUploadUtils imageUploadUtils = new ImageUploadUtils();
