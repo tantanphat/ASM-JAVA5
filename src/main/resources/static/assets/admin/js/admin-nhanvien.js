@@ -88,31 +88,76 @@ $(document).ready(function() {
 
         $('#btnCreate').click(function(e) {
             // Lấy thông tin từ form
-            var tenNV = $('#FullName').val();
+            var tenNV = $('#FullName').val().trim();
             var gioiTinh = $('#Gender').val() === "1";
-            var diaChi = $('#Address').val();
-            var dienThoai = $('#Phone').val();
-            var ngaySinh = $('#Brithday').val();
-            var matkhau = $('#Password').val();
-            var vaiTro = $('#RoleQL').prop('checked'); // true nếu là quản lý
+            var diaChi = $('#Address').val().trim();
+            var dienThoai = $('#Phone').val().trim();
+            var ngaySinh = $('#Brithday').val().trim();
+            var matkhau = $('#Password').val().trim();
+            var vaiTro = $('input[name="role_radio"]:checked').val(); // true nếu là quản lý
 
-            if (tenNV =="" || diaChi==""|| dienThoai==""|| ngaySinh==""|| matkhau=="") {
-                alert("Vui lòng điền đầy đủ thông tin!");
-                return;
+            // Biến để theo dõi trạng thái hợp lệ của form
+            var isValid = true;
+
+            var namePattern = /^[a-zA-Z\s]+$/;
+
+            // Reset lỗi
+            $('.error').remove();
+
+            // Kiểm tra từng trường và thêm thông báo lỗi nếu cần
+            if (tenNV === "") {
+                isValid = false;
+                $('#FullName').after('<span class="error">Họ tên không được để trống</span>');
+            } else if (!namePattern.test(tenNV)) {
+                isValid = false;
+                $('#FullName').after('<span class="error">Họ tên chỉ được chứa chữ cái và khoảng trắng</span>');
             }
 
-            // Tạo đối tượng nhân viên mới (không bao gồm maNV)
-            var newNhanVien = {
-                tenNV: tenNV,
-                gioiTinh: gioiTinh,
-                diaChi: diaChi,
-                dienThoai: dienThoai,
-                ngaySinh: ngaySinh,
-                matkhau: matkhau,
-                vaiTro: vaiTro
-            };
+            if ($('#Gender').val() === "") {
+                isValid = false;
+                $('#Gender').after('<span class="error">Vui lòng chọn giới tính</span>');
+            }
 
-            // Gửi yêu cầu POST để thêm nhân viên mới
+            if (diaChi === "") {
+                isValid = false;
+                $('#Address').after('<span class="error">Địa chỉ không được để trống</span>');
+            }
+
+            var phonePattern = /^[0-9]{10,11}$/;
+            if (!phonePattern.test(dienThoai)) {
+                isValid = false;
+                $('#Phone').after('<span class="error">Số điện thoại không hợp lệ</span>');
+            }
+
+            if (ngaySinh === "") {
+                isValid = false;
+                $('#Brithday').after('<span class="error">Ngày sinh không được để trống</span>');
+            }
+
+            if (matkhau.length < 3) {
+                isValid = false;
+                $('#Password').after('<span class="error" >Mật khẩu phải có ít nhất 3 ký tự</span>');
+            }
+
+            if (typeof vaiTro !== "boolean") {
+                isValid = false;
+                $('.form-check-inline').after('<span class="error">Vui lòng chọn vai trò</span>');
+            }
+
+            if (isValid) {
+                // Tạo đối tượng nhân viên mới (không bao gồm maNV)
+                var newNhanVien = {
+                    tenNV: tenNV,
+                    gioiTinh: gioiTinh,
+                    diaChi: diaChi,
+                    dienThoai: dienThoai,
+                    ngaySinh: ngaySinh,
+                    matkhau: matkhau,
+                    vaiTro: vaiTro
+                };
+
+
+                // Gửi yêu cầu POST để thêm nhân viên mới
             $.ajax({
                 url: "/api/nhan-vien/add",
                 type: "POST",
@@ -128,6 +173,7 @@ $(document).ready(function() {
                     console.error("Error adding employee:", error);
                 }
             });
+            }
         })
 
         $('#btnClear').click(function(e) {

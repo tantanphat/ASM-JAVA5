@@ -226,7 +226,9 @@ $(document).ready(function() {
             contentType: "application/json",
             success: function (response) {
                 alert(response);
-                hienThiListSP();
+                hienThiListDanhMucSanPham(function (){
+
+                });
                 e.preventDefault();
             }
         });
@@ -251,7 +253,9 @@ $(document).ready(function() {
         }
 
         // clearSP();
-        hienThiListSP();
+        hienThiListDanhMucSanPham(function (){
+            hienThiListSP(pageNo, pageSize, sortBy, sortOrder);
+        });
         $('#admin_product').get(0).scrollIntoView({ behavior: 'smooth' });
     });
 
@@ -314,7 +318,9 @@ $(document).ready(function() {
             success: function (response) {
                 $('#admin_product').get(0).scrollIntoView({behavior: 'smooth'});
                 alert("Thêm thành công");
-                // hienThiListDanhMucSanPham();
+                hienThiListDanhMucSanPham(function (){
+                    hienThiListSP(pageNo, pageSize, sortBy, sortOrder);
+                });
             },
             error: function (xhr, status, error) {
                 console.error("Lỗi:", error);
