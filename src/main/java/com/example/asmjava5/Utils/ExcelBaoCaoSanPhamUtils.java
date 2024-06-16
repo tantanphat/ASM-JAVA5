@@ -50,8 +50,8 @@ public class ExcelBaoCaoSanPhamUtils {
         return workbook;
     }
     private void writeHeaderLine(int month) {
-        sheetBanDuoc = workbook.createSheet("Sản phẩm bán được tháng "+month);
-        sheetKhongBanDuoc = workbook.createSheet("Sản phẩm không bán được tháng "+month);
+        sheetBanDuoc = workbook.createSheet("Sản phẩm bán được tháng " + month);
+        sheetKhongBanDuoc = workbook.createSheet("Sản phẩm không bán được tháng " + month);
 
         //Sản phẩm bán được
         Row row = sheetBanDuoc.createRow(0);
@@ -67,29 +67,29 @@ public class ExcelBaoCaoSanPhamUtils {
         createCell(row, 0, "STT", style);
         createCell(row, 1, "Mã SP", style);
         createCell(row, 2, "Tên SP", style);
-        createCell(row, 3, "Đơn  giá bán", style);
+        createCell(row, 3, "Đơn giá bán", style);
         createCell(row, 4, "Loại sản phẩm", style);
         createCell(row, 5, "Số lượng đã bán", style);
-
 
         //Sản phẩm không bán được
         Row rowKo = sheetKhongBanDuoc.createRow(0);
 
         CellStyle styleKo = workbook.createCellStyle();
         Font fontKo = sheetKhongBanDuoc.getWorkbook().createFont();
-        font.setFontName("Times New Roman");
-        font.setBold(true);
-        font.setFontHeightInPoints((short) 14);
-        font.setColor(IndexedColors.BLACK.getIndex());
-        style.setFont(fontKo);
+        fontKo.setFontName("Times New Roman");
+        fontKo.setBold(true);
+        fontKo.setFontHeightInPoints((short) 14);
+        fontKo.setColor(IndexedColors.BLACK.getIndex());
+        styleKo.setFont(fontKo);
 
         createCell(rowKo, 0, "STT", styleKo);
         createCell(rowKo, 1, "Mã SP", styleKo);
         createCell(rowKo, 2, "Tên SP", styleKo);
-        createCell(rowKo, 3, "Đơn  giá bán", styleKo);
+        createCell(rowKo, 3, "Đơn giá bán", styleKo);
         createCell(rowKo, 4, "Loại sản phẩm", styleKo);
-        createCell(rowKo, 5, "Số lượng tốn kho", styleKo);
+        createCell(rowKo, 5, "Số lượng tồn kho", styleKo);
     }
+
 
     private void createCell(Row row, int columnCount, Object value, CellStyle style) {
         sheetBanDuoc.autoSizeColumn(columnCount);
