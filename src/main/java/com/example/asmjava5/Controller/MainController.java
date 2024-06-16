@@ -78,8 +78,6 @@ public class MainController {
 //            model.addAttribute("CURRENT_USER",username);
 //        }
 //        System.out.println("Hello "+sessionUtils.laySession(SessionAttr.CURRENT_USER));
-
-
         return "views/index";
     }
 

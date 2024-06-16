@@ -115,11 +115,16 @@ public class KhachHangAPI {
         return false;
     }
 
+    //Đăng ký khách hàng
     @PostMapping("/add-khach-hang")
     public ResponseEntity<?> addKhachHang(@RequestBody DangKyKhachHang dangKyKhachHang) {
-//        emailService.sendMail(MailConstant.KEY_MAIL_SIGNIN_WELCOME,dangKyKhachHang.getEmail());
-        khachHangServiceImpl.dangKyKhachHangMoi(dangKyKhachHang);
-        return ResponseEntity.ok(HttpStatus.OK);
+        try {
+            emailService.sendMail(MailConstant.KEY_MAIL_SIGNIN_WELCOME,dangKyKhachHang.getEmail());//Gửi mail khi khách hàng đăng ký thành công
+            khachHangServiceImpl.dangKyKhachHangMoi(dangKyKhachHang);//Xử lý thông tin và thêm khách hàng
+            return ResponseEntity.ok(HttpStatus.OK);//Trả về 200 khi thành công
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());//Trả về 401 khi có ngoại lệ
+        }
     }
     @GetMapping("/xuat-ra-excel")
     public void xuatListKhachHangRaExcel() {
@@ -147,6 +152,7 @@ public class KhachHangAPI {
         String userName = principal.getName();
         KhachHang kh = khachHangServiceImpl.getLoginByEmail(userName);
 
+
         changePassword.setMaKH(kh.getMaKH());
 
         // So sánh mật khẩu cũ của người dùng với mật khẩu đã được mã hóa trong cơ sở dữ liệu
@@ -158,13 +164,18 @@ public class KhachHangAPI {
         }
     }
 
+    //Lấy email và gửi mã xác nhận cho khách hàng
     @GetMapping("/mail-for-forgot-password")
     public ResponseEntity<?> forgotPassword(@RequestParam("email") String email) {
+        //Lấy email mà khách hàng quên mật khẩu
         KhachHang kh = khachHangServiceImpl.getLoginByEmail(email);
+        //Nếu email có thì bắt đầu gửi mã xác nhận
         if (kh!= null) {
+            //Lấy mã xác nhận ngẫu nhiên
             String ma = SendMa.MaXacNhan();
+            //Lưu mã xác nhận vào session
             session.setAttribute("MaXacNhan",ma);
-            System.out.println(ma);
+            //Gửi mã xác nhận về email
             emailService.sendMailCode(MailConstant.CODE_FORGOT_PASSWORD,email,ma);
             return ResponseEntity.ok(HttpStatus.OK);
         } else {
@@ -172,15 +183,20 @@ public class KhachHangAPI {
         }
     }
 
+    //Xác nhận mã xác nhận của khách hàng
     @GetMapping("/conform-code-password")
     public ResponseEntity<?> conformCodePassword() {
+        //Lâý mã xác nhận từ session
         String maXN = (String)session.getAttribute("MaXacNhan");
+        //Trả mã xác nhận để xác thực
         return ResponseEntity.ok(maXN);
     }
 
+    //Sau khi xác nhận thì nhập mật khẩu mới và tiến hành đổi mật khẩu
     @PutMapping("/forgor-password-new-password")
     public ResponseEntity<?> forgorPasswordNewPassword(@RequestParam("email")String email,@RequestParam("pass") String pass) {
         try {
+            //Xác nhận và đổi mật khẩu thành công
             khachHangServiceImpl.forgotPassword(email, pass);
             return ResponseEntity.ok("Đổi mật khẩu thành công");
         } catch(Exception e) {

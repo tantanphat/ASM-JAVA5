@@ -22,9 +22,8 @@
   </style>
 </head>
 <body>
-<!-- insert common header -->
 <div class="com" th:insert="~{/common/header :: header}"></div>
-<main layout:fragment="index">
+<main layout:fragment="index" id="s">
   <h1>Tìm kiếm sản phẩm: </h1>
   <div class="tab-content" id="nav-tabContent">
     <!-- card one -->
@@ -32,7 +31,8 @@
          role="tabpanel" aria-labelledby="nav-home-tab">
       <div class="row" id="product-container">
         <!-- Sản phẩm sẽ được hiển thị ở đây -->
-
+      </div>
+      <div class="pagination"  id="pagination-san-pham">
       </div>
     </div>
   </div>
@@ -41,22 +41,43 @@
 </main>
 </body>
 <script>
+
   $(document).ready(function() {
     var urlParams = new URLSearchParams(window.location.search);
     var key = urlParams.get('key');
-    if (key) {
-      // Thực hiện AJAX call
-      $.ajax({
-        url: "/api/san-pham/"+key,
-        type: 'GET',
-        success: function(data) {
-          renderProducts(data);
+    function hienThiSPTimKiem(key) {
+      $('#pagination-san-pham').pagination({
+        dataSource: function(done){
+          $.ajax({
+            url: "/api/san-pham/"+key,
+            type: 'GET',
+            success: function(response) {
+
+              done(response);
+            },
+            error: function(error) {
+              // Hàm được gọi khi request thất bại
+              console.error('Lỗi khi gọi API:', error);
+            }
+          });
         },
-        error: function(error) {
-          // Hàm được gọi khi request thất bại
-          console.error('Lỗi khi gọi API:', error);
+        afterPaging : function() {
+          $('#btnSearchSP').get(0).scrollIntoView({ behavior:'smooth' });
+        },
+        pageSize: 6,
+        autoHidePrevious: true,
+        autoHideNext: true,
+        prevText: '&laquo; Trước',
+        nextText: 'Sau &raquo;',
+
+        callback: function(data, pagination) {
+          renderProducts(data);
         }
-      });
+      })
+
+    }
+    if (key) {
+      hienThiSPTimKiem(key)
     }
 
     // Hàm để hiển thị sản phẩm
@@ -74,7 +95,6 @@
         productsContainer.append(productHTML);
         return;
       }
-
       products.forEach(function(product) {
         var productHTML = `
                         <div class="col-xl-4 col-lg-4 col-md-6">
@@ -103,7 +123,25 @@
         productsContainer.append(productHTML);
       });
     }
+    $('#btnSearchSP').on('click', function(event){
+      var keyWord = $('#SearchSP').val();
+// Nếu từ khóa trống, hiển thị thông báo không tìm thấy sản phẩm
+      if (keyWord === "" || keyWord.length === 0) {
+        var productsContainer = $('#product-container');
+        productsContainer.empty();
+        var productHTML = `
+        <div class="col-xl-4 col-lg-4 col-md-6 text-center">
+          <strong>Không tìm thấy sản phẩm</strong>
+        </div>
+      `;
+        productsContainer.append(productHTML);
+      }
 
+      var newUrl = new URL(window.location);
+      newUrl.searchParams.set('key', keyWord);
+      window.history.pushState({}, '', newUrl);// thay đổi URL mà không tải lại trang.
+      hienThiSPTimKiem(keyWord)
+    })
     $('img').on('error', function() {
       $(this).attr('src', 'https://res.cloudinary.com/dtnf47wll/image/upload/noImage.png');
     });

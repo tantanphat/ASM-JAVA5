@@ -458,9 +458,6 @@ $(document).ready(function() {
             }
         })
     })
-
-    doThonTinHoaDonLenForm();
-
     // doHDCTLenTableTheoMaHDBan("HD00001");
     doTenSPKhiNhapMaSP();
     listMaNV();

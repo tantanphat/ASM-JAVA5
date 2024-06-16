@@ -46,25 +46,73 @@ public class HoaDonAPI {
         return hoaDonService.getAllHoaDon();
     }
 
+    //Đổ hóa đơn theo mã hóa đơn
     @GetMapping("/{hd_MaHDBan}")
     public HoaDon getOneHoaDon(@PathVariable("hd_MaHDBan") String MaHDBan) {
         return hoaDonService.getHoaDonByID(MaHDBan);
     }
 
-
-
+    //Chức năng thêm hóa đơn
     @PostMapping("/add")
     public ResponseEntity<HoaDon> addHoaDon(@RequestBody HoaDon hoaDon) {
         HoaDon newHoaDon = hoaDonService.addHoaDon(hoaDon);
         return ResponseEntity.ok(newHoaDon);
     }
 
-    Map<String,SanPham> map =new HashMap<>();
+    //Chức năng xóa hóa đơn
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteHoaDon(@RequestParam("mahd") String mahd) {
+        try {
+            hoaDonService.deleteHoaDon(mahd);
+            return ResponseEntity.ok("Xóa hóa đơn thành công");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Đã xảy ra lỗi khi xóa hóa đơn");
+        }
+    }
+
+    //Chức năng tạo hóa đơn
+    @PostMapping("/createHD")
+    public ResponseEntity<?> createHD(@RequestBody TaoHoaDon hoaDon) {
+        try {
+            String makh = khachHangService.AUTO_MAKH();
+            //Nếu là khách hàng mới thì đăng ký khách hàng mới với hóa đơn
+            if (hoaDon.getMaKH().equalsIgnoreCase("")) {
+                DangKyKhachHang kha = new DangKyKhachHang();
+                kha.setTenKH(hoaDon.getTenKH());
+                kha.setDiaChi(hoaDon.getDiaChi());
+                kha.setSdt(hoaDon.getSdt());
+                kha.setEmail(hoaDon.getEmail());
+                kha.setMatKhau(encoder.encode(hoaDon.getSdt()));
+                kha.setThanhVien(false);
+                khachHangService.dangKyKhachHangMoi(kha);
+                hoaDonService.creatHD(hoaDon.getMaNV(),makh);
+            }
+            else {
+                hoaDonService.creatHD(hoaDon.getMaNV(),hoaDon.getMaKH());
+            }
+
+            return ResponseEntity.ok(HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Đã xảy ra lỗi khi Thêm hóa đơn");
+        }
+    }
+
+    //Chức năng update hóa đơn
+    @PutMapping("/updateHD")
+    public ResponseEntity<?> updateHoaDon(@RequestBody HoaDon hoaDon) {
+        hoaDonService.updateHD(hoaDon);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
 
     @PostMapping("/thanh-toan")
     @SuppressWarnings("unchecked")
     public ResponseEntity<?> thanhToan(String maHD, String mailKH) {
+        //Lấy giỏ hàng từ session
         List<CartItemsDTO> cartItems = (List<CartItemsDTO>) sessionUtils.laySession(SessionAttr.SESSION_KEY_CART);
+
+        //Lấy mã KH
         KhachHang kh = khachHangService.getLoginByEmail(mailKH);
 
         String maKH = kh.getMaKH();
@@ -93,55 +141,15 @@ public class HoaDonAPI {
 
             for (String key : quantityMap.keySet()) {
                 System.out.println("SP: " + key + " Quantity: " + quantityMap.get(key));
+                //Lưu sản phẩm vào trong hóa đơn chi tiết
                 hoaDonChiTietService.saveHoaDonChiTiet(maHD,key,quantityMap.get(key),0.0);
+                //Thanh toán xong thì xóa List trong giỏ hàng
                 session.removeSession(SessionAttr.SESSION_KEY_CART);
             }
         }
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteHoaDon(@RequestParam("mahd") String mahd) {
-        try {
-            hoaDonService.deleteHoaDon(mahd);
-            return ResponseEntity.ok("Xóa hóa đơn thành công");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Đã xảy ra lỗi khi xóa hóa đơn");
-        }
-    }
 
-    @PostMapping("/createHD")
-    public ResponseEntity<?> createHD(@RequestBody TaoHoaDon hoaDon) {
-            try {
-                String makh = khachHangService.AUTO_MAKH();
-//                KhachHang khachHangIsExist = khachHangService.findBymaKH(hoaDon.getMaKH());
-                if (hoaDon.getMaKH().equalsIgnoreCase("")) {
-                    DangKyKhachHang kha = new DangKyKhachHang();
-                    kha.setTenKH(hoaDon.getTenKH());
-                    kha.setDiaChi(hoaDon.getDiaChi());
-                    kha.setSdt(hoaDon.getSdt());
-                    kha.setEmail(hoaDon.getEmail());
-                    kha.setMatKhau(encoder.encode(hoaDon.getSdt()));
-                    kha.setThanhVien(false);
-                    khachHangService.dangKyKhachHangMoi(kha);
-                    hoaDonService.creatHD(hoaDon.getMaNV(),makh);
-                }
-                else {
-                    hoaDonService.creatHD(hoaDon.getMaNV(),hoaDon.getMaKH());
-                }
-
-                return ResponseEntity.ok(HttpStatus.OK);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Đã xảy ra lỗi khi Thêm hóa đơn");
-            }
-        }
-
-        @PutMapping("/updateHD")
-    public ResponseEntity<?> updateHoaDon(@RequestBody HoaDon hoaDon) {
-        hoaDonService.updateHD(hoaDon);
-        return ResponseEntity.ok(HttpStatus.OK);
-        }
 
 }

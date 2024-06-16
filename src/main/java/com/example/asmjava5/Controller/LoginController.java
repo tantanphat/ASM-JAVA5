@@ -76,19 +76,9 @@ public class LoginController {
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
-
     }
 
-    //Khi logout sẽ về trang Dang-nhap
-    @RequestMapping("/logout")
-    public String logout() {
-        String path = request.getServletPath();
-        switch (path) {
-            case "/admin":
-                return "forward:/admin/Login";
-            default: return "forward:/Dang-nhap";
-        }
-    }
+
 
     @GetMapping("/admin/Login")
     public String doGetAdminLoginController() {

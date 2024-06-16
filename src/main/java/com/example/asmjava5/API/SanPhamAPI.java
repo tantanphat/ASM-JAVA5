@@ -35,30 +35,35 @@ public class SanPhamAPI {
     @Autowired
     private DanhMucSPService danhMucSPService;
 
+    //Đổ hết sản phẩm lên table admin sản-phẩm
     @GetMapping("")
     public List<SanPham> getAllSanPham(@RequestParam(defaultValue = "0") Integer pageNo,
                                        @RequestParam(defaultValue = "5") Integer pageSize,
                                        @RequestParam(defaultValue = "maSP") String sortBy,
-                                       @RequestParam(defaultValue = "") String sortOrder) {
+                                       @RequestParam(defaultValue = "asc") String sortOrder) {
         return sanPhamService.getAllSP(pageNo, pageSize, sortBy, sortOrder);
     }
 
+    //Lấy số lượng sản phẩm
     @GetMapping("/lengthSP")
     public int getTotalSanPhamCount() {
         return sanPhamService.getAllSanPham().size();
     }
 
+    //Lấy sản phẩm theo mã sản phẩm
     @GetMapping("/c")
     public SanPham getSanPham(@RequestParam("maSP") String maSP) {
     return sanPhamService.getSanPhamById(maSP);
     }
 
+    //Lấy sản phẩm theo mã sản phẩm
     @GetMapping("/masp/{masp}")
     public SanPham getOneSanPham(@PathVariable("masp") String masp) {
         return sanPhamService.getSanPhamById(masp);
     }
 
 
+    //Tìm kiếm sản phẩm
     @GetMapping("/{keyword}")
     public List<SanPham> timKiemSanPham(@PathVariable String keyword) {
         return sanPhamService.timKiemSanPham(keyword);
@@ -69,14 +74,16 @@ public class SanPhamAPI {
         return danhMucSPService.findAllDMSP();
     }
 
+    //Tạo hoặc update thì sẽ lưu ảnh trên đám mây Cloudinary
     @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @PostMapping(value = "/upload-anh-sp", consumes = "multipart/form-data")
     public ResponseEntity<String> uploadAnhSanPham(@RequestParam("file") MultipartFile file) {
         try {
-            // Lưu ảnh vào thư mục UPLOAD_DIRECTORY
+//            Lưu ảnh vào thư mục /assets/sanpham
 //            File newImg = new File(UPLOAD_DIRECTORY, file.getOriginalFilename());
 //            file.transferTo(newImg);
 
+            // Lưu ảnh vào Cloudinary
             ImageUploadUtils imageUploadUtils = new ImageUploadUtils();
             imageUploadUtils.uploadImage(file);
             return ResponseEntity.status(HttpStatus.OK).build();
@@ -86,6 +93,7 @@ public class SanPhamAPI {
         }
     }
 
+    //Update Sản Phẩm
     @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @PutMapping("/updateSP")
     public ResponseEntity<?> updateSP(@RequestBody SanPham sp){
@@ -100,12 +108,14 @@ public class SanPhamAPI {
         return ResponseEntity.ok("Cập nhập thành công");
     }
 
+    //Tạo mới sản phẩm
     @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @PostMapping("/adSP")
     public ResponseEntity<?> adSP(@RequestBody SanPham sp){
         sanPhamService.addSP(sp);
         return ResponseEntity.ok(HttpStatus.OK);
     }
+
 
     @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @DeleteMapping("/deleteSP")

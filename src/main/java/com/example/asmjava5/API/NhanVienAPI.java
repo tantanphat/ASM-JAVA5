@@ -20,13 +20,14 @@ public class NhanVienAPI {
     @Autowired
     private NhanVienService nvService;
 
-
+    //Lấy ra danh sách nhân viên
     @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @GetMapping("")
     public List<NhanVien> getAllNhanVien() {
         return nvService.getALlNhanVien();
     }
 
+    //Lấy ra nhân viên theo mã nhân viên
     @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @GetMapping("/{manv}")
     public ResponseEntity<NhanVien> getOneNhanVien(@PathVariable("manv") String manv) {
@@ -35,6 +36,7 @@ public class NhanVienAPI {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    //Thêm mới nhân viên
     @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @PostMapping("/add")
     public ResponseEntity<NhanVien> addNhanVien(@RequestBody NhanVien nhanVien) {
@@ -42,6 +44,7 @@ public class NhanVienAPI {
         return ResponseEntity.ok().build();
     }
 
+    //Cập nhật nhân viên
     @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @PutMapping("/update/{maNV}")
     public ResponseEntity<NhanVien> updateNhanVien(@PathVariable("maNV") String maNV, @RequestBody NhanVien nhanVien) {
@@ -53,6 +56,7 @@ public class NhanVienAPI {
         }
     }
 
+    //Xóa nhân viên
     @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @PutMapping("/delete/{maNV}")
     public ResponseEntity<?> deleteNhanVien(@PathVariable("maNV") String maNV) {
@@ -66,6 +70,7 @@ public class NhanVienAPI {
         }
     }
 
+    //Lấy ra danh sách mã nhân viên
     @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
     @GetMapping("/listMaNV")
     public List<String> listMaNV() {

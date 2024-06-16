@@ -18,16 +18,19 @@ public class CartAPI {
     @Autowired
     private CartService cartService = new CartServiceImpl();
 
+    //Lấy toàn bộ sản phẩm có trong giỏ hàng
     @GetMapping("/getListCart")
     public List<CartItemsDTO> getAllCartItems() {
         return cartService.getAllCartItems();
     }
 
+    //Thêm sản phẩm vào giỏ hàng
     @PostMapping("/cart/add")
     public CartItemsDTO addToCart(@RequestBody CartItemsDTO cartItems) {
         return cartService.addToCart(cartItems);
     }
 
+    //Số lượng sản phẩm có trong giỏ hàng
     @GetMapping("/countListCart")
     public int getCartCount() {
         return cartService.countListCart();

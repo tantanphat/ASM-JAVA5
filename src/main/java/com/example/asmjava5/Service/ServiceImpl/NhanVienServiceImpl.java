@@ -1,6 +1,5 @@
 package com.example.asmjava5.Service.ServiceImpl;
 
-import com.example.asmjava5.Constant.FuncAttr;
 import com.example.asmjava5.Entity.NhanVien;
 import com.example.asmjava5.Repository.NhanVienRepository;
 import com.example.asmjava5.Service.NhanVienService;

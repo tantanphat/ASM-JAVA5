@@ -93,7 +93,8 @@ public class SanPhamServiceImpl implements SanPhamService {
         } else if (sortOrder.equalsIgnoreCase("desc")) {
             paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
         } else {
-            paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+            // Giá trị mặc định nếu sortOrder không hợp lệ
+            paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).ascending());
         }
 
         Page<SanPham> pagedResult = sanPhamRepository.findAll(paging);
@@ -103,6 +104,7 @@ public class SanPhamServiceImpl implements SanPhamService {
             return new ArrayList<SanPham>();
         }
     }
+
 
     @Override
     public List<SanPham> findByMaDM(int maDM) {

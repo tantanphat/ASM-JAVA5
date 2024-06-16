@@ -2,6 +2,7 @@ package com.example.asmjava5.Security;
 
 import com.example.asmjava5.Security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -24,6 +25,7 @@ import org.springframework.security.web.authentication.rememberme.InMemoryTokenR
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 @Configuration
 @EnableWebSecurity
@@ -52,6 +54,11 @@ public class WebSecurityConfig {
         return new SessionRegistryImpl();
     }
 
+//    @Bean
+//    public static ServletListenerRegistrationBean httpSessionEventPublisher() {
+//        return new ServletListenerRegistrationBean(new HttpSessionEventPublisher());
+//    }
+
 
     @Bean
     public AuthenticationFailureHandler authenticationFailureHandler() {
@@ -74,41 +81,42 @@ public class WebSecurityConfig {
     @Order(1)
     public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
         http
-                .securityMatcher("/admin","/admin/**")
+                .securityMatcher("/admin","/admin/**")//Bảo mật cho tài nguyên và chỉ cho cho Admin,Staff ms có quyền truy cập tài nguyên này
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/admin","/admin/**").authenticated()
                         .requestMatchers("/admin/**","/admin"
                         ).hasAnyRole("ADMIN","STAFF")
                 )
                 .formLogin(login -> login
-                        .loginPage("/admin/Login")
+                        .loginPage("/admin/Login")//Khi truy cập tài nguyên admin thì nó sẽ trả về trang /admin/Login
                         .loginProcessingUrl("/Dang-nhap")
                         .defaultSuccessUrl("/amin")
                         .permitAll()
-                        .failureHandler(authenticationFailureHandler())
+                        .failureHandler(authenticationFailureHandler())//Trả về thông báo nếu có sai sót trong quá trình xác thực
                     )
                 .logout(logout -> logout
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/admin/Login")
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/admin/Login")//Khi admin hoặc nhân viên logout nó sẽ trả về trang đăng nhập của admin
+                .invalidateHttpSession(true)//Xóa session khi logout
+                .deleteCookies("JSESSIONID")//Xóa cookies thì logout
                 .permitAll()
                 )
                 .exceptionHandling(exceptionHandling -> exceptionHandling
-                        .accessDeniedPage("/error")
+                        .accessDeniedPage("/error")//Nếu lỗi xảy ra thì nó sẽ trả về trang lỗi
+
                 )
                 .rememberMe(rememberMe ->
                         rememberMe
                                 .tokenRepository(persistentTokenRepository()) // Sử dụng persistentTokenRepository để lưu trữ token
-                                .tokenValiditySeconds( 60 * 60) // Thời gian tồn tại của token là 24 giờ
-                )
-                .sessionManagement(sessionManagement ->
-                        sessionManagement
-                                .maximumSessions(1)
-                                .expiredUrl("/admin/Login")
-                                .maxSessionsPreventsLogin(true)
-                                .sessionRegistry(sessionRegistry())
+                                .tokenValiditySeconds( 60 * 60*60) // Thời gian tồn tại của token là 1 giờ
                 );
+//                .sessionManagement(sessionManagement ->
+//                        sessionManagement
+//                                .maximumSessions(1)
+//                                .expiredUrl("/admin/Login")
+//                                .maxSessionsPreventsLogin(true)
+//                                .sessionRegistry(sessionRegistry())
+//                );
 
         return http.build();
     }
@@ -131,16 +139,6 @@ public class WebSecurityConfig {
                                 .permitAll() // Cho phép tất cả truy cập vào trang login
                                 .failureHandler(authenticationFailureHandler())
                 )
-//                .oauth2Login(oauth2Login ->
-//                        oauth2Login
-////                                .userInfoEndpoint(userInfoEndpoint ->
-////                                        userInfoEndpoint
-////                                                .userService(oAuth2UserService()
-////                                                )
-////                                )
-//                                .successHandler(oAuth2AuthenticationSuccessHandler())
-//                )
-//                .oauth2Client(Customizer.withDefaults())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/Dang-nhap")
@@ -156,7 +154,6 @@ public class WebSecurityConfig {
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
 
                 );
-
 //                .sessionManagement(sessionManagement ->
 //                        sessionManagement
 //                                .maximumSessions(1)

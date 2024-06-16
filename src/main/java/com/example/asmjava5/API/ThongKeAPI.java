@@ -17,8 +17,12 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/thong-ke")
+@RequestMapping("/api/thong-ke/")
 public class ThongKeAPI {
+    @Autowired
+    ExcelBaoCaoDoanhThuUtils excelBaoCaoDoanhThuUtils;
+    @Autowired
+    ExcelBaoCaoSanPhamUtils excelBaoCaoSanPhamUtils;
 
     @Autowired
      private ThongKeService thongKeService;
@@ -59,18 +63,15 @@ public class ThongKeAPI {
         return thongKeService.thongKeSanPhamKBanDuoc(thang);
     }
 
-    @Autowired
-    ExcelBaoCaoDoanhThuUtils excelBaoCaoDoanhThuUtils;
-    @Autowired
-    ExcelBaoCaoSanPhamUtils excelBaoCaoSanPhamUtils;
 
-    //    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
-    @GetMapping("/doanh-thu-thang-theo-nam")
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
+    @GetMapping("doanh-thu-thang-theo-nam")
     public List<Object[]> thongKeSanPhamKBanDuoc(@RequestParam("month") int month , @RequestParam(name = "year",defaultValue = "2021") int year) throws IOException {;
         return thongKeService.thongKeDoanhThuThangTheoNam(month, year);
     }
 
-    @GetMapping("/excel-thong-ke")
+    //Xuất thống kê doanh thu trong năm theo từng tháng
+    @GetMapping("excel-thong-ke")
     public ResponseEntity<?> xuatThoongKe(@RequestParam(name = "year") int year) throws IOException {
         try {
             excelBaoCaoDoanhThuUtils.export(year,"D:/DoanhThu.xlsx");
@@ -79,7 +80,9 @@ public class ThongKeAPI {
             return ResponseEntity.badRequest().body("Tệp đang được sử dụng vui lòng tắt để xuất ra file");
         }
     }
-    @GetMapping("/excel-thong-ke-san-pham")
+
+    //Xuất ra sản phẩm đã được bán và không bán được theo tháng
+    @GetMapping("excel-thong-ke-san-pham")
     public ResponseEntity<?> xuatExcelSanPham(@RequestParam(name = "month") int month) throws IOException {
         try {
             excelBaoCaoSanPhamUtils.export(month,"D:/Sản Phẩm.xlsx");

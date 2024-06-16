@@ -311,6 +311,7 @@
         <canvas class="border my-4 w-100" id="dashDoanhThu" width="900" height="380"></canvas>
 
         <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+        <script th:src="@{/assets/admin/dist/js/dashboard.js}"></script>
     </article>
 
 
@@ -323,21 +324,21 @@
 
 <script th:src="@{/assets/admin/js/sidebars.js}"></script>
 <script th:src="@{/assets/admin/js/admin.js}"></script>
-<script th:src="@{/assets/admin/js/admin-hoadon.js}"></script>
-<script th:src="@{/assets/admin/js/admin-khachhang.js}"></script>
-<script th:src="@{/assets/admin/js/admin-thongke.js}"></script>
-<script th:src="@{/assets/admin/js/admin-sanpham.js}"></script>
+<!--<script th:src="@{/assets/admin/js/admin-hoadon.js}"></script>-->
+<!--<script th:src="@{/assets/admin/js/admin-khachhang.js}"></script>-->
+<!--<script th:src="@{/assets/admin/js/admin-thongke.js}"></script>-->
+<!--<script th:src="@{/assets/admin/js/admin-sanpham.js}"></script>-->
 <script th:src="@{/assets/admin/js/DanhMucSanPham.js}"></script>
 <script th:src="@{/assets/admin/js/billTab.js}"></script>
-<script th:src="@{/assets/admin/dist/js/dashboard.js}"></script>
+
 <script>
-    $("#tabs").tabs({
-        active: 2,
-        activate: function (event, ui) {
-            var active = $('#tabs').tabs('option', 'active');
-            $("#tabid").html('the tab id is ' + $("#tabs ul>li a").eq(active).attr("href"));
-        }
-    });
+    // $("#tabs").tabs({
+    //     active: 2,
+    //     activate: function (event, ui) {
+    //         var active = $('#tabs').tabs('option', 'active');
+    //         $("#tabid").html('the tab id is ' + $("#tabs ul>li a").eq(active).attr("href"));
+    //     }
+    // });
 
 
 </script>

@@ -12,6 +12,6 @@ public class WebConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/assets/**")
                 .addResourceLocations("classpath:/static/assets/")
-                .setCacheControl(CacheControl.noCache()); // Cấu hình Cache-Control
+                .setCacheControl(CacheControl.noCache());
     }
 }
