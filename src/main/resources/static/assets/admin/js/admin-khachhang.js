@@ -115,16 +115,16 @@ $(document).ready(function() {
                     $('#PhoneKH').val(data.sdt);
                     $('#Email').val(data.email);
 
-                    tbody.empty(); // Xóa nội dung cũ của bảng
-                    var row = $('<tr></tr>');
-                    row.append('<td><a href="/admin/khach-hang/' + data.maKH + '">' + data.maKH + '</td>'); // Mã khách hàng
-                    row.append('<td>' + data.tenKH + '</td>'); // Tên khách hàng
-                    row.append('<td>' + data.diaChi + '</td>'); // Địa chỉ
-                    row.append('<td>' + data.sdt + '</td>'); // Số điện thoại
-                    row.append('<td>' + data.email + '</td>'); // Email
-                    // row.append('<td>' + item.matKhau + '</td>'); // Mật khẩu
-                    row.append('<td>' + data.thanhVien + '</td>'); // Thành viên
-                    tbody.append(row); // Thêm hàng vào bảng
+                    // tbody.empty(); // Xóa nội dung cũ của bảng
+                    // var row = $('<tr></tr>');
+                    // row.append('<td><a href="/admin/khach-hang/' + data.maKH + '">' + data.maKH + '</td>'); // Mã khách hàng
+                    // row.append('<td>' + data.tenKH + '</td>'); // Tên khách hàng
+                    // row.append('<td>' + data.diaChi + '</td>'); // Địa chỉ
+                    // row.append('<td>' + data.sdt + '</td>'); // Số điện thoại
+                    // row.append('<td>' + data.email + '</td>'); // Email
+                    // // row.append('<td>' + item.matKhau + '</td>'); // Mật khẩu
+                    // row.append('<td>' + data.thanhVien + '</td>'); // Thành viên
+                    // tbody.append(row); // Thêm hàng vào bảng
 
                     var formContainer = document.getElementById('htmlKH');
                     formContainer.scrollIntoView({behavior: 'smooth'});

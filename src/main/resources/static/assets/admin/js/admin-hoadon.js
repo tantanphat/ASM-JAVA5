@@ -28,11 +28,50 @@ $(document).ready(function() {
                 $('#TenNV_HD').val(data.nhanVien.tenNV);
                 $('#Phone_HD').val(data.khachHang.sdt);
                 $('#Mail_KH').val(data.khachHang.email)
+                ThanhTien()
                 var formContainer = document.getElementById('hoaDonForm');
                 formContainer.scrollIntoView({ behavior: 'smooth' });
             }
         });
     }
+
+    function timKiemKhachHang() {
+        var maKH = $('#MaKH_HD').val();
+        var phone = $('#Phone_HD').val();
+        var mail = $('#Mail_KH').val();
+
+        var key = maKH || phone || mail;
+
+        $.ajax({
+            url: "/api/khach-hang/tim-kiem",
+            type: "GET",
+            data: { key: key },
+            success: function(data) {
+                console.log(data.tenKH);
+                $('#MaKH_HD').val(data.maKH);
+                $('#TenKH_HD').val(data.tenKH);
+                $('#Address_HD').val(data.diaChi);
+                $('#Phone_HD').val(data.sdt);
+                $('#Mail_KH').val(data.email);
+
+                var formContainer = document.getElementById('htmlKH');
+                formContainer.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    }
+    function debounce(callback, wait) {
+        let timerId;
+        return (...args) => {
+            clearTimeout(timerId);
+            timerId = setTimeout(() => {
+                callback(...args);
+            }, wait);
+        };
+    }
+
+    $('#MaKH_HD, #Phone_HD, #Mail_KH').on('input', debounce(() => {
+        timKiemKhachHang();
+    }, 300))
 
     //Đổ thông tin hdct vào table
     function doHDCTLenTableTheoMaHDBan(data) {
@@ -78,7 +117,6 @@ $(document).ready(function() {
             }
         });
     }
-
     //Đổ data hd vào table
     function doHoaDonLenTable() {
         // $.ajax({
@@ -149,9 +187,6 @@ $(document).ready(function() {
             }
         })
     }
-
-
-
     //Lấy danh sách mã nhân viên
     function listMaNV() {
         $.ajax({
@@ -170,7 +205,6 @@ $(document).ready(function() {
             }
         });
     }
-
     //Đổ hdct từ table lên form
     function doLaiHDCTTable(mahd){
         $.ajax({
@@ -215,9 +249,12 @@ $(document).ready(function() {
                     type: "GET",
                     data: { mssp: timSP },
                     success: function(response) {
+                        var thanhTien = response.giaBan*100
                         $('#TenSP').val(response.tenSP);
-                        $('#DonGia').val(response.giaBan*100);
+                        $('#DonGia').val(thanhTien);
                         var hangTonKho = response.soLuong;
+
+                        $('#ThanhTien').val(thanhTien);
                     }
                 });
             } else {
@@ -225,7 +262,30 @@ $(document).ready(function() {
             }
         });
     }
+    function ThanhTien() {
+        $('#Quantity').on('input',function(e) {
+            var soLuong = $(this).val();
+            var DonGia = $('#DonGia').val();
+            var giamGia = $('#Sale').val();
+            var thanhTien = (soLuong * DonGia) * (1 - giamGia / 100);
+            $('#ThanhTien').val(0);
+            $('#ThanhTien').val(thanhTien);
+        })
 
+        $('#Sale').on('input',function(e) {
+            var soLuong = $('#Quantity').val();
+            var DonGia = $('#DonGia').val();
+            var giamGia = $(this).val();
+            if (giamGia < 0) {
+                alert("Giảm giá không đúng định dạng");
+                $('#Sale').val(0);
+                return;
+            }
+            var thanhTien = (soLuong * DonGia) * (1 - giamGia / 100);
+            $('#ThanhTien').val(0);
+            $('#ThanhTien').val(thanhTien);
+        })
+    }
     $('#MaNV_HD').change(function() {
         var manv = $(this).val();
         $.ajax({
@@ -236,110 +296,6 @@ $(document).ready(function() {
 
             }
         })
-    })
-
-    $('#hdct_add').click(function(e) {
-        var maHDBan = $("#MaHD").val()
-        var maSP = $('#MaSP_CT').val()
-        var soLuong= $('#Quantity').val()
-        var giamGia= $('#Sale').val()
-
-        if ( maSP == "" || soLuong == ""  || giamGia == "" || maHDBan == "" )   {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Something went wrong!",
-            });
-            return;
-        } else {
-            let data = {
-                maHDBan: maHDBan,
-                maSP: maSP,
-                soLuong: soLuong,
-                giamGia: giamGia,
-            };
-            $.ajax({
-                url: "/api/hoa-don-chi-tiet/add-hdct",
-                type: "post",
-                data: JSON.stringify(data),
-                contentType: "application/json",
-                dataType: "json",
-            })
-            doLaiHDCTTable(maHDBan);
-        }
-
-    })
-    $('#updateHDCT').click(function(e) {MHDCT
-        var MHDCT = $("#MHDCT").val()
-        var maHDBan = $("#MaHD").val()
-        var maSP = $('#MaSP_CT').val()
-        var soLuong= $('#Quantity').val()
-        var giamGia= $('#Sale').val()
-
-        if (MHDCT == "" || maHDBan == "" || soLuong == "" || maSP == "" || giamGia == "" )   {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Something went wrong!",
-            });
-            return;
-        } else {
-            var data = {
-                hdct_maHDCT: MHDCT,
-                hdct_maHDBan: maHDBan,
-                hdct_maSP: maSP,
-                hdct_soLuong: soLuong,
-                hdct_giamGia: giamGia,
-            };
-            $.ajax({
-                url: "/api/hoa-don-chi-tiet/update-hdct",
-                type: "post",
-                data: JSON.stringify(data),
-                contentType: "application/json",
-                dataType: "json",
-                success: function (response) {
-                    var maHDBan = $("#MaHD").val()
-                    doLaiHDCTTable(maHDBan)
-                    alert("Updated")
-
-                },error: function (jqXHR, textStatus, errorThrown){
-                    console.log(jqXHR);
-                    console.log(textStatus);
-                    console.log(errorThrown);
-                }
-            })
-            clearHDCT()
-            doLaiHDCTTable(maHDBan);
-        }
-    })
-    $('#deleteHDCT').click(function(e) {
-        var MHDCT = $("#MHDCT").val()
-        var maHDBan = $("#MaHD").val()
-        if (MHDCT == "" || maHDBan == ""  )   {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Something went wrong!",
-            });
-            return;
-        } else {
-            $.ajax({
-                url: "/api/hoa-don-chi-tiet/delete-hdct",
-                type: "delete",
-                data: {mahdct:MHDCT},
-                success: function (response) {
-                    clearHDCT()
-                    doLaiHDCTTable(maHDBan);
-
-                },error: function (jqXHR, textStatus, errorThrown){
-                    console.log(jqXHR);
-                    console.log(textStatus);
-                    console.log(errorThrown);
-                }
-            })
-
-        }
-
     })
     $("#deleteHD").click(function () {
 
@@ -442,6 +398,118 @@ $(document).ready(function() {
             $('#Mail_KH').attr('disabled', 'disabled');
         }
     });
+    $('#hdct_add').click(function(e) {
+        var maHDBan = $("#MaHD").val()
+        var maSP = $('#MaSP_CT').val()
+        var soLuong= $('#Quantity').val()
+        var giamGia= $('#Sale').val()
+
+        if ( maSP == "" || soLuong == ""  || giamGia == "" || maHDBan == "" )   {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
+            });
+            return;
+        } else {
+            let data = {
+                maHDBan: maHDBan,
+                maSP: maSP,
+                soLuong: soLuong,
+                giamGia: giamGia,
+            };
+            $.ajax({
+                url: "/api/hoa-don-chi-tiet/add-hdct",
+                type: "post",
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                dataType: "json",
+                success: function (response) {
+                    alert("Thêm thành công")
+                    doLaiHDCTTable(maHDBan);
+                }
+            })
+
+        }
+
+    })
+    $('#updateHDCT').click(function(e) {MHDCT
+        var MHDCT = $("#MHDCT").val()
+        var maHDBan = $("#MaHD").val()
+        var maSP = $('#MaSP_CT').val()
+        var soLuong= $('#Quantity').val()
+        var giamGia= $('#Sale').val()
+
+        if (MHDCT == "" || maHDBan == "" || soLuong == "" || maSP == "" || giamGia == "" )   {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
+            });
+            return;
+        } else {
+            var data = {
+                hdct_maHDCT: MHDCT,
+                hdct_maHDBan: maHDBan,
+                hdct_maSP: maSP,
+                hdct_soLuong: soLuong,
+                hdct_giamGia: giamGia,
+            };
+            $.ajax({
+                url: "/api/hoa-don-chi-tiet/update-hdct",
+                type: "post",
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                dataType: "json",
+                success: function (response) {
+                    var maHDBan = $("#MaHD").val()
+                    doLaiHDCTTable(maHDBan)
+                    alert("Updated")
+
+                },error: function (jqXHR, textStatus, errorThrown){
+                    console.log(jqXHR);
+                    console.log(textStatus);
+                    console.log(errorThrown);
+                }
+            })
+            clearHDCT()
+            doLaiHDCTTable(maHDBan);
+        }
+    })
+    $('#deleteHDCT').click(function(e) {
+        var MHDCT = $("#MHDCT").val()
+        var maHDBan = $("#MaHD").val()
+        if (MHDCT == "" || maHDBan == ""  )   {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
+            });
+            return;
+        } else {
+            $.ajax({
+                url: "/api/hoa-don-chi-tiet/delete-hdct",
+                type: "delete",
+                data: {mahdct:MHDCT},
+                success: function (response) {
+                    alert("Xóa thành công")
+                    doLaiHDCTTable(maHDBan);
+                    clearHDCT()
+
+                },error: function (jqXHR, textStatus, errorThrown){
+                    console.log(jqXHR);
+                    console.log(textStatus);
+                    console.log(errorThrown);
+                }
+            })
+
+        }
+
+    })
+    $('#clearHDCT').click(function(e) {
+        clearHDCT()
+    })
+
 
     $('#Phone_HD').change(function(e) {
         var sdt = $(this).val();
@@ -463,9 +531,9 @@ $(document).ready(function() {
     listMaNV();
     doHoaDonLenTable();
 
-    $('#clearHDCT').click(function(e) {
-        clearHDCT()
-    })
 
+
+
+    ThanhTien();
 
 });
