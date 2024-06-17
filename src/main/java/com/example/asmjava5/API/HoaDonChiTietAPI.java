@@ -39,8 +39,13 @@ public class HoaDonChiTietAPI {
 
     @PostMapping("/update-hdct")
     public ResponseEntity<?> updateHDCT(@RequestBody HoaDonChiTiet hdct) {
-        hoaDonChiTietService.updateHDCT(hdct);
-        return new ResponseEntity<>(HttpStatus.OK);
+        try {
+            hoaDonChiTietService.updateHDCT(hdct);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Đã xảy ra lỗi khi cập nhật hóa đơn chi tiết");
+        }
     }
 
     @DeleteMapping("/delete-hdct")

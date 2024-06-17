@@ -98,7 +98,7 @@ $(document).ready(function() {
                             type: "GET",
                             success: function (data) {
                                 $('#MHDCT').val(data.hdct_maHDCT);
-                                $('#DonGia').val(data.sanPham.giaBan*100 + 'đ');
+                                $('#DonGia').val(data.sanPham.giaBan*100);
                                 $('#TenSP').val(data.sanPham.tenSP);
                                 $('#Quantity').val(data.hdct_soLuong);
                                 $('#MaSP_CT').val(data.sanPham.maSP);
@@ -117,6 +117,49 @@ $(document).ready(function() {
             }
         });
     }
+    // function doLaiHDCTTable(mahd){
+    //     $.ajax({
+    //         url: "/api/hoa-don-chi-tiet/mahd/"+mahd,
+    //         type: "GET",
+    //         success: function(response) {
+    //             var tbody = $('#hoadonchitiet-Table tbody');
+    //             tbody.empty();
+    //             response.forEach(function(item) {
+    //                 var row = $('<tr></tr>');
+    //                 row.append('<td class="clHDCT">' + item.hdct_maHDCT + '</td>');
+    //                 row.append('<td>' + item.hdct_maHDBan + '</td>');
+    //                 row.append('<td>' + item.sanPham.maSP + '</td>');
+    //                 row.append('<td>' + item.sanPham.giaBan*100 + 'đ' + '</td>');
+    //                 row.append('<td>' + item.hdct_soLuong + '</td>');
+    //                 row.append('<td>' + item.hdct_giamGia + '</td>');
+    //                 row.append('<td>' + (item.hdct_soLuong*item.sanPham.giaBan)*(100-(item.hdct_giamGia)) + 'đ' + '</td>');
+    //                 tbody.append(row);
+    //                 $('.clHDCT').click(function(e) {
+    //                     var hdct_maHDCT = $(this).text();
+    //                     $.ajax({
+    //                         url: "/api/hoa-don-chi-tiet/" + hdct_maHDCT,
+    //                         type: "GET",
+    //                         success: function (data) {
+    //                             $('#MHDCT').val(data.hdct_maHDCT);
+    //                             $('#DonGia').val(data.sanPham.giaBan*100);
+    //                             $('#TenSP').val(data.sanPham.tenSP);
+    //                             $('#Quantity').val(data.hdct_soLuong);
+    //                             $('#MaSP_CT').val(data.sanPham.maSP);
+    //                             $('#Sale').val(data.hdct_giamGia);
+    //                             $('#ThanhTien').val((data.hdct_soLuong * data.sanPham.giaBan) * (100-(data.hdct_giamGia)) + 'đ');
+    //                             var formContainer = document.getElementById('HoaDonChiTietContainer');
+    //                             formContainer.scrollIntoView({ behavior: 'smooth' });
+    //                         }
+    //                     });
+    //                 });
+    //             })
+    //         },
+    //         error: function(xhr, status, error) {
+    //             // Xử lý lỗi
+    //             console.error("Error fetching employee data:", error);
+    //         }
+    //     });
+    // }
     //Đổ data hd vào table
     function doHoaDonLenTable() {
         // $.ajax({
@@ -206,31 +249,7 @@ $(document).ready(function() {
         });
     }
     //Đổ hdct từ table lên form
-    function doLaiHDCTTable(mahd){
-        $.ajax({
-            url: "/api/hoa-don-chi-tiet/mahd/"+mahd,
-            type: "GET",
-            success: function(response) {
-                var tbody = $('#hoadonchitiet-Table tbody');
-                tbody.empty();
-                response.forEach(function(item) {
-                    var row = $('<tr></tr>');
-                    row.append('<td class="clHDCT">' + item.hdct_maHDCT + '</td>');
-                    row.append('<td>' + item.hdct_maHDBan + '</td>');
-                    row.append('<td>' + item.sanPham.maSP + '</td>');
-                    row.append('<td>' + item.sanPham.giaBan*100 + 'đ' + '</td>');
-                    row.append('<td>' + item.hdct_soLuong + '</td>');
-                    row.append('<td>' + item.hdct_giamGia + '</td>');
-                    row.append('<td>' + (item.hdct_soLuong*item.sanPham.giaBan)*(100-(item.hdct_giamGia)) + 'đ' + '</td>');
-                    tbody.append(row);
-                })
-            },
-            error: function(xhr, status, error) {
-                // Xử lý lỗi
-                console.error("Error fetching employee data:", error);
-            }
-        });
-    }
+
     function clearHDCT(){
         $('#MHDCT').val("")
         $('#DonGia').val("")
@@ -276,7 +295,7 @@ $(document).ready(function() {
             var soLuong = $('#Quantity').val();
             var DonGia = $('#DonGia').val();
             var giamGia = $(this).val();
-            if (giamGia < 0) {
+            if (giamGia < 0 && giamGia > 100) {
                 alert("Giảm giá không đúng định dạng");
                 $('#Sale').val(0);
                 return;
@@ -425,9 +444,16 @@ $(document).ready(function() {
                 contentType: "application/json",
                 dataType: "json",
                 success: function (response) {
+                    doHDCTLenTableTheoMaHDBan(maHDBan);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
                     alert("Thêm thành công")
-                    doLaiHDCTTable(maHDBan);
-                }
+                    console.log(jqXHR);
+                    console.log(textStatus);
+                    console.log(errorThrown);
+                    clearHDCT();
+                    doHDCTLenTableTheoMaHDBan(maHDBan);
+                },
             })
 
         }
@@ -462,18 +488,25 @@ $(document).ready(function() {
                 contentType: "application/json",
                 dataType: "json",
                 success: function (response) {
-                    var maHDBan = $("#MaHD").val()
-                    doLaiHDCTTable(maHDBan)
-                    alert("Updated")
-
-                },error: function (jqXHR, textStatus, errorThrown){
+                    doHDCTLenTableTheoMaHDBan(maHDBan);
+                    alert("Update thành công");
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
                     console.log(jqXHR);
                     console.log(textStatus);
                     console.log(errorThrown);
+                    clearHDCT();
+                    doHDCTLenTableTheoMaHDBan(maHDBan);
+                },
+                complete: function(jqXHR, textStatus) {
+                    try {
+                        var responseJson = JSON.parse(jqXHR.responseText);
+                        console.log(responseJson);
+                    } catch (e) {
+                        console.error("Phản hồi không phải là JSON hợp lệ:", jqXHR.responseText);
+                    }
                 }
-            })
-            clearHDCT()
-            doLaiHDCTTable(maHDBan);
+            });
         }
     })
     $('#deleteHDCT').click(function(e) {
@@ -493,14 +526,17 @@ $(document).ready(function() {
                 data: {mahdct:MHDCT},
                 success: function (response) {
                     alert("Xóa thành công")
-                    doLaiHDCTTable(maHDBan);
+                    doHDCTLenTableTheoMaHDBan(maHDBan);
                     clearHDCT()
 
-                },error: function (jqXHR, textStatus, errorThrown){
+                },error: function (jqXHR, textStatus, errorThrown) {
+                    alert("Thêm thành công")
                     console.log(jqXHR);
                     console.log(textStatus);
                     console.log(errorThrown);
-                }
+                    clearHDCT();
+                    doHDCTLenTableTheoMaHDBan(maHDBan);
+                },
             })
 
         }
