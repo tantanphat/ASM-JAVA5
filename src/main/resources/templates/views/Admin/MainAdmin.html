@@ -200,7 +200,13 @@
                     Khách hàng
                 </a>
             </li>
-            <li>
+            <li sec:authorize="!hasRole('ADMIN')">
+                <span  class="nav-link text-white roleAdminNot"  >
+                    <i class="fa-solid fa-file-invoice-dollar me-2" width="16" height="16"></i>
+                    Nhân viên
+                </span>
+            </li>
+            <li sec:authorize="hasRole('ADMIN')">
                 <a th:href="@{/admin/nhan-vien}" class="nav-link text-white">
                     <i class="fa-solid fa-clipboard-user me-2" width="16" height="16"></i>
                     Nhân viên
@@ -221,7 +227,7 @@
             <li sec:authorize="!hasRole('ADMIN')">
                 <span  class="nav-link text-white roleAdminNot"  >
                     <i class="fa-solid fa-file-invoice-dollar me-2" width="16" height="16"></i>
-                    Báo cáo - Thống kêê
+                    Báo cáo - Thống kê
                 </span>
             </li>
             <li sec:authorize="hasRole('ADMIN')">
