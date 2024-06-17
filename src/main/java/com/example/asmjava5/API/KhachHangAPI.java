@@ -80,8 +80,10 @@ public class KhachHangAPI {
     }
 
     @GetMapping("/{maKH}")
-    public KhachHang getOneNhanVien(@PathVariable("maKH") String maKH) {
-        return khachHangServiceImpl.findBymaKH(maKH);
+    public ResponseEntity<KhachHang> getOneNhanVien(@PathVariable("maKH") String maKH) {
+        return Optional.ofNullable(khachHangServiceImpl.findBymaKH(maKH))
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping("/add")

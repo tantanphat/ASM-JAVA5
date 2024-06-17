@@ -4,6 +4,54 @@ $(document).ready(function() {
     // Tách URL để lấy mã khách hàng (makh)
     var segments = currentURL.split('/');
     var makh = segments[segments.length - 1];
+
+    function getMAKH(callback) {
+        var currentURL = window.location.href;
+        var url = new URL(currentURL);
+        var maKH = url.searchParams.get("maKH");
+        callback(maKH); // Gọi callback và truyền giá trị manv vào
+    }
+
+    function getKHByMAKH() {
+        getMAKH(function(maKH) {
+            if (maKH) {
+                $.ajax({
+                    url: "/api/khach-hang/" + maKH,
+                    type: "GET",
+                    success: function(data) {
+                        // Đổ dữ liệu lên form
+                        $('#MAKH').val(data.maKH);
+                        $('#FullNameKH').val(data.tenKH);
+                        $('#AddressKH').val(data.diaChi);
+                        $('#PhoneKH').val(data.sdt);
+                        $('#Email').val(data.email);
+                        var roleValue = data.thanhVien;
+                        if (roleValue == false) {
+                            $('#Rolefalse').prop('checked', true);
+                            $('#Roletrue').prop('checked', false);
+                        } else {
+                            $('#Rolefalse').prop('checked', false);
+                            $('#Roletrue').prop('checked', true);
+                        }
+
+                        // Cuộn trang đến form
+                        var formContainer = document.getElementById('formUpdate');
+                        formContainer.scrollIntoView({ behavior: 'smooth' });
+
+                    },
+                    error: function(xhr, status, error) {
+                        if (xhr.status == 404) {
+                            alert("Không tìm thấy khách hàng có mã " + maKH);
+                            window.location.href = "/admin/khach-hang";
+                        }
+                    }
+                });
+            }
+        });
+    }
+    getKHByMAKH()
+
+
     function clear() {
         $('#MAKH').val("");
         $('#FullNameKH').val("");
@@ -11,32 +59,6 @@ $(document).ready(function() {
         $('#PhoneKH').val("");
         $('#Email').val("");
     }
-
-    // Gửi yêu cầu GET để lấy thông tin khách hàng
-    $.ajax({
-        url: "/api/khach-hang/" + makh,
-        type: "GET",
-        success: function (data) {
-            // Đổ dữ liệu lên form
-            $('#MAKH').val(data.maKH);
-            $('#FullNameKH').val(data.tenKH);
-            $('#AddressKH').val(data.diaChi);
-            $('#PhoneKH').val(data.sdt);
-            $('#Email').val(data.email);
-            var roleValue = data.thanhVien;
-            if (roleValue == false) {
-                $('#Rolefalse').prop('checked', true);
-                $('#Roletrue').prop('checked', false);
-            } else {
-                $('#Rolefalse').prop('checked', false);
-                $('#Roletrue').prop('checked', true);
-            }
-
-            // Cuộn trang đến form
-            var formContainer = document.getElementById('formUpdate');
-            formContainer.scrollIntoView({ behavior: 'smooth' });
-        }
-    });
 
     $('#pagination-container-kh ').pagination({
         dataSource: function(done){
@@ -120,14 +142,51 @@ $(document).ready(function() {
             });
         }
     });
-    $(document).ready(function() {
+
         fetchEmployeeDataKH();
-    });
+
 
     $('#btnClearKH_click').click(function () {
         clear()
-        window.location.href = "http://localhost:8080/admin/khach-hang"
+        window.location = "/admin/khach-hang"
     })
+
+    function fetchEmployeeDataKH() {
+        $.ajax({
+            url: "/api/khach-hang",
+            type: "GET",
+            success: function(response) {
+                // Xử lý thành công, đổ dữ liệu vào bảng
+                var tbody = $('#khach-hang-table tbody');
+                tbody.empty(); // Xóa nội dung cũ của bảng
+                response.forEach(function(item) {
+                    var row = $('<tr></tr>');
+                    row.append('<td class="khClick">' + item.maKH + '</td>'); // Mã khách hàng
+                    row.append('<td>' + item.tenKH + '</td>'); // Tên khách hàng
+                    row.append('<td>' + item.diaChi + '</td>'); // Địa chỉ
+                    row.append('<td>' + item.sdt + '</td>'); // Số điện thoại
+                    row.append('<td>' + item.email + '</td>'); // Email
+                    row.append('<td>' + item.thanhVien + '</td>'); // Thành viên
+                    tbody.append(row); // Thêm hàng vào bảng
+                });
+
+                // Gán sự kiện click cho các phần tử có class "khClick" trong tbody
+                $('#khach-hang-table tbody').on('click', '.khClick', function(e) {
+                    var maKH = $(this).text();
+                    var newUrl = new URL(window.location);
+                    newUrl.searchParams.set('maKH', maKH);
+                    window.history.pushState({}, '', newUrl);
+                    $('#formUpdate').get(0).scrollIntoView({ behavior: 'smooth' });
+                    getKHByMAKH()
+                });
+            },
+            error: function(xhr, status, error) {
+                // Xử lý lỗi khi lấy dữ liệu
+                console.error("Lỗi khi lấy dữ liệu khách hàng:", error);
+            }
+        });
+
+    }
 });
 
 function btnCreatKH_click() {
@@ -141,12 +200,12 @@ function btnCreatKH_click() {
 // Biến để theo dõi trạng thái hợp lệ của form
     var isValid = true;
 
-    var namePattern = /^[a-zA-Z\s]+$/;
+    var namePattern = /^([a-vxyỳọáầảấờễàạằệếýộậốũứĩõúữịỗìềểẩớặòùồợãụủíỹắẫựỉỏừỷởóéửỵẳẹèẽổẵẻỡơôưăêâđA-VXYỲỌÁẦẢẤỜỄÀẠẰỆẾÝỘẬỐŨỨĨÕÚỮỊỖÌỀỂẨỚẶÒÙỒỢÃỤỦÍỸẮẪỰỈỎỪỶỞÓÉỬỴẲẸÈẼỔẴẺỠƠÔƯĂÊÂĐ]+)(\s{1}[a-vxyỳọáầảấờễàạằệếýộậốũứĩõúữịỗìềểẩớặòùồợãụủíỹắẫựỉỏừỷởóéửỵẳẹèẽổẵẻỡơôưăêâđA-VXYỲỌÁẦẢẤỜỄÀẠẰỆẾÝỘẬỐŨỨĨÕÚỮỊỖÌỀỂẨỚẶÒÙỒỢÃỤỦÍỸẮẪỰỈỎỪỶỞÓÉỬỴẲẸÈẼỔẴẺỠƠÔƯĂÊÂĐ]+)*$/;
 
 // Reset lỗi
     $('.error').remove();
 
-// Kiểm tra từng trường và thêm thông báo lỗi nếu cần
+// Kiểm tra từng trường và thêm thông báo lỗi
     if (tenKH === "") {
         isValid = false;
         $('#FullNameKH').after('<span class="error">Họ tên không được để trống</span>');
@@ -185,34 +244,54 @@ function btnCreatKH_click() {
             thanhVien: thanhVien
         };
 
-            // Gửi yêu cầu POST để thêm khách hàng mới
-            $.ajax({
-                url: "/api/khach-hang/add",
-                type: "POST",
-                contentType: "application/json",
-                data: JSON.stringify(newKhachHang),
-                success: function (data) {
-                    // Cập nhật bảng hiển thị khách hàng
-                    var tbody = $('#khach-hang-table tbody');
-                    var row = $('<tr></tr>');
-                    row.append('<td><a href="/admin/khach-hang/' + data.maKH + '">' + data.maKH + '</td>'); // Mã khách hàng
-                    row.append('<td>' + data.tenKH + '</td>'); // Tên khách hàng
-                    row.append('<td>' + data.diaChi + '</td>'); // Địa chỉ
-                    row.append('<td>' + data.sdt + '</td>'); // Số điện thoại
-                    row.append('<td>' + data.email + '</td>'); // Email
-                    row.append('<td>' + (data.thanhVien ? 'true' : 'false') + '</td>'); // Thành viên
-                    tbody.append(row);
-                    // Reset form sau khi thêm
-                    $('#formUpdate')[0].reset();
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error adding customer:", error);
+        $.ajax({
+            type: 'GET',
+            url: '/api/khach-hang/check-khach-hang',
+            data: { mail: email },
+            contentType: 'application/x-www-form-urlencoded',
+            success: function(response) {
+                if (response == true ) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "Email đã tồn tại"
+                    });
+                } else {
+
+                    // Gửi yêu cầu POST để thêm khách hàng mới
+                    $.ajax({
+                        url: "/api/khach-hang/add",
+                        type: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify(newKhachHang),
+                        success: function (data) {
+                            // Cập nhật bảng hiển thị khách hàng
+                            var tbody = $('#khach-hang-table tbody');
+                            var row = $('<tr></tr>');
+                            row.append('<td><a href="/admin/khach-hang/' + data.maKH + '">' + data.maKH + '</td>'); // Mã khách hàng
+                            row.append('<td>' + data.tenKH + '</td>'); // Tên khách hàng
+                            row.append('<td>' + data.diaChi + '</td>'); // Địa chỉ
+                            row.append('<td>' + data.sdt + '</td>'); // Số điện thoại
+                            row.append('<td>' + data.email + '</td>'); // Email
+                            row.append('<td>' + (data.thanhVien ? 'true' : 'false') + '</td>'); // Thành viên
+                            tbody.append(row);
+                            // Reset form sau khi thêm
+                            $('#formUpdate')[0].reset();
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Error adding customer:", error);
+                        }
+                    });
+
                 }
-            });
+            },
+            error: function(jqXHR, exception, exceptionText) {
+
+            }
+        });
+
         }
 }
-
-
 
 function btnUpdateKH_click() {
     // Lấy mã khách hàng từ form
@@ -251,35 +330,7 @@ function btnUpdateKH_click() {
     });
 }
 
-function fetchEmployeeDataKH() {
-    $.ajax({
-        url: "/api/khach-hang",
-        type: "GET",
-        headers: {
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBWZXIiOiIwLjAuMCIsImV4cCI6NDcyNjM4OTEyMiwibG9jYWxlIjoiIiwibWFzdGVyVmVyIjoiIiwicGxhdGZvcm0iOiIiLCJwbGF0Zm9ybVZlciI6IiIsInVzZXJJZCI6IiJ9.QIZbmB5_9Xlap_gDhjETfMI6EAmR15yBtIQkWFWJkrg',
-        },
-        success: function(response) {
-            // Xử lý thành công, đổ dữ liệu vào bảng
-            var tbody = $('#khach-hang-table tbody');
-            tbody.empty(); // Xóa nội dung cũ của bảng
-            response.forEach(function(item) {
-                var row = $('<tr></tr>');
-                row.append('<td><a href="/admin/khach-hang/' + item.maKH + '">' + item.maKH+ '</td>'); // Mã khách hàng
-                row.append('<td>' + item.tenKH + '</td>'); // Tên khách hàng
-                row.append('<td>' + item.diaChi + '</td>'); // Địa chỉ
-                row.append('<td>' + item.sdt + '</td>'); // Số điện thoại
-                row.append('<td>' + item.email + '</td>'); // Email
-                // row.append('<td>' + item.matKhau + '</td>'); // Mật khẩu
-                row.append('<td>' + item.thanhVien + '</td>'); // Thành viên
-                tbody.append(row); // Thêm hàng vào bảng
-            });
-        },
-        error: function(xhr, status, error) {
-            // Xử lý lỗi khi lấy dữ liệu
-            console.error("Lỗi khi lấy dữ liệu khách hàng:", error);
-        }
-    });
-}
+
 
 function btnDeleteKH_click() {
     // Lấy mã nhân viên từ form
