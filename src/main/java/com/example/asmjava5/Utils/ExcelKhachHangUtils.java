@@ -6,6 +6,7 @@ import com.example.asmjava5.Service.KhachHangService;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 
 import java.io.File;
@@ -15,7 +16,7 @@ import java.io.OutputStream;
 import java.util.List;
 
 public class ExcelKhachHangUtils {
-    private static CellStyle cellStyleFormatNumber = null;
+
 
     // Create CellStyle for header
     private static CellStyle createStyleForHeader(Sheet sheet) {
@@ -116,7 +117,7 @@ public class ExcelKhachHangUtils {
 
     public static void writeExcel(List<KhachHang> khachhang, String excelFilePath) throws IOException {
         Workbook workbook = getWorkbook(excelFilePath);
-        Sheet sheet = workbook.createSheet("DoanhThu");
+        Sheet sheet = workbook.createSheet("Khách Hàng");
         int rowIndex = 0;
         writeHeader(sheet, rowIndex);
         rowIndex++;

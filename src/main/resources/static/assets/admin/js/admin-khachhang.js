@@ -1,9 +1,9 @@
 $(document).ready(function() {
-    // Lấy URL hiện tại
-    var currentURL = window.location.href;
-    // Tách URL để lấy mã khách hàng (makh)
-    var segments = currentURL.split('/');
-    var makh = segments[segments.length - 1];
+    // // Lấy URL hiện tại
+    // var currentURL = window.location.href;
+    // // Tách URL để lấy mã khách hàng (makh)
+    // var segments = currentURL.split('/');
+    // var makh = segments[segments.length - 1];
 
     function getMAKH(callback) {
         var currentURL = window.location.href;
@@ -83,25 +83,15 @@ $(document).ready(function() {
             tbody.empty(); // Xóa nội dung cũ của bảng
             data.forEach(function(item) {
                 var row = $('<tr></tr>');
-                row.append('<td><a href="/admin/khach-hang/' + item.maKH + '">' + item.maKH+ '</td>'); // Mã khách hàng
+                row.append('<td class="khClick">' + item.maKH + '</td>'); // Mã khách hàng
                 row.append('<td>' + item.tenKH + '</td>'); // Tên khách hàng
                 row.append('<td>' + item.diaChi + '</td>'); // Địa chỉ
                 row.append('<td>' + item.sdt + '</td>'); // Số điện thoại
                 row.append('<td>' + item.email + '</td>'); // Email
-                // row.append('<td>' + item.matKhau + '</td>'); // Mật khẩu
                 row.append('<td>' + item.thanhVien + '</td>'); // Thành viên
                 tbody.append(row); // Thêm hàng vào bảng
             });
         }
-    })
-
-    $('#XuatListKH').click(function(e) {
-        $.ajax({
-            url:'/api/khach-hang/xuat-ra-excel',
-            type: 'GET',
-        }).done(function() {
-            alert('Xuất ra file thành công')
-        })
     })
 
     $("#searchKH").on('input', function(e) {
@@ -148,7 +138,9 @@ $(document).ready(function() {
 
     $('#btnClearKH_click').click(function () {
         clear()
-        window.location = "/admin/khach-hang"
+
+        window.history.pushState({}, '', "/admin/khach-hang");
+        $('#formUpdate').get(0).scrollIntoView({ behavior: 'smooth' });
     })
 
     function fetchEmployeeDataKH() {
@@ -187,56 +179,123 @@ $(document).ready(function() {
         });
 
     }
-});
 
-function btnCreatKH_click() {
-    // Lấy thông tin từ form
-    var tenKH = $('#FullNameKH').val().trim();
-    var diaChi = $('#AddressKH').val().trim();
-    var sdt = $('#PhoneKH').val().trim();
-    var email = $('#Email').val().trim();
-    var thanhVien = $('input[name="role_radio"]:checked').val();// true nếu là thành viên
+    function btnCreatKH_click() {
+        // Lấy thông tin từ form
+        var tenKH = $('#FullNameKH').val().trim();
+        var diaChi = $('#AddressKH').val().trim();
+        var sdt = $('#PhoneKH').val().trim();
+        var email = $('#Email').val().trim();
+        var thanhVien = $('input[name="role_radio"]:checked').val();// true nếu là thành viên
 
 // Biến để theo dõi trạng thái hợp lệ của form
-    var isValid = true;
+        var isValid = true;
 
-    var namePattern = /^([a-vxyỳọáầảấờễàạằệếýộậốũứĩõúữịỗìềểẩớặòùồợãụủíỹắẫựỉỏừỷởóéửỵẳẹèẽổẵẻỡơôưăêâđA-VXYỲỌÁẦẢẤỜỄÀẠẰỆẾÝỘẬỐŨỨĨÕÚỮỊỖÌỀỂẨỚẶÒÙỒỢÃỤỦÍỸẮẪỰỈỎỪỶỞÓÉỬỴẲẸÈẼỔẴẺỠƠÔƯĂÊÂĐ]+)(\s{1}[a-vxyỳọáầảấờễàạằệếýộậốũứĩõúữịỗìềểẩớặòùồợãụủíỹắẫựỉỏừỷởóéửỵẳẹèẽổẵẻỡơôưăêâđA-VXYỲỌÁẦẢẤỜỄÀẠẰỆẾÝỘẬỐŨỨĨÕÚỮỊỖÌỀỂẨỚẶÒÙỒỢÃỤỦÍỸẮẪỰỈỎỪỶỞÓÉỬỴẲẸÈẼỔẴẺỠƠÔƯĂÊÂĐ]+)*$/;
+        var namePattern = /^([a-vxyỳọáầảấờễàạằệếýộậốũứĩõúữịỗìềểẩớặòùồợãụủíỹắẫựỉỏừỷởóéửỵẳẹèẽổẵẻỡơôưăêâđA-VXYỲỌÁẦẢẤỜỄÀẠẰỆẾÝỘẬỐŨỨĨÕÚỮỊỖÌỀỂẨỚẶÒÙỒỢÃỤỦÍỸẮẪỰỈỎỪỶỞÓÉỬỴẲẸÈẼỔẴẺỠƠÔƯĂÊÂĐ]+)(\s{1}[a-vxyỳọáầảấờễàạằệếýộậốũứĩõúữịỗìềểẩớặòùồợãụủíỹắẫựỉỏừỷởóéửỵẳẹèẽổẵẻỡơôưăêâđA-VXYỲỌÁẦẢẤỜỄÀẠẰỆẾÝỘẬỐŨỨĨÕÚỮỊỖÌỀỂẨỚẶÒÙỒỢÃỤỦÍỸẮẪỰỈỎỪỶỞÓÉỬỴẲẸÈẼỔẴẺỠƠÔƯĂÊÂĐ]+)*$/;
 
 // Reset lỗi
-    $('.error').remove();
+        $('.error').remove();
 
 // Kiểm tra từng trường và thêm thông báo lỗi
-    if (tenKH === "") {
-        isValid = false;
-        $('#FullNameKH').after('<span class="error">Họ tên không được để trống</span>');
-    } else if (!namePattern.test(tenKH)) {
-        isValid = false;
-        $('#FullNameKH').after('<span class="error">Họ tên chỉ được chứa chữ cái và khoảng trắng</span>');
+        if (tenKH === "") {
+            isValid = false;
+            $('#FullNameKH').after('<span class="error">Họ tên không được để trống</span>');
+        } else if (!namePattern.test(tenKH)) {
+            isValid = false;
+            $('#FullNameKH').after('<span class="error">Họ tên chỉ được chứa chữ cái và khoảng trắng</span>');
+        }
+
+        if (diaChi === "") {
+            isValid = false;
+            $('#AddressKH').after('<span class="error">Địa chỉ không được để trống</span>');
+        }
+
+        var phonePattern = /^[0-9]{10,11}$/;
+        if (!phonePattern.test(sdt)) {
+            isValid = false;
+            $('#PhoneKH').after('<span class="error">Số điện thoại không hợp lệ</span>');
+        }
+
+        var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        if (email === "") {
+            isValid = false;
+            $('#Email').after('<span class="error">Email không được để trống</span>');
+        } else if (!emailPattern.test(email)) {
+            isValid = false;
+            $('#Email').after('<span class="error">Email không hợp lệ</span>');
+        }
+
+        if (isValid) {
+            // Tạo đối tượng khách hàng mới (không bao gồm maKH)
+            var newKhachHang = {
+                tenKH: tenKH,
+                diaChi: diaChi,
+                sdt: sdt,
+                email: email,
+                thanhVien: thanhVien
+            };
+
+            $.ajax({
+                type: 'GET',
+                url: '/api/khach-hang/check-khach-hang',
+                data: { mail: email },
+                contentType: 'application/x-www-form-urlencoded',
+                success: function(response) {
+                    if (response == true ) {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "Email đã tồn tại"
+                        });
+                    } else {
+
+                        // Gửi yêu cầu POST để thêm khách hàng mới
+                        $.ajax({
+                            url: "/api/khach-hang/add",
+                            type: "POST",
+                            contentType: "application/json",
+                            data: JSON.stringify(newKhachHang),
+                            success: function (data) {
+                                // Cập nhật bảng hiển thị khách hàng
+                                var tbody = $('#khach-hang-table tbody');
+                                var row = $('<tr></tr>');
+                                row.append('<td><a href="/admin/khach-hang/' + data.maKH + '">' + data.maKH + '</td>'); // Mã khách hàng
+                                row.append('<td>' + data.tenKH + '</td>'); // Tên khách hàng
+                                row.append('<td>' + data.diaChi + '</td>'); // Địa chỉ
+                                row.append('<td>' + data.sdt + '</td>'); // Số điện thoại
+                                row.append('<td>' + data.email + '</td>'); // Email
+                                row.append('<td>' + (data.thanhVien ? 'true' : 'false') + '</td>'); // Thành viên
+                                tbody.append(row);
+                                // Reset form sau khi thêm
+                                $('#formUpdate')[0].reset();
+                            },
+                            error: function (xhr, status, error) {
+                                console.error("Error adding customer:", error);
+                            }
+                        });
+
+                    }
+                },
+                error: function(jqXHR, exception, exceptionText) {
+
+                }
+            });
+
+        }
     }
 
-    if (diaChi === "") {
-        isValid = false;
-        $('#AddressKH').after('<span class="error">Địa chỉ không được để trống</span>');
-    }
+    function btnUpdateKH_click() {
+        // Lấy mã khách hàng từ form
+        var maKH = $('#MAKH').val();
+        // Lấy thông tin mới từ form
+        var tenKH = $('#FullNameKH').val();
+        var diaChi = $('#AddressKH').val();
+        var sdt = $('#PhoneKH').val();
+        var email = $('#Email').val();
+        var thanhVien = $('#Roletrue').prop('checked'); // true nếu là thành viên
 
-    var phonePattern = /^[0-9]{10,11}$/;
-    if (!phonePattern.test(sdt)) {
-        isValid = false;
-        $('#PhoneKH').after('<span class="error">Số điện thoại không hợp lệ</span>');
-    }
-
-    var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    if (email === "") {
-        isValid = false;
-        $('#Email').after('<span class="error">Email không được để trống</span>');
-    } else if (!emailPattern.test(email)) {
-        isValid = false;
-        $('#Email').after('<span class="error">Email không hợp lệ</span>');
-    }
-
-    if (isValid) {
-        // Tạo đối tượng khách hàng mới (không bao gồm maKH)
-        var newKhachHang = {
+        // Tạo đối tượng khách hàng cần cập nhật
+        var updatedKhachHang = {
             tenKH: tenKH,
             diaChi: diaChi,
             sdt: sdt,
@@ -244,110 +303,78 @@ function btnCreatKH_click() {
             thanhVien: thanhVien
         };
 
+        // Gửi yêu cầu PUT để cập nhật thông tin khách hàng
         $.ajax({
-            type: 'GET',
-            url: '/api/khach-hang/check-khach-hang',
-            data: { mail: email },
-            contentType: 'application/x-www-form-urlencoded',
-            success: function(response) {
-                if (response == true ) {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Error",
-                        text: "Email đã tồn tại"
-                    });
-                } else {
-
-                    // Gửi yêu cầu POST để thêm khách hàng mới
-                    $.ajax({
-                        url: "/api/khach-hang/add",
-                        type: "POST",
-                        contentType: "application/json",
-                        data: JSON.stringify(newKhachHang),
-                        success: function (data) {
-                            // Cập nhật bảng hiển thị khách hàng
-                            var tbody = $('#khach-hang-table tbody');
-                            var row = $('<tr></tr>');
-                            row.append('<td><a href="/admin/khach-hang/' + data.maKH + '">' + data.maKH + '</td>'); // Mã khách hàng
-                            row.append('<td>' + data.tenKH + '</td>'); // Tên khách hàng
-                            row.append('<td>' + data.diaChi + '</td>'); // Địa chỉ
-                            row.append('<td>' + data.sdt + '</td>'); // Số điện thoại
-                            row.append('<td>' + data.email + '</td>'); // Email
-                            row.append('<td>' + (data.thanhVien ? 'true' : 'false') + '</td>'); // Thành viên
-                            tbody.append(row);
-                            // Reset form sau khi thêm
-                            $('#formUpdate')[0].reset();
-                        },
-                        error: function (xhr, status, error) {
-                            console.error("Error adding customer:", error);
-                        }
-                    });
-
-                }
+            url: "/api/khach-hang/" + maKH,
+            type: "PUT",
+            contentType: "application/json",
+            data: JSON.stringify(updatedKhachHang),
+            success: function (data) {
+                // Cập nhật thông tin khách hàng trong bảng hiển thị
+                $('#khach-hang-table tbody').empty(); // Xóa hết dữ liệu cũ trong bảng
+                fetchEmployeeDataKH(); // Gọi lại hàm fetchEmployeeData() để lấy dữ liệu mới
+                alert("Thông tin nhân viên đã được cập nhật!");
+                $('#formUpdate').get(0).scrollIntoView({ behavior: 'smooth' });
             },
-            error: function(jqXHR, exception, exceptionText) {
+            error: function (xhr, status, error) {
+                console.error("Error updating employee:", error);
+            }
+        });
+    }
 
+    function btnDeleteKH_click() {
+        // Lấy mã nhân viên từ form
+        var maKH = $('#MAKH').val();
+
+        // Gửi yêu cầu DELETE để xóa nhân viên
+        $.ajax({
+            url: "/api/khach-hang/" + maKH,
+            type: "DELETE",
+            success: function () {
+                $('#employeeTable tbody').empty(); // Xóa hết dữ liệu cũ trong bảng
+                fetchEmployeeDataKH(); // Gọi lại hàm fetchEmployeeData() để lấy dữ liệu mới
+                alert("Khách hàng đã được xóa thành công!");
+                // $('#formUpdate')[0].reset();
+                $('#formUpdate').get(0).scrollIntoView({ behavior: 'smooth' });
+            },
+            error: function (xhr, status, error) {
+                console.error("Error deleting employee:", error);
+            }
+        });
+    }
+
+    $('#btnUpdateKH_click').click(function () {
+        btnUpdateKH_click()
+    })
+
+    $('#btnDeleteKH_click').click(function () {
+        btnDeleteKH_click()
+    })
+
+    $('#btnCreatKH_click').click(function () {
+        btnCreatKH_click()
+    })
+
+    $('#XuatListKH').click(function(e) {
+        e.preventDefault()
+        $.ajax({
+            url: '/api/khach-hang/xuat-ra-excel',
+            type: 'GET',
+            success: function(response) {
+                console.log(response);
+                alert('Xuất ra file thành công');
+            }
+        }).fail(function(xhr) {
+            if (xhr.status === 404) {
+                alert('Xuất ra file thất bại');
+            } else {
+                alert('Đã có một ngoại lệ xảy ra');
             }
         });
 
-        }
-}
-
-function btnUpdateKH_click() {
-    // Lấy mã khách hàng từ form
-    var maKH = $('#MAKH').val();
-    // Lấy thông tin mới từ form
-    var tenKH = $('#FullNameKH').val();
-    var diaChi = $('#AddressKH').val();
-    var sdt = $('#PhoneKH').val();
-    var email = $('#Email').val();
-    var thanhVien = $('#Roletrue').prop('checked'); // true nếu là thành viên
-
-    // Tạo đối tượng khách hàng cần cập nhật
-    var updatedKhachHang = {
-        tenKH: tenKH,
-        diaChi: diaChi,
-        sdt: sdt,
-        email: email,
-        thanhVien: thanhVien
-    };
-
-    // Gửi yêu cầu PUT để cập nhật thông tin khách hàng
-    $.ajax({
-        url: "/api/khach-hang/" + maKH,
-        type: "PUT",
-        contentType: "application/json",
-        data: JSON.stringify(updatedKhachHang),
-        success: function (data) {
-            // Cập nhật thông tin khách hàng trong bảng hiển thị
-            $('#khach-hang-table tbody').empty(); // Xóa hết dữ liệu cũ trong bảng
-            fetchEmployeeDataKH(); // Gọi lại hàm fetchEmployeeData() để lấy dữ liệu mới
-            alert("Thông tin nhân viên đã được cập nhật!");
-        },
-        error: function (xhr, status, error) {
-            console.error("Error updating employee:", error);
-        }
-    });
-}
+    })
 
 
+});
 
-function btnDeleteKH_click() {
-    // Lấy mã nhân viên từ form
-    var maKH = $('#MAKH').val();
 
-    // Gửi yêu cầu DELETE để xóa nhân viên
-    $.ajax({
-        url: "/api/khach-hang/" + maKH,
-        type: "DELETE",
-        success: function () {
-            $('#employeeTable tbody').empty(); // Xóa hết dữ liệu cũ trong bảng
-            fetchEmployeeDataKH(); // Gọi lại hàm fetchEmployeeData() để lấy dữ liệu mới
-            alert("Khách hàng đã được xóa thành công!");
-            $('#formUpdate')[0].reset();
-        },
-        error: function (xhr, status, error) {
-            console.error("Error deleting employee:", error);
-        }
-    });
-}

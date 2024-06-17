@@ -105,6 +105,7 @@ public class WebSecurityConfig {
                         .accessDeniedPage("/error")//Nếu lỗi xảy ra thì nó sẽ trả về trang lỗi
 
                 )
+                .csrf(AbstractHttpConfigurer::disable)//tắt tính năng bảo vệ CSRF
                 .rememberMe(rememberMe ->
                         rememberMe
                                 .tokenRepository(persistentTokenRepository()) // Sử dụng persistentTokenRepository để lưu trữ token

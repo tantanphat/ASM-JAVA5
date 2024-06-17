@@ -20,6 +20,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -129,14 +130,17 @@ public class KhachHangAPI {
             return ResponseEntity.badRequest().body(e.getMessage());//Trả về 401 khi có ngoại lệ
         }
     }
+
     @GetMapping("/xuat-ra-excel")
-    public void xuatListKhachHangRaExcel() {
+    public ResponseEntity<?> xuatListKhachHangRaExcel() {
         List<KhachHang> kh = khachHangServiceImpl.getAllKhachHang();
-        String excelFilePath = "D:/Khachhang.xlsx";
+        String excelFilePath = "D:/Khách Hàng.xlsx";
         try {
             ExcelKhachHangUtils.writeExcel(kh,excelFilePath);
+            return ResponseEntity.ok(HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 

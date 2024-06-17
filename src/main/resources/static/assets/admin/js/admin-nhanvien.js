@@ -3,7 +3,7 @@ $(document).ready(function() {
             var currentURL = window.location.href;
             var url = new URL(currentURL);
             var manv = url.searchParams.get("maNV");
-            callback(manv); // Gọi callback và truyền giá trị manv vào
+            callback(manv);
         }
 
         function getNVByMANV() {
@@ -59,7 +59,7 @@ $(document).ready(function() {
                     tbody.empty(); // Clear the table body before adding new rows
                     response.forEach(function (item) {
                         var row = $('<tr></tr>');
-                        row.append('<td><a class="nvClick" href="/admin/nhan-vien?maNV=' + item.maNV + '">' + item.maNV + '</a></td>');
+                        row.append('<td class="nvClick">' + item.maNV + '</td>');
                         row.append('<td>' + item.tenNV + '</td>');
                         row.append('<td>' + (item.gioiTinh ? 'Nam' : 'Nữ') + '</td>');
                         row.append('<td>' + item.diaChi + '</td>');
@@ -67,6 +67,14 @@ $(document).ready(function() {
                         row.append('<td>' + item.ngaySinh + '</td>');
                         row.append('<td>' + (item.vaiTro ? 'Admin' : 'Staff') + '</td>');
                         tbody.append(row);
+                    });
+                    $('.nvClick').on('click', function(e) {
+                        var maNV = $(this).text();
+                        var newUrl = new URL(window.location);
+                        newUrl.searchParams.set('maNV', maNV);
+                        window.history.pushState({}, '', newUrl);
+                        $('#nhanVienAdmin').get(0).scrollIntoView({ behavior: 'smooth' });
+                        getNVByMANV();
                     });
                 },
                 error: function (xhr, status, error) {
@@ -86,99 +94,50 @@ $(document).ready(function() {
           $('#Password').val("");
         }
 
-        $('#btnCreate').click(function(e) {
-            // Lấy thông tin từ form
-            var tenNV = $('#FullName').val().trim();
-            var gioiTinh = $('#Gender').val() === "1";
-            var diaChi = $('#Address').val().trim();
-            var dienThoai = $('#Phone').val().trim();
-            var ngaySinh = $('#Brithday').val().trim();
-            var matkhau = $('#Password').val().trim();
-            var vaiTro = $('input[name="role_radio"]:checked').val(); // true nếu là quản lý
+    $('#btnCreate').click(function(e) {
+        // Lấy thông tin từ form
+        var tenNV = $('#FullName').val();
+        var gioiTinh = $('#Gender').val() === "1";
+        var diaChi = $('#Address').val();
+        var dienThoai = $('#Phone').val();
+        var ngaySinh = $('#Brithday').val();
+        var matkhau = $('#Password').val();
+        var vaiTro = $('#RoleQL').prop('checked'); // true nếu là quản lý
 
-            // Biến để theo dõi trạng thái hợp lệ của form
-            var isValid = true;
+        // Tạo đối tượng nhân viên mới (không bao gồm maNV)
+        var newNhanVien = {
+            tenNV: tenNV,
+            gioiTinh: gioiTinh,
+            diaChi: diaChi,
+            dienThoai: dienThoai,
+            ngaySinh: ngaySinh,
+            matkhau: matkhau,
+            vaiTro: vaiTro
+        };
 
-            var namePattern = /^[a-zA-Z\s]+$/;
-
-            // Reset lỗi
-            $('.error').remove();
-
-            // Kiểm tra từng trường và thêm thông báo lỗi nếu cần
-            if (tenNV === "") {
-                isValid = false;
-                $('#FullName').after('<span class="error">Họ tên không được để trống</span>');
-            } else if (!namePattern.test(tenNV)) {
-                isValid = false;
-                $('#FullName').after('<span class="error">Họ tên chỉ được chứa chữ cái và khoảng trắng</span>');
+        // Gửi yêu cầu POST để thêm nhân viên mới
+        $.ajax({
+            url: "/api/nhan-vien/add",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(newNhanVien),
+            success: function (data) {
+                $('#employeeTable tbody').empty();
+                fetchEmployeeData();
+                alert("Thêm mới thành viên thành công")
+                // Reset form sau khi thêm
+                $('#formUpdate')[0].reset();
+            },
+            error: function (xhr, status, error) {
+                console.error("Error adding employee:", error);
             }
-
-            if ($('#Gender').val() === "") {
-                isValid = false;
-                $('#Gender').after('<span class="error">Vui lòng chọn giới tính</span>');
-            }
-
-            if (diaChi === "") {
-                isValid = false;
-                $('#Address').after('<span class="error">Địa chỉ không được để trống</span>');
-            }
-
-            var phonePattern = /^[0-9]{10,11}$/;
-            if (!phonePattern.test(dienThoai)) {
-                isValid = false;
-                $('#Phone').after('<span class="error">Số điện thoại không hợp lệ</span>');
-            }
-
-            if (ngaySinh === "") {
-                isValid = false;
-                $('#Brithday').after('<span class="error">Ngày sinh không được để trống</span>');
-            }
-
-            if (matkhau.length < 3) {
-                isValid = false;
-                $('#Password').after('<span class="error" >Mật khẩu phải có ít nhất 3 ký tự</span>');
-            }
-
-            if (typeof vaiTro !== "boolean") {
-                isValid = false;
-                $('.form-check-inline').after('<span class="error">Vui lòng chọn vai trò</span>');
-            }
-
-            if (isValid) {
-                // Tạo đối tượng nhân viên mới (không bao gồm maNV)
-                var newNhanVien = {
-                    tenNV: tenNV,
-                    gioiTinh: gioiTinh,
-                    diaChi: diaChi,
-                    dienThoai: dienThoai,
-                    ngaySinh: ngaySinh,
-                    matkhau: matkhau,
-                    vaiTro: vaiTro
-                };
-
-
-                // Gửi yêu cầu POST để thêm nhân viên mới
-            $.ajax({
-                url: "/api/nhan-vien/add",
-                type: "POST",
-                contentType: "application/json",
-                data: JSON.stringify(newNhanVien),
-                success: function (data) {
-                    $('#employeeTable tbody').empty();
-                    fetchEmployeeData();
-                    // Reset form sau khi thêm
-                    $('#formUpdate')[0].reset();
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error adding employee:", error);
-                }
-            });
-            }
-        })
+        });
+    })
 
         $('#btnClear').click(function(e) {
             clearNhanVien()
-            window.location.href = "http://localhost:8080/admin/nhan-vien";
+            window.history.pushState({}, '', "/admin/nhan-vien");
+            $('#formUpdate').get(0).scrollIntoView({ behavior: 'smooth' });
         })
         $('#btnUpdate').click(function(e) {
             // Lấy mã nhân viên từ form

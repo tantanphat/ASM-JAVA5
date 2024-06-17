@@ -164,7 +164,6 @@ $(document).ready(function() {
         hienThiListSP(pageNo,pageSize,sortBy,sortOrder);
     });
 
-    hienThiListSP();
     $('#anhSP').click(function () {
         $('#fileInput').click();
     })
@@ -278,6 +277,7 @@ $(document).ready(function() {
     })
     $('#createSP').click(function () {
         // Gather input values
+        var maSP = $('#maSanPham').val().trim();
         var tenSP = $('#tenSanPham').val().trim();
         var maDM = $('#danhMucSanPham').val().trim();
         var soLuong = $('#Sl_SP').val().trim();
@@ -293,6 +293,11 @@ $(document).ready(function() {
 
         // Reset previous error messages
         $('.error').remove();
+
+        if (maSP.length > 0) {
+            alert("Sản phẩm đã tồn tại")
+            return;
+        }
 
         // Validate each field and add error messages if necessary
         if (tenSP === "") {
