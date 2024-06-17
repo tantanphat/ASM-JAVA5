@@ -25,7 +25,7 @@
                 <input type="text" placeholder="Phone" id="phone" required/>
                 <input type="email" placeholder="Email" id="email" required/>
                 <input type="text" placeholder="Address" id="address" required/>
-                <button>Sign Up</button>
+                <button id="dangKy">Sign Up</button>
             </form>
         </div>
         <div class="form-container sign-in-container">
@@ -190,6 +190,11 @@
                             text: "Email đã tồn tại"
                         });
                     } else {
+
+                        $('#dangKy').click(function(e) {
+                            alert("Thông tin bạn đang được xử lý")
+                            return;
+                        })
                         $.ajax({
                             type: 'POST',
                             url: '/api/khach-hang/add-khach-hang',

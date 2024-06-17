@@ -99,16 +99,14 @@ public class MailServiceImpl implements MailService {
     @Override
     public void sendMailFile(String type, String to, byte[] fileBytes) {
         MimeMessage message = javaMailSender.createMimeMessage();
-        String ma = SendMa.MaXacNhan();
         try {
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
             helper.setFrom(username);
             helper.setTo(to);
 
-            String title = null;
-            String content = null;
-            title = "Thanh toán thành công";
-            content = "<div style=' background-color: #d4edda;\n" +
+
+            String title = "Thanh toán thành công";
+            String content = "<div style=' background-color: #d4edda;\n" +
                     "    color: #155724;\n" +
                     "    border: 1px solid #c3e6cb;\n" +
                     "    border-radius: 5px;\n" +

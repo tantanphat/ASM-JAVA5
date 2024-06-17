@@ -155,6 +155,38 @@
 
                         if (response.ok) {
                             console.log('File PDF đã được gửi thành công!');
+                            $.ajax({
+                                url: "/api/hoa-don/thanh-toan",
+                                type: "POST",
+                                data: {maHD : MaHD, mailKH : MailKH},
+                                success: function (data) {
+                                    console.log(data);
+                                    Swal.fire({
+                                        icon:'success',
+                                        title: 'Thanh toán thành công',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            window.location.href = "/";
+                                        }
+                                    })
+
+
+
+                                    window.location = "/user/Lich-su-mua-hang"
+                                    // html2pdf().set(options).from(element).save();
+
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    if (jqXHR.status === 401) {
+                                        console.log("Unauthorized");
+                                    } else {
+                                        console.log(jqXHR); // Log thông tin lỗi khác
+                                    }
+                                }
+                            });
+
                         } else {
                             console.error('Có lỗi xảy ra khi gửi file PDF.');
                         }
@@ -164,40 +196,9 @@
                 };
             }
 
-            // $('#khung').attr("hidden",true)
+            $('#khung').attr("hidden",true)
             // printHTML()
-
-            $.ajax({
-                url: "/api/hoa-don/thanh-toan",
-                type: "POST",
-                data: {maHD : MaHD, mailKH : MailKH},
-                success: function (data) {
-                    console.log(data);
-                    Swal.fire({
-                        icon:'success',
-                        title: 'Thanh toán thành công',
-                        showConfirmButton: false,
-                        timer: 1500
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.href = "/";
-                        }
-                    })
-
-
-                    $('#khung').attr("hidden",true)
-                    printHTML()
-                    // html2pdf().set(options).from(element).save();
-                    window.location = "/user/Lich-su-mua-hang"
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    if (jqXHR.status === 401) {
-                        console.log("Unauthorized");
-                    } else {
-                        console.log(jqXHR); // Log thông tin lỗi khác
-                    }
-                }
-            });
+            printHTML()
         })
     });
 </script>

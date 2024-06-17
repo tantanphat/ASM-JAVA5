@@ -123,6 +123,7 @@ public class KhachHangAPI {
             khachHangServiceImpl.dangKyKhachHangMoi(dangKyKhachHang);//Xử lý thông tin và thêm khách hàng
             return ResponseEntity.ok(HttpStatus.OK);//Trả về 200 khi thành công
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(e.getMessage());//Trả về 401 khi có ngoại lệ
         }
     }

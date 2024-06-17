@@ -156,7 +156,6 @@ public class HoaDonAPI {
     @PostMapping("/Gui-hoa-don-mail")
     public ResponseEntity<?> guiHoaDonMail(@RequestBody byte[] fileBytes, Principal principal) {
         String email = principal.getName();
-        System.out.println(email);
         mailService.sendMailFile(MailConstant.FILE_MAIL_HOA_DON, "nguyen04tan04phat03@gmail.com", fileBytes);
         return ResponseEntity.ok(HttpStatus.OK);
     }
