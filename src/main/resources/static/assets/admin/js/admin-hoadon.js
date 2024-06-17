@@ -474,6 +474,7 @@ $(document).ready(function() {
             });
             return;
         } else {
+
             var data = {
                 hdct_maHDCT: MHDCT,
                 hdct_maHDBan: maHDBan,
